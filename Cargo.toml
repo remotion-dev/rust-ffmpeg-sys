@@ -1,6 +1,8 @@
 [package]
 name    = "ffmpeg-sys-next"
 version = "5.1.1"
+build   = "build.rs"
+links   = "ffmpeg"
 
 authors = ["meh. <meh@schizofreni.co>", "Zhiming Wang <i@zhimingwang.org>"]
 license = "WTFPL"
