@@ -9,8 +9,10 @@
 
 extern crate libc;
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-
+include!(concat!(
+    env!("REMOTION_FFMPEG_RUST_BINDINGS_OUT_DIR"),
+    "/bindings.rs"
+));
 #[macro_use]
 mod avutil;
 pub use avutil::*;
