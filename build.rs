@@ -80,10 +80,7 @@ impl ParseCallbacks for Callbacks {
         let codec_flag_prefix = "AV_CODEC_FLAG_";
         let error_max_size = "AV_ERROR_MAX_STRING_SIZE";
 
-        if value >= i64::min_value() as i64
-            && value <= i64::max_value() as i64
-            && _name.starts_with(ch_layout_prefix)
-        {
+        if value >= i64::min_value() && _name.starts_with(ch_layout_prefix) {
             Some(IntKind::ULongLong)
         } else if value >= i32::min_value() as i64
             && value <= i32::max_value() as i64
@@ -445,7 +442,7 @@ fn check_features(
         );
     }
 
-    let version_check_info = [("avcodec", 56, 60, 0, 108)];
+    let version_check_info = [("avcodec", 56, 61, 0, 108)];
     for &(lib, begin_version_major, end_version_major, begin_version_minor, end_version_minor) in
         version_check_info.iter()
     {
@@ -590,6 +587,7 @@ fn check_features(
         ("ffmpeg_4_4", 58, 100),
         ("ffmpeg_5_0", 59, 18),
         ("ffmpeg_5_1", 59, 37),
+        ("ffmpeg_6_0", 60, 3),
     ];
     for &(ffmpeg_version_flag, lavc_version_major, lavc_version_minor) in
         ffmpeg_lavc_versions.iter()
@@ -613,7 +611,7 @@ fn check_features(
 fn link_to_libraries(statik: bool) {
     let ffmpeg_ty = if statik { "static" } else { "dylib" };
     for lib in LIBRARIES {
-        let feat_is_enabled = lib.feature_name().and_then(|f| env::var(&f).ok()).is_some();
+        let feat_is_enabled = lib.feature_name().and_then(|f| env::var(f).ok()).is_some();
         if !lib.is_feature || feat_is_enabled {
             println!("cargo:rustc-link-lib={}={}", ffmpeg_ty, lib.name);
         }
