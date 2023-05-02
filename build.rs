@@ -386,7 +386,7 @@ fn get_zip_name() -> String {
 fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
     // Read zips/macos.gz in as a Vec<u8>
-    std::fs::remove_dir_all("extracted").unwrap_or(());
+    // std::fs::remove_dir_all("extracted").unwrap_or(());
     let target = env::var("TARGET").unwrap();
     std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
     let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
