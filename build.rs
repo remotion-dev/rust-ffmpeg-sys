@@ -378,11 +378,12 @@ fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
     // Read bindings/macos.gz in as a Vec<u8>
     std::fs::remove_dir_all("extracted").unwrap_or(());
-    let platform = get_zip_name();
-    let input_file = File::open(format!("bindings/{}", platform)).unwrap();
+    let target = env::var("TARGET").unwrap();
+    std::env::set_var("TARGET", target.clone());
+    let input_file = File::open(format!("bindings/{}", get_zip_name())).unwrap();
     let input_reader = BufReader::new(input_file);
 
-    let target_dir = PathBuf::from("extracted"); // Doesn't need to exist
+    let target_dir = PathBuf::from("extracted").join(target.clone()); // Doesn't need to exist
 
     let mut gz_decoder = GzDecoder::new(input_reader);
 
@@ -403,7 +404,10 @@ fn main() {
 
     let ffmpeg_dir = PathBuf::from(manifest_dir)
         .join("extracted")
+        .join(target.clone())
         .join("remotion");
+
+    println!("cargo:rustc-env={}={}", "TARGET", target.clone());
     println!(
         "cargo:rustc-link-search=native={}",
         ffmpeg_dir.join("lib").to_string_lossy()

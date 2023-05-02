@@ -12,6 +12,8 @@ extern crate libc;
 include!(concat!(
     env!("CARGO_MANIFEST_DIR"),
     "/extracted",
+    "/",
+    env!("TARGET"),
     "/bindings.rs"
 ));
 #[macro_use]

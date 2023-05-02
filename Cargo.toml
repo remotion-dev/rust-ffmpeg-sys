@@ -15,6 +15,7 @@ keywords    = ["audio", "video"]
 # Disable doctests as a workaround for https://github.com/rust-lang/rust-bindgen/issues/1313
 doctest = false
 
+
 [dependencies]
 libc = "0.2"
 
@@ -25,6 +26,8 @@ pkg-config = "0.3"
 flate2 = "1.0"
 tar = "0.4"
 bindgen    = { version = "0.64", default-features = false, features = ["runtime"] }
+
+
 
 [target.'cfg(target_env = "msvc")'.build-dependencies]
 vcpkg = "0.2"
@@ -111,3 +114,4 @@ avresample = []
 postproc   = []
 swresample = []
 swscale    = []
+
