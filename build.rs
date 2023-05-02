@@ -379,7 +379,7 @@ fn main() {
     // Read zips/macos.gz in as a Vec<u8>
     std::fs::remove_dir_all("extracted").unwrap_or(());
     let target = env::var("TARGET").unwrap();
-    std::env::set_var("TARGET", target.clone());
+    std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
     let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
     let input_reader = BufReader::new(input_file);
 
