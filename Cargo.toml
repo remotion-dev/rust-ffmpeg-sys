@@ -22,6 +22,8 @@ libc = "0.2"
 num_cpus   = "1.15"
 cc         = "1.0"
 pkg-config = "0.3"
+flate2 = "1.0"
+tar = "0.4"
 bindgen    = { version = "0.64", default-features = false, features = ["runtime"] }
 
 [target.'cfg(target_env = "msvc")'.build-dependencies]

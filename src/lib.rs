@@ -10,7 +10,8 @@
 extern crate libc;
 
 include!(concat!(
-    env!("REMOTION_FFMPEG_RUST_BINDINGS_OUT_DIR"),
+    env!("CARGO_MANIFEST_DIR"),
+    "/extracted",
     "/bindings.rs"
 ));
 #[macro_use]

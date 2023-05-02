@@ -1,12 +1,15 @@
 extern crate bindgen;
 extern crate cc;
+extern crate flate2;
 extern crate num_cpus;
 extern crate pkg_config;
+extern crate tar;
 
 use std::env;
 use std::fmt::Write as FmtWrite;
-use std::fs::{self, File};
-use std::io::{self, BufRead, BufReader, Write};
+use std::fs::File;
+use std::io::Read;
+use std::io::{BufReader, Write};
 use std::path::PathBuf;
 use std::process::Command;
 use std::str;
@@ -14,6 +17,8 @@ use std::str;
 use bindgen::callbacks::{
     EnumVariantCustomBehavior, EnumVariantValue, IntKind, MacroParsingBehavior, ParseCallbacks,
 };
+use flate2::read::GzDecoder;
+use tar::Archive;
 
 #[derive(Debug)]
 struct Library {
@@ -128,276 +133,8 @@ impl ParseCallbacks for Callbacks {
     }
 }
 
-fn version() -> String {
-    let major: u8 = env::var("CARGO_PKG_VERSION_MAJOR")
-        .unwrap()
-        .parse()
-        .unwrap();
-    let minor: u8 = env::var("CARGO_PKG_VERSION_MINOR")
-        .unwrap()
-        .parse()
-        .unwrap();
-
-    format!("{}.{}", major, minor)
-}
-
 fn output() -> PathBuf {
     PathBuf::from(env::var("OUT_DIR").unwrap())
-}
-
-fn source() -> PathBuf {
-    output().join(format!("ffmpeg-{}", version()))
-}
-
-fn search() -> PathBuf {
-    let mut absolute = env::current_dir().unwrap();
-    absolute.push(&output());
-    absolute.push("dist");
-
-    absolute
-}
-
-fn fetch() -> io::Result<()> {
-    let output_base_path = output();
-    let clone_dest_dir = format!("ffmpeg-{}", version());
-    let _ = std::fs::remove_dir_all(output_base_path.join(&clone_dest_dir));
-    let status = Command::new("git")
-        .current_dir(&output_base_path)
-        .arg("clone")
-        .arg("--depth=1")
-        .arg("-b")
-        .arg(format!("release/{}", version()))
-        .arg("https://github.com/FFmpeg/FFmpeg")
-        .arg(&clone_dest_dir)
-        .status()?;
-
-    if status.success() {
-        Ok(())
-    } else {
-        Err(io::Error::new(io::ErrorKind::Other, "fetch failed"))
-    }
-}
-
-fn switch(configure: &mut Command, feature: &str, name: &str) {
-    let arg = if env::var("CARGO_FEATURE_".to_string() + feature).is_ok() {
-        "--enable-"
-    } else {
-        "--disable-"
-    };
-    configure.arg(arg.to_string() + name);
-}
-
-fn build() -> io::Result<()> {
-    let source_dir = source();
-
-    // Command's path is not relative to command's current_dir
-    let configure_path = source_dir.join("configure");
-    assert!(configure_path.exists());
-    let mut configure = Command::new(&configure_path);
-    configure.current_dir(&source_dir);
-
-    configure.arg(format!("--prefix={}", search().to_string_lossy()));
-
-    if env::var("TARGET").unwrap() != env::var("HOST").unwrap() {
-        // Rust targets are subtly different than naming scheme for compiler prefixes.
-        // The cc crate has the messy logic of guessing a working prefix,
-        // and this is a messy way of reusing that logic.
-        let cc = cc::Build::new();
-        let compiler = cc.get_compiler();
-        let compiler = compiler.path().file_stem().unwrap().to_str().unwrap();
-        let suffix_pos = compiler.rfind('-').unwrap(); // cut off "-gcc"
-        let prefix = compiler[0..suffix_pos].trim_end_matches("-wr"); // "wr-c++" compiler
-
-        configure.arg(format!("--cross-prefix={}-", prefix));
-        configure.arg(format!(
-            "--arch={}",
-            env::var("CARGO_CFG_TARGET_ARCH").unwrap()
-        ));
-        configure.arg(format!(
-            "--target_os={}",
-            env::var("CARGO_CFG_TARGET_OS").unwrap()
-        ));
-    }
-
-    // control debug build
-    if env::var("DEBUG").is_ok() {
-        configure.arg("--enable-debug");
-        configure.arg("--disable-stripping");
-    } else {
-        configure.arg("--disable-debug");
-        configure.arg("--enable-stripping");
-    }
-
-    // make it static
-    configure.arg("--enable-static");
-    configure.arg("--disable-shared");
-
-    configure.arg("--enable-pic");
-
-    // stop autodetected libraries enabling themselves, causing linking errors
-    configure.arg("--disable-autodetect");
-
-    // do not build programs since we don't need them
-    configure.arg("--disable-programs");
-
-    macro_rules! enable {
-        ($conf:expr, $feat:expr, $name:expr) => {
-            if env::var(concat!("CARGO_FEATURE_", $feat)).is_ok() {
-                $conf.arg(concat!("--enable-", $name));
-            }
-        };
-    }
-
-    // macro_rules! disable {
-    //     ($conf:expr, $feat:expr, $name:expr) => (
-    //         if env::var(concat!("CARGO_FEATURE_", $feat)).is_err() {
-    //             $conf.arg(concat!("--disable-", $name));
-    //         }
-    //     )
-    // }
-
-    // the binary using ffmpeg-sys must comply with GPL
-    switch(&mut configure, "BUILD_LICENSE_GPL", "gpl");
-
-    // the binary using ffmpeg-sys must comply with (L)GPLv3
-    switch(&mut configure, "BUILD_LICENSE_VERSION3", "version3");
-
-    // the binary using ffmpeg-sys cannot be redistributed
-    switch(&mut configure, "BUILD_LICENSE_NONFREE", "nonfree");
-
-    let ffmpeg_major_version: u32 = env!("CARGO_PKG_VERSION_MAJOR").parse().unwrap();
-
-    // configure building libraries based on features
-    for lib in LIBRARIES
-        .iter()
-        .filter(|lib| lib.is_feature)
-        .filter(|lib| !(lib.name == "avresample" && ffmpeg_major_version >= 5))
-    {
-        switch(&mut configure, &lib.name.to_uppercase(), lib.name);
-    }
-
-    // configure external SSL libraries
-    enable!(configure, "BUILD_LIB_GNUTLS", "gnutls");
-    enable!(configure, "BUILD_LIB_OPENSSL", "openssl");
-
-    // configure external filters
-    enable!(configure, "BUILD_LIB_FONTCONFIG", "fontconfig");
-    enable!(configure, "BUILD_LIB_FREI0R", "frei0r");
-    enable!(configure, "BUILD_LIB_LADSPA", "ladspa");
-    enable!(configure, "BUILD_LIB_ASS", "libass");
-    enable!(configure, "BUILD_LIB_FREETYPE", "libfreetype");
-    enable!(configure, "BUILD_LIB_FRIBIDI", "libfribidi");
-    enable!(configure, "BUILD_LIB_OPENCV", "libopencv");
-    enable!(configure, "BUILD_LIB_VMAF", "libvmaf");
-
-    // configure external encoders/decoders
-    enable!(configure, "BUILD_LIB_AACPLUS", "libaacplus");
-    enable!(configure, "BUILD_LIB_CELT", "libcelt");
-    enable!(configure, "BUILD_LIB_DCADEC", "libdcadec");
-    enable!(configure, "BUILD_LIB_DAV1D", "libdav1d");
-    enable!(configure, "BUILD_LIB_FAAC", "libfaac");
-    enable!(configure, "BUILD_LIB_FDK_AAC", "libfdk-aac");
-    enable!(configure, "BUILD_LIB_GSM", "libgsm");
-    enable!(configure, "BUILD_LIB_ILBC", "libilbc");
-    enable!(configure, "BUILD_LIB_VAZAAR", "libvazaar");
-    enable!(configure, "BUILD_LIB_MP3LAME", "libmp3lame");
-    enable!(configure, "BUILD_LIB_OPENCORE_AMRNB", "libopencore-amrnb");
-    enable!(configure, "BUILD_LIB_OPENCORE_AMRWB", "libopencore-amrwb");
-    enable!(configure, "BUILD_LIB_OPENH264", "libopenh264");
-    enable!(configure, "BUILD_LIB_OPENH265", "libopenh265");
-    enable!(configure, "BUILD_LIB_OPENJPEG", "libopenjpeg");
-    enable!(configure, "BUILD_LIB_OPUS", "libopus");
-    enable!(configure, "BUILD_LIB_SCHROEDINGER", "libschroedinger");
-    enable!(configure, "BUILD_LIB_SHINE", "libshine");
-    enable!(configure, "BUILD_LIB_SNAPPY", "libsnappy");
-    enable!(configure, "BUILD_LIB_SPEEX", "libspeex");
-    enable!(
-        configure,
-        "BUILD_LIB_STAGEFRIGHT_H264",
-        "libstagefright-h264"
-    );
-    enable!(configure, "BUILD_LIB_THEORA", "libtheora");
-    enable!(configure, "BUILD_LIB_TWOLAME", "libtwolame");
-    enable!(configure, "BUILD_LIB_UTVIDEO", "libutvideo");
-    enable!(configure, "BUILD_LIB_VO_AACENC", "libvo-aacenc");
-    enable!(configure, "BUILD_LIB_VO_AMRWBENC", "libvo-amrwbenc");
-    enable!(configure, "BUILD_LIB_VORBIS", "libvorbis");
-    enable!(configure, "BUILD_LIB_VPX", "libvpx");
-    enable!(configure, "BUILD_LIB_WAVPACK", "libwavpack");
-    enable!(configure, "BUILD_LIB_WEBP", "libwebp");
-    enable!(configure, "BUILD_LIB_X264", "libx264");
-    enable!(configure, "BUILD_LIB_X265", "libx265");
-    enable!(configure, "BUILD_LIB_AVS", "libavs");
-    enable!(configure, "BUILD_LIB_XVID", "libxvid");
-
-    // other external libraries
-    enable!(configure, "BUILD_LIB_DRM", "libdrm");
-    enable!(configure, "BUILD_NVENC", "nvenc");
-
-    // configure external protocols
-    enable!(configure, "BUILD_LIB_SMBCLIENT", "libsmbclient");
-    enable!(configure, "BUILD_LIB_SSH", "libssh");
-
-    // configure misc build options
-    enable!(configure, "BUILD_PIC", "pic");
-
-    // run ./configure
-    let output = configure
-        .output()
-        .unwrap_or_else(|_| panic!("{:?} failed", configure));
-    if !output.status.success() {
-        println!("configure: {}", String::from_utf8_lossy(&output.stdout));
-
-        return Err(io::Error::new(
-            io::ErrorKind::Other,
-            format!(
-                "configure failed {}",
-                String::from_utf8_lossy(&output.stderr)
-            ),
-        ));
-    }
-
-    // run make
-    if !Command::new("make")
-        .arg("-j")
-        .arg(num_cpus::get().to_string())
-        .current_dir(&source())
-        .status()?
-        .success()
-    {
-        return Err(io::Error::new(io::ErrorKind::Other, "make failed"));
-    }
-
-    // run make install
-    if !Command::new("make")
-        .current_dir(&source())
-        .arg("install")
-        .status()?
-        .success()
-    {
-        return Err(io::Error::new(io::ErrorKind::Other, "make install failed"));
-    }
-
-    Ok(())
-}
-
-#[cfg(not(target_env = "msvc"))]
-fn try_vcpkg(_statik: bool) -> Option<Vec<PathBuf>> {
-    None
-}
-
-#[cfg(target_env = "msvc")]
-fn try_vcpkg(statik: bool) -> Option<Vec<PathBuf>> {
-    if !statik {
-        env::set_var("VCPKGRS_DYNAMIC", "1");
-    }
-
-    vcpkg::find_package("ffmpeg")
-        .map_err(|e| {
-            println!("Could not find ffmpeg with vcpkg: {}", e);
-        })
-        .map(|library| library.include_paths)
-        .ok()
 }
 
 fn check_features(
@@ -621,106 +358,58 @@ fn link_to_libraries(statik: bool) {
     }
 }
 
+fn get_zip_name() -> String {
+    match env::var("TARGET") {
+        Ok(target) => match target.as_str() {
+            "aarch64-unknown-linux-gnu" => "linux-arm.gz".to_string(),
+            "aarch64-unknown-linux-musl" => "linux-arm-musl.gz".to_string(),
+            "x86_64-unknown-linux-gnu" => "linux-x64.gz".to_string(),
+            "x86_64-unknown-linux-musl" => "linux-x64-musl.gz".to_string(),
+            "x86_64-apple-darwin" => "macos-x64.gz".to_string(),
+            "aarch64-apple-darwin" => "macos-arm.gz".to_string(),
+            "x86_64-pc-windows-gnu" => "windows.gz".to_string(),
+            &_ => panic!("Unsupported target"),
+        },
+        Err(_) => panic!("TARGET environment variable not set"),
+    }
+}
+
 fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
-    let ffmpeg_major_version: u32 = env!("CARGO_PKG_VERSION_MAJOR").parse().unwrap();
+    // Read bindings/macos.gz in as a Vec<u8>
+    std::fs::remove_dir_all("extracted").unwrap_or(());
+    let platform = get_zip_name();
+    let input_file = File::open(format!("bindings/{}", platform)).unwrap();
+    let input_reader = BufReader::new(input_file);
 
-    let include_paths: Vec<PathBuf> = if env::var("CARGO_FEATURE_BUILD").is_ok() {
-        println!(
-            "cargo:rustc-link-search=native={}",
-            search().join("lib").to_string_lossy()
-        );
-        link_to_libraries(statik);
-        if fs::metadata(&search().join("lib").join("libavutil.a")).is_err() {
-            fs::create_dir_all(&output()).expect("failed to create build directory");
-            fetch().unwrap();
-            build().unwrap();
-        }
+    let target_dir = PathBuf::from("extracted"); // Doesn't need to exist
 
-        // Check additional required libraries.
-        {
-            let config_mak = source().join("ffbuild/config.mak");
-            let file = File::open(config_mak).unwrap();
-            let reader = BufReader::new(file);
-            let extra_libs = reader
-                .lines()
-                .find(|line| line.as_ref().unwrap().starts_with("EXTRALIBS"))
-                .map(|line| line.unwrap())
-                .unwrap();
+    let mut gz_decoder = GzDecoder::new(input_reader);
 
-            let linker_args = extra_libs.split('=').last().unwrap().split(' ');
-            let include_libs = linker_args
-                .filter(|v| v.starts_with("-l"))
-                .map(|flag| &flag[2..]);
+    // Read the decompressed data into a Vec<u8>
+    let mut tar_data = Vec::new();
+    gz_decoder.read_to_end(&mut tar_data).unwrap();
 
-            for lib in include_libs {
-                println!("cargo:rustc-link-lib={}", lib);
-            }
-        }
+    // Create a cursor to read the decompressed tar data
+    let cursor = std::io::Cursor::new(tar_data);
 
-        vec![search().join("include")]
-    }
-    // Use prebuilt library
-    else if let Ok(ffmpeg_dir) = env::var("FFMPEG_DIR") {
-        let ffmpeg_dir = PathBuf::from(ffmpeg_dir);
-        println!(
-            "cargo:rustc-link-search=native={}",
-            ffmpeg_dir.join("lib").to_string_lossy()
-        );
-        link_to_libraries(statik);
-        vec![ffmpeg_dir.join("include")]
-    } else if let Some(paths) = try_vcpkg(statik) {
-        // vcpkg doesn't detect the "system" dependencies
-        if statik {
-            if cfg!(feature = "avcodec") || cfg!(feature = "avdevice") {
-                println!("cargo:rustc-link-lib=ole32");
-            }
+    // Create a new tar Archive to handle the tar contents
+    let mut archive = Archive::new(cursor);
 
-            if cfg!(feature = "avformat") {
-                println!("cargo:rustc-link-lib=secur32");
-                println!("cargo:rustc-link-lib=ws2_32");
-            }
+    // Extract the contents of the tar archive to the destination directory
+    archive.unpack(target_dir).unwrap();
 
-            // avutil depdendencies
-            println!("cargo:rustc-link-lib=bcrypt");
-            println!("cargo:rustc-link-lib=user32");
-        }
+    let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
 
-        paths
-    }
-    // Fallback to pkg-config
-    else {
-        pkg_config::Config::new()
-            .statik(statik)
-            .probe("libavutil")
-            .unwrap();
-
-        let mut libs = vec![
-            ("libavformat", "AVFORMAT"),
-            ("libavfilter", "AVFILTER"),
-            ("libavdevice", "AVDEVICE"),
-            ("libswscale", "SWSCALE"),
-            ("libswresample", "SWRESAMPLE"),
-        ];
-        if ffmpeg_major_version < 5 {
-            libs.push(("libavresample", "AVRESAMPLE"));
-        }
-
-        for (lib_name, env_variable_name) in libs.iter() {
-            if env::var(format!("CARGO_FEATURE_{}", env_variable_name)).is_ok() {
-                pkg_config::Config::new()
-                    .statik(statik)
-                    .probe(lib_name)
-                    .unwrap();
-            }
-        }
-
-        pkg_config::Config::new()
-            .statik(statik)
-            .probe("libavcodec")
-            .unwrap()
-            .include_paths
-    };
+    let ffmpeg_dir = PathBuf::from(manifest_dir)
+        .join("extracted")
+        .join("remotion");
+    println!(
+        "cargo:rustc-link-search=native={}",
+        ffmpeg_dir.join("lib").to_string_lossy()
+    );
+    link_to_libraries(statik);
+    let include_paths = vec![ffmpeg_dir.join("include")];
 
     if statik && cfg!(target_os = "macos") {
         let frameworks = vec![
