@@ -368,6 +368,15 @@ fn get_zip_name() -> String {
             "x86_64-apple-darwin" => "macos-x64.gz".to_string(),
             "aarch64-apple-darwin" => "macos-arm.gz".to_string(),
             "x86_64-pc-windows-gnu" => "windows.gz".to_string(),
+
+            // Alternative spellings
+            "linux-arm" => "aarch64-unknown-linux-gnu.gz".to_string(),
+            "linux-arm-musl" => "aarch64-unknown-linux-musl.gz".to_string(),
+            "linux-x64" => "x86_64-unknown-linux-gnu.gz".to_string(),
+            "linux-x64-musl" => "x86_64-unknown-linux-musl.gz".to_string(),
+            "macos-x64" => "x86_64-apple-darwin.gz".to_string(),
+            "macos-arm" => "aarch64-apple-darwin.gz".to_string(),
+            "windows" => "x86_64-pc-windows-gnu.gz".to_string(),
             tar => panic!("Unsupported target {}", tar),
         },
         Err(_) => panic!("TARGET environment variable not set"),
