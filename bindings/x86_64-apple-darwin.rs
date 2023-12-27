@@ -99,7 +99,6 @@ pub const __DARWIN_NO_LONG_LONG: libc::c_int = 0;
 pub const _DARWIN_FEATURE_64_BIT_INODE: libc::c_int = 1;
 pub const _DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE: libc::c_int = 1;
 pub const _DARWIN_FEATURE_UNIX_CONFORMANCE: libc::c_int = 3;
-pub const __has_ptrcheck: libc::c_int = 0;
 pub const __PTHREAD_SIZE__: libc::c_int = 8176;
 pub const __PTHREAD_ATTR_SIZE__: libc::c_int = 56;
 pub const __PTHREAD_MUTEXATTR_SIZE__: libc::c_int = 8;
@@ -464,13 +463,6 @@ pub const __MAC_10_16: libc::c_int = 101600;
 pub const __MAC_11_0: libc::c_int = 110000;
 pub const __MAC_11_1: libc::c_int = 110100;
 pub const __MAC_11_3: libc::c_int = 110300;
-pub const __MAC_11_4: libc::c_int = 110400;
-pub const __MAC_11_5: libc::c_int = 110500;
-pub const __MAC_11_6: libc::c_int = 110600;
-pub const __MAC_12_0: libc::c_int = 120000;
-pub const __MAC_12_1: libc::c_int = 120100;
-pub const __MAC_12_2: libc::c_int = 120200;
-pub const __MAC_12_3: libc::c_int = 120300;
 pub const __IPHONE_2_0: libc::c_int = 20000;
 pub const __IPHONE_2_1: libc::c_int = 20100;
 pub const __IPHONE_2_2: libc::c_int = 20200;
@@ -523,14 +515,6 @@ pub const __IPHONE_14_1: libc::c_int = 140100;
 pub const __IPHONE_14_2: libc::c_int = 140200;
 pub const __IPHONE_14_3: libc::c_int = 140300;
 pub const __IPHONE_14_5: libc::c_int = 140500;
-pub const __IPHONE_14_6: libc::c_int = 140600;
-pub const __IPHONE_14_7: libc::c_int = 140700;
-pub const __IPHONE_14_8: libc::c_int = 140800;
-pub const __IPHONE_15_0: libc::c_int = 150000;
-pub const __IPHONE_15_1: libc::c_int = 150100;
-pub const __IPHONE_15_2: libc::c_int = 150200;
-pub const __IPHONE_15_3: libc::c_int = 150300;
-pub const __IPHONE_15_4: libc::c_int = 150400;
 pub const __TVOS_9_0: libc::c_int = 90000;
 pub const __TVOS_9_1: libc::c_int = 90100;
 pub const __TVOS_9_2: libc::c_int = 90200;
@@ -557,13 +541,6 @@ pub const __TVOS_14_1: libc::c_int = 140100;
 pub const __TVOS_14_2: libc::c_int = 140200;
 pub const __TVOS_14_3: libc::c_int = 140300;
 pub const __TVOS_14_5: libc::c_int = 140500;
-pub const __TVOS_14_6: libc::c_int = 140600;
-pub const __TVOS_14_7: libc::c_int = 140700;
-pub const __TVOS_15_0: libc::c_int = 150000;
-pub const __TVOS_15_1: libc::c_int = 150100;
-pub const __TVOS_15_2: libc::c_int = 150200;
-pub const __TVOS_15_3: libc::c_int = 150300;
-pub const __TVOS_15_4: libc::c_int = 150400;
 pub const __WATCHOS_1_0: libc::c_int = 10000;
 pub const __WATCHOS_2_0: libc::c_int = 20000;
 pub const __WATCHOS_2_1: libc::c_int = 20100;
@@ -588,13 +565,6 @@ pub const __WATCHOS_7_1: libc::c_int = 70100;
 pub const __WATCHOS_7_2: libc::c_int = 70200;
 pub const __WATCHOS_7_3: libc::c_int = 70300;
 pub const __WATCHOS_7_4: libc::c_int = 70400;
-pub const __WATCHOS_7_5: libc::c_int = 70500;
-pub const __WATCHOS_7_6: libc::c_int = 70600;
-pub const __WATCHOS_8_0: libc::c_int = 80000;
-pub const __WATCHOS_8_1: libc::c_int = 80100;
-pub const __WATCHOS_8_3: libc::c_int = 80300;
-pub const __WATCHOS_8_4: libc::c_int = 80400;
-pub const __WATCHOS_8_5: libc::c_int = 80500;
 pub const MAC_OS_X_VERSION_10_0: libc::c_int = 1000;
 pub const MAC_OS_X_VERSION_10_1: libc::c_int = 1010;
 pub const MAC_OS_X_VERSION_10_2: libc::c_int = 1020;
@@ -628,11 +598,9 @@ pub const MAC_OS_X_VERSION_10_15: libc::c_int = 101500;
 pub const MAC_OS_X_VERSION_10_15_1: libc::c_int = 101501;
 pub const MAC_OS_X_VERSION_10_16: libc::c_int = 101600;
 pub const MAC_OS_VERSION_11_0: libc::c_int = 110000;
-pub const MAC_OS_VERSION_12_0: libc::c_int = 120000;
 pub const __DRIVERKIT_19_0: libc::c_int = 190000;
 pub const __DRIVERKIT_20_0: libc::c_int = 200000;
-pub const __DRIVERKIT_21_0: libc::c_int = 210000;
-pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 120300;
+pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 110300;
 pub const __ENABLE_LEGACY_MAC_AVAILABILITY: libc::c_int = 1;
 pub const __DARWIN_WCHAR_MIN: libc::c_int = -2147483648;
 pub const _FORTIFY_SOURCE: libc::c_int = 2;
@@ -778,8 +746,6 @@ pub const PLOSS: libc::c_int = 6;
 pub const RENAME_SECLUDE: libc::c_int = 1;
 pub const RENAME_SWAP: libc::c_int = 2;
 pub const RENAME_EXCL: libc::c_int = 4;
-pub const RENAME_RESERVED1: libc::c_int = 8;
-pub const RENAME_NOFOLLOW_ANY: libc::c_int = 16;
 pub const __SLBF: libc::c_int = 1;
 pub const __SNBF: libc::c_int = 2;
 pub const __SRD: libc::c_int = 4;
@@ -978,7 +944,6 @@ pub const IOPOL_TYPE_VFS_TRIGGER_RESOLVE: libc::c_int = 5;
 pub const IOPOL_TYPE_VFS_IGNORE_CONTENT_PROTECTION: libc::c_int = 6;
 pub const IOPOL_TYPE_VFS_IGNORE_PERMISSIONS: libc::c_int = 7;
 pub const IOPOL_TYPE_VFS_SKIP_MTIME_UPDATE: libc::c_int = 8;
-pub const IOPOL_TYPE_VFS_ALLOW_LOW_SPACE_WRITES: libc::c_int = 9;
 pub const IOPOL_SCOPE_PROCESS: libc::c_int = 0;
 pub const IOPOL_SCOPE_THREAD: libc::c_int = 1;
 pub const IOPOL_SCOPE_DARWIN_BG: libc::c_int = 2;
@@ -1005,8 +970,6 @@ pub const IOPOL_VFS_IGNORE_PERMISSIONS_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_IGNORE_PERMISSIONS_ON: libc::c_int = 1;
 pub const IOPOL_VFS_SKIP_MTIME_UPDATE_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_SKIP_MTIME_UPDATE_ON: libc::c_int = 1;
-pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_OFF: libc::c_int = 0;
-pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_ON: libc::c_int = 1;
 pub const WNOHANG: libc::c_int = 1;
 pub const WUNTRACED: libc::c_int = 2;
 pub const WCOREFLAG: libc::c_int = 128;
@@ -1715,6 +1678,7 @@ pub const AV_LZO_INVALID_BACKPTR: libc::c_int = 4;
 pub const AV_LZO_ERROR: libc::c_int = 8;
 pub const AV_LZO_INPUT_PADDING: libc::c_int = 8;
 pub const AV_LZO_OUTPUT_PADDING: libc::c_int = 12;
+pub const CLOCKS_PER_SEC: libc::c_int = 1000000;
 pub const TIME_UTC: libc::c_int = 1;
 pub const AV_STEREO3D_FLAG_INVERT: libc::c_int = 1;
 pub const AV_TIMECODE_STR_SIZE: libc::c_int = 23;
@@ -3769,6 +3733,13 @@ extern "C" {
         arg2: *const libc::c_char,
         arg3: *mut __va_list_tag,
     ) -> libc::c_int;
+}
+extern "C" {
+    pub fn zopen(
+        arg1: *const libc::c_char,
+        arg2: *const libc::c_char,
+        arg3: libc::c_int,
+    ) -> *mut FILE;
 }
 extern "C" {
     pub fn funopen(
@@ -12923,7 +12894,7 @@ extern "C" {
     pub fn valloc(arg1: usize) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn aligned_alloc(__alignment: libc::c_ulong, __size: libc::c_ulong) -> *mut libc::c_void;
+    pub fn aligned_alloc(__alignment: usize, __size: usize) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn posix_memalign(
