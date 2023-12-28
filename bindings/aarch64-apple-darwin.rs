@@ -430,10 +430,11 @@ pub const SCNxMAX: &[u8; 3usize] = b"jx\0";
 pub const __API_TO_BE_DEPRECATED: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_MACOS: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_IOS: libc::c_int = 100000;
-pub const __API_TO_BE_DEPRECATED_TVOS: libc::c_int = 100000;
-pub const __API_TO_BE_DEPRECATED_WATCHOS: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_MACCATALYST: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_WATCHOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_TVOS: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_DRIVERKIT: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_VISIONOS: libc::c_int = 100000;
 pub const __MAC_10_0: libc::c_int = 1000;
 pub const __MAC_10_1: libc::c_int = 1010;
 pub const __MAC_10_2: libc::c_int = 1020;
@@ -462,6 +463,7 @@ pub const __MAC_10_13_4: libc::c_int = 101304;
 pub const __MAC_10_14: libc::c_int = 101400;
 pub const __MAC_10_14_1: libc::c_int = 101401;
 pub const __MAC_10_14_4: libc::c_int = 101404;
+pub const __MAC_10_14_5: libc::c_int = 101405;
 pub const __MAC_10_14_6: libc::c_int = 101406;
 pub const __MAC_10_15: libc::c_int = 101500;
 pub const __MAC_10_15_1: libc::c_int = 101501;
@@ -477,10 +479,20 @@ pub const __MAC_12_0: libc::c_int = 120000;
 pub const __MAC_12_1: libc::c_int = 120100;
 pub const __MAC_12_2: libc::c_int = 120200;
 pub const __MAC_12_3: libc::c_int = 120300;
+pub const __MAC_12_4: libc::c_int = 120400;
+pub const __MAC_12_5: libc::c_int = 120500;
+pub const __MAC_12_6: libc::c_int = 120600;
+pub const __MAC_12_7: libc::c_int = 120700;
 pub const __MAC_13_0: libc::c_int = 130000;
 pub const __MAC_13_1: libc::c_int = 130100;
 pub const __MAC_13_2: libc::c_int = 130200;
 pub const __MAC_13_3: libc::c_int = 130300;
+pub const __MAC_13_4: libc::c_int = 130400;
+pub const __MAC_13_5: libc::c_int = 130500;
+pub const __MAC_13_6: libc::c_int = 130600;
+pub const __MAC_14_0: libc::c_int = 140000;
+pub const __MAC_14_1: libc::c_int = 140100;
+pub const __MAC_14_2: libc::c_int = 140200;
 pub const __IPHONE_2_0: libc::c_int = 20000;
 pub const __IPHONE_2_1: libc::c_int = 20100;
 pub const __IPHONE_2_2: libc::c_int = 20200;
@@ -533,6 +545,7 @@ pub const __IPHONE_14_1: libc::c_int = 140100;
 pub const __IPHONE_14_2: libc::c_int = 140200;
 pub const __IPHONE_14_3: libc::c_int = 140300;
 pub const __IPHONE_14_5: libc::c_int = 140500;
+pub const __IPHONE_14_4: libc::c_int = 140400;
 pub const __IPHONE_14_6: libc::c_int = 140600;
 pub const __IPHONE_14_7: libc::c_int = 140700;
 pub const __IPHONE_14_8: libc::c_int = 140800;
@@ -541,11 +554,62 @@ pub const __IPHONE_15_1: libc::c_int = 150100;
 pub const __IPHONE_15_2: libc::c_int = 150200;
 pub const __IPHONE_15_3: libc::c_int = 150300;
 pub const __IPHONE_15_4: libc::c_int = 150400;
+pub const __IPHONE_15_5: libc::c_int = 150500;
+pub const __IPHONE_15_6: libc::c_int = 150600;
 pub const __IPHONE_16_0: libc::c_int = 160000;
 pub const __IPHONE_16_1: libc::c_int = 160100;
 pub const __IPHONE_16_2: libc::c_int = 160200;
 pub const __IPHONE_16_3: libc::c_int = 160300;
 pub const __IPHONE_16_4: libc::c_int = 160400;
+pub const __IPHONE_16_5: libc::c_int = 160500;
+pub const __IPHONE_16_6: libc::c_int = 160600;
+pub const __IPHONE_16_7: libc::c_int = 160700;
+pub const __IPHONE_17_0: libc::c_int = 170000;
+pub const __IPHONE_17_1: libc::c_int = 170100;
+pub const __IPHONE_17_2: libc::c_int = 170200;
+pub const __WATCHOS_1_0: libc::c_int = 10000;
+pub const __WATCHOS_2_0: libc::c_int = 20000;
+pub const __WATCHOS_2_1: libc::c_int = 20100;
+pub const __WATCHOS_2_2: libc::c_int = 20200;
+pub const __WATCHOS_3_0: libc::c_int = 30000;
+pub const __WATCHOS_3_1: libc::c_int = 30100;
+pub const __WATCHOS_3_1_1: libc::c_int = 30101;
+pub const __WATCHOS_3_2: libc::c_int = 30200;
+pub const __WATCHOS_4_0: libc::c_int = 40000;
+pub const __WATCHOS_4_1: libc::c_int = 40100;
+pub const __WATCHOS_4_2: libc::c_int = 40200;
+pub const __WATCHOS_4_3: libc::c_int = 40300;
+pub const __WATCHOS_5_0: libc::c_int = 50000;
+pub const __WATCHOS_5_1: libc::c_int = 50100;
+pub const __WATCHOS_5_2: libc::c_int = 50200;
+pub const __WATCHOS_5_3: libc::c_int = 50300;
+pub const __WATCHOS_6_0: libc::c_int = 60000;
+pub const __WATCHOS_6_1: libc::c_int = 60100;
+pub const __WATCHOS_6_2: libc::c_int = 60200;
+pub const __WATCHOS_7_0: libc::c_int = 70000;
+pub const __WATCHOS_7_1: libc::c_int = 70100;
+pub const __WATCHOS_7_2: libc::c_int = 70200;
+pub const __WATCHOS_7_3: libc::c_int = 70300;
+pub const __WATCHOS_7_4: libc::c_int = 70400;
+pub const __WATCHOS_7_5: libc::c_int = 70500;
+pub const __WATCHOS_7_6: libc::c_int = 70600;
+pub const __WATCHOS_8_0: libc::c_int = 80000;
+pub const __WATCHOS_8_1: libc::c_int = 80100;
+pub const __WATCHOS_8_3: libc::c_int = 80300;
+pub const __WATCHOS_8_4: libc::c_int = 80400;
+pub const __WATCHOS_8_5: libc::c_int = 80500;
+pub const __WATCHOS_8_6: libc::c_int = 80600;
+pub const __WATCHOS_8_7: libc::c_int = 80700;
+pub const __WATCHOS_9_0: libc::c_int = 90000;
+pub const __WATCHOS_9_1: libc::c_int = 90100;
+pub const __WATCHOS_9_2: libc::c_int = 90200;
+pub const __WATCHOS_9_3: libc::c_int = 90300;
+pub const __WATCHOS_9_4: libc::c_int = 90400;
+pub const __WATCHOS_9_5: libc::c_int = 90500;
+pub const __WATCHOS_9_6: libc::c_int = 90600;
+pub const __WATCHOS_10_0: libc::c_int = 100000;
+pub const __WATCHOS_10_1: libc::c_int = 100100;
+pub const __WATCHOS_10_2: libc::c_int = 100200;
 pub const __TVOS_9_0: libc::c_int = 90000;
 pub const __TVOS_9_1: libc::c_int = 90100;
 pub const __TVOS_9_2: libc::c_int = 90200;
@@ -579,47 +643,52 @@ pub const __TVOS_15_1: libc::c_int = 150100;
 pub const __TVOS_15_2: libc::c_int = 150200;
 pub const __TVOS_15_3: libc::c_int = 150300;
 pub const __TVOS_15_4: libc::c_int = 150400;
+pub const __TVOS_15_5: libc::c_int = 150500;
+pub const __TVOS_15_6: libc::c_int = 150600;
 pub const __TVOS_16_0: libc::c_int = 160000;
 pub const __TVOS_16_1: libc::c_int = 160100;
 pub const __TVOS_16_2: libc::c_int = 160200;
 pub const __TVOS_16_3: libc::c_int = 160300;
 pub const __TVOS_16_4: libc::c_int = 160400;
-pub const __WATCHOS_1_0: libc::c_int = 10000;
-pub const __WATCHOS_2_0: libc::c_int = 20000;
-pub const __WATCHOS_2_1: libc::c_int = 20100;
-pub const __WATCHOS_2_2: libc::c_int = 20200;
-pub const __WATCHOS_3_0: libc::c_int = 30000;
-pub const __WATCHOS_3_1: libc::c_int = 30100;
-pub const __WATCHOS_3_1_1: libc::c_int = 30101;
-pub const __WATCHOS_3_2: libc::c_int = 30200;
-pub const __WATCHOS_4_0: libc::c_int = 40000;
-pub const __WATCHOS_4_1: libc::c_int = 40100;
-pub const __WATCHOS_4_2: libc::c_int = 40200;
-pub const __WATCHOS_4_3: libc::c_int = 40300;
-pub const __WATCHOS_5_0: libc::c_int = 50000;
-pub const __WATCHOS_5_1: libc::c_int = 50100;
-pub const __WATCHOS_5_2: libc::c_int = 50200;
-pub const __WATCHOS_5_3: libc::c_int = 50300;
-pub const __WATCHOS_6_0: libc::c_int = 60000;
-pub const __WATCHOS_6_1: libc::c_int = 60100;
-pub const __WATCHOS_6_2: libc::c_int = 60200;
-pub const __WATCHOS_7_0: libc::c_int = 70000;
-pub const __WATCHOS_7_1: libc::c_int = 70100;
-pub const __WATCHOS_7_2: libc::c_int = 70200;
-pub const __WATCHOS_7_3: libc::c_int = 70300;
-pub const __WATCHOS_7_4: libc::c_int = 70400;
-pub const __WATCHOS_7_5: libc::c_int = 70500;
-pub const __WATCHOS_7_6: libc::c_int = 70600;
-pub const __WATCHOS_8_0: libc::c_int = 80000;
-pub const __WATCHOS_8_1: libc::c_int = 80100;
-pub const __WATCHOS_8_3: libc::c_int = 80300;
-pub const __WATCHOS_8_4: libc::c_int = 80400;
-pub const __WATCHOS_8_5: libc::c_int = 80500;
-pub const __WATCHOS_9_0: libc::c_int = 90000;
-pub const __WATCHOS_9_1: libc::c_int = 90100;
-pub const __WATCHOS_9_2: libc::c_int = 90200;
-pub const __WATCHOS_9_3: libc::c_int = 90300;
-pub const __WATCHOS_9_4: libc::c_int = 90400;
+pub const __TVOS_16_5: libc::c_int = 160500;
+pub const __TVOS_16_6: libc::c_int = 160600;
+pub const __TVOS_17_0: libc::c_int = 170000;
+pub const __TVOS_17_1: libc::c_int = 170100;
+pub const __TVOS_17_2: libc::c_int = 170200;
+pub const __BRIDGEOS_2_0: libc::c_int = 20000;
+pub const __BRIDGEOS_3_0: libc::c_int = 30000;
+pub const __BRIDGEOS_3_1: libc::c_int = 30100;
+pub const __BRIDGEOS_3_4: libc::c_int = 30400;
+pub const __BRIDGEOS_4_0: libc::c_int = 40000;
+pub const __BRIDGEOS_4_1: libc::c_int = 40100;
+pub const __BRIDGEOS_5_0: libc::c_int = 50000;
+pub const __BRIDGEOS_5_1: libc::c_int = 50100;
+pub const __BRIDGEOS_5_3: libc::c_int = 50300;
+pub const __BRIDGEOS_6_0: libc::c_int = 60000;
+pub const __BRIDGEOS_6_2: libc::c_int = 60200;
+pub const __BRIDGEOS_6_4: libc::c_int = 60400;
+pub const __BRIDGEOS_6_5: libc::c_int = 60500;
+pub const __BRIDGEOS_6_6: libc::c_int = 60600;
+pub const __BRIDGEOS_7_0: libc::c_int = 70000;
+pub const __BRIDGEOS_7_1: libc::c_int = 70100;
+pub const __BRIDGEOS_7_2: libc::c_int = 70200;
+pub const __BRIDGEOS_7_3: libc::c_int = 70300;
+pub const __BRIDGEOS_7_4: libc::c_int = 70400;
+pub const __BRIDGEOS_7_6: libc::c_int = 70600;
+pub const __BRIDGEOS_8_0: libc::c_int = 80000;
+pub const __BRIDGEOS_8_1: libc::c_int = 80100;
+pub const __BRIDGEOS_8_2: libc::c_int = 80200;
+pub const __DRIVERKIT_19_0: libc::c_int = 190000;
+pub const __DRIVERKIT_20_0: libc::c_int = 200000;
+pub const __DRIVERKIT_21_0: libc::c_int = 210000;
+pub const __DRIVERKIT_22_0: libc::c_int = 220000;
+pub const __DRIVERKIT_22_4: libc::c_int = 220400;
+pub const __DRIVERKIT_22_5: libc::c_int = 220500;
+pub const __DRIVERKIT_22_6: libc::c_int = 220600;
+pub const __DRIVERKIT_23_0: libc::c_int = 230000;
+pub const __DRIVERKIT_23_1: libc::c_int = 230100;
+pub const __DRIVERKIT_23_2: libc::c_int = 230200;
+pub const __VISIONOS_1_0: libc::c_int = 10000;
 pub const MAC_OS_X_VERSION_10_0: libc::c_int = 1000;
 pub const MAC_OS_X_VERSION_10_1: libc::c_int = 1010;
 pub const MAC_OS_X_VERSION_10_2: libc::c_int = 1020;
@@ -648,24 +717,44 @@ pub const MAC_OS_X_VERSION_10_13_4: libc::c_int = 101304;
 pub const MAC_OS_X_VERSION_10_14: libc::c_int = 101400;
 pub const MAC_OS_X_VERSION_10_14_1: libc::c_int = 101401;
 pub const MAC_OS_X_VERSION_10_14_4: libc::c_int = 101404;
+pub const MAC_OS_X_VERSION_10_14_5: libc::c_int = 101405;
 pub const MAC_OS_X_VERSION_10_14_6: libc::c_int = 101406;
 pub const MAC_OS_X_VERSION_10_15: libc::c_int = 101500;
 pub const MAC_OS_X_VERSION_10_15_1: libc::c_int = 101501;
+pub const MAC_OS_X_VERSION_10_15_4: libc::c_int = 101504;
 pub const MAC_OS_X_VERSION_10_16: libc::c_int = 101600;
 pub const MAC_OS_VERSION_11_0: libc::c_int = 110000;
+pub const MAC_OS_VERSION_11_1: libc::c_int = 110100;
+pub const MAC_OS_VERSION_11_3: libc::c_int = 110300;
+pub const MAC_OS_VERSION_11_4: libc::c_int = 110400;
+pub const MAC_OS_VERSION_11_5: libc::c_int = 110500;
+pub const MAC_OS_VERSION_11_6: libc::c_int = 110600;
 pub const MAC_OS_VERSION_12_0: libc::c_int = 120000;
+pub const MAC_OS_VERSION_12_1: libc::c_int = 120100;
+pub const MAC_OS_VERSION_12_2: libc::c_int = 120200;
+pub const MAC_OS_VERSION_12_3: libc::c_int = 120300;
+pub const MAC_OS_VERSION_12_4: libc::c_int = 120400;
+pub const MAC_OS_VERSION_12_5: libc::c_int = 120500;
+pub const MAC_OS_VERSION_12_6: libc::c_int = 120600;
+pub const MAC_OS_VERSION_12_7: libc::c_int = 120700;
 pub const MAC_OS_VERSION_13_0: libc::c_int = 130000;
-pub const __DRIVERKIT_19_0: libc::c_int = 190000;
-pub const __DRIVERKIT_20_0: libc::c_int = 200000;
-pub const __DRIVERKIT_21_0: libc::c_int = 210000;
-pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 130300;
+pub const MAC_OS_VERSION_13_1: libc::c_int = 130100;
+pub const MAC_OS_VERSION_13_2: libc::c_int = 130200;
+pub const MAC_OS_VERSION_13_3: libc::c_int = 130300;
+pub const MAC_OS_VERSION_13_4: libc::c_int = 130400;
+pub const MAC_OS_VERSION_13_5: libc::c_int = 130500;
+pub const MAC_OS_VERSION_13_6: libc::c_int = 130600;
+pub const MAC_OS_VERSION_14_0: libc::c_int = 140000;
+pub const MAC_OS_VERSION_14_1: libc::c_int = 140100;
+pub const MAC_OS_VERSION_14_2: libc::c_int = 140200;
+pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 140200;
 pub const __ENABLE_LEGACY_MAC_AVAILABILITY: libc::c_int = 1;
 pub const __DARWIN_WCHAR_MIN: libc::c_int = -2147483648;
 pub const _FORTIFY_SOURCE: libc::c_int = 2;
 pub const __DARWIN_CLK_TCK: libc::c_int = 100;
-pub const CHAR_BIT: libc::c_int = 8;
 pub const MB_LEN_MAX: libc::c_int = 6;
 pub const CLK_TCK: libc::c_int = 100;
+pub const CHAR_BIT: libc::c_int = 8;
 pub const SCHAR_MAX: libc::c_int = 127;
 pub const SCHAR_MIN: libc::c_int = -128;
 pub const UCHAR_MAX: libc::c_int = 255;
@@ -809,6 +898,11 @@ pub const RENAME_SWAP: libc::c_int = 2;
 pub const RENAME_EXCL: libc::c_int = 4;
 pub const RENAME_RESERVED1: libc::c_int = 8;
 pub const RENAME_NOFOLLOW_ANY: libc::c_int = 16;
+pub const SEEK_SET: libc::c_int = 0;
+pub const SEEK_CUR: libc::c_int = 1;
+pub const SEEK_END: libc::c_int = 2;
+pub const SEEK_HOLE: libc::c_int = 3;
+pub const SEEK_DATA: libc::c_int = 4;
 pub const __SLBF: libc::c_int = 1;
 pub const __SNBF: libc::c_int = 2;
 pub const __SRD: libc::c_int = 4;
@@ -835,9 +929,6 @@ pub const FILENAME_MAX: libc::c_int = 1024;
 pub const P_tmpdir: &[u8; 10usize] = b"/var/tmp/\0";
 pub const L_tmpnam: libc::c_int = 1024;
 pub const TMP_MAX: libc::c_int = 308915776;
-pub const SEEK_SET: libc::c_int = 0;
-pub const SEEK_CUR: libc::c_int = 1;
-pub const SEEK_END: libc::c_int = 2;
 pub const L_ctermid: libc::c_int = 1024;
 pub const _USE_FORTIFY_LEVEL: libc::c_int = 2;
 pub const __DARWIN_NSIG: libc::c_int = 32;
@@ -1030,6 +1121,8 @@ pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_ON: libc::c_int = 1;
 pub const IOPOL_VFS_DISALLOW_RW_FOR_O_EVTONLY_DEFAULT: libc::c_int = 0;
 pub const IOPOL_VFS_DISALLOW_RW_FOR_O_EVTONLY_ON: libc::c_int = 1;
+pub const IOPOL_VFS_NOCACHE_WRITE_FS_BLKSIZE_DEFAULT: libc::c_int = 0;
+pub const IOPOL_VFS_NOCACHE_WRITE_FS_BLKSIZE_ON: libc::c_int = 1;
 pub const WNOHANG: libc::c_int = 1;
 pub const WUNTRACED: libc::c_int = 2;
 pub const WCOREFLAG: libc::c_int = 128;
@@ -8347,6 +8440,96 @@ fn bindgen_test_layout_lldiv_t() {
 extern "C" {
     pub static mut __mb_cur_max: libc::c_int;
 }
+pub type malloc_type_id_t = libc::c_ulonglong;
+extern "C" {
+    pub fn malloc_type_malloc(size: usize, type_id: malloc_type_id_t) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_calloc(
+        count: usize,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_free(ptr: *mut libc::c_void, type_id: malloc_type_id_t);
+}
+extern "C" {
+    pub fn malloc_type_realloc(
+        ptr: *mut libc::c_void,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_valloc(size: usize, type_id: malloc_type_id_t) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_aligned_alloc(
+        alignment: usize,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_posix_memalign(
+        memptr: *mut *mut libc::c_void,
+        alignment: usize,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> libc::c_int;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _malloc_zone_t {
+    _unused: [u8; 0],
+}
+pub type malloc_zone_t = _malloc_zone_t;
+extern "C" {
+    pub fn malloc_type_zone_malloc(
+        zone: *mut malloc_zone_t,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_zone_calloc(
+        zone: *mut malloc_zone_t,
+        count: usize,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_zone_free(
+        zone: *mut malloc_zone_t,
+        ptr: *mut libc::c_void,
+        type_id: malloc_type_id_t,
+    );
+}
+extern "C" {
+    pub fn malloc_type_zone_realloc(
+        zone: *mut malloc_zone_t,
+        ptr: *mut libc::c_void,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_zone_valloc(
+        zone: *mut malloc_zone_t,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn malloc_type_zone_memalign(
+        zone: *mut malloc_zone_t,
+        alignment: usize,
+        size: usize,
+        type_id: malloc_type_id_t,
+    ) -> *mut libc::c_void;
+}
 extern "C" {
     pub fn malloc(__size: libc::c_ulong) -> *mut libc::c_void;
 }
@@ -9146,6 +9329,7 @@ extern "C" {
 extern "C" {
     pub fn flsll(arg1: libc::c_longlong) -> libc::c_int;
 }
+pub type wint_t = __darwin_wint_t;
 extern "C" {
     #[doc = " Put a description of the AVERROR code errnum in errbuf.\n In case of failure the global variable errno is set to indicate the\n error. Even in case of failure av_strerror() will print a generic\n error message indicating the errnum provided to errbuf.\n\n @param errnum      error code to describe\n @param errbuf      buffer to which description is written\n @param errbuf_size the size in bytes of errbuf\n @return 0 on success, a negative value if a description for errnum\n cannot be found"]
     pub fn av_strerror(
