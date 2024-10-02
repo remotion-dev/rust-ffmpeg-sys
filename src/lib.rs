@@ -9,8 +9,12 @@
 
 extern crate libc;
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-
+include!(concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/bindings/",
+    env!("TARGET"),
+    ".rs"
+));
 #[macro_use]
 mod avutil;
 pub use avutil::*;
