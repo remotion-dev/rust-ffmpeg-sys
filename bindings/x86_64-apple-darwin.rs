@@ -81,13 +81,15 @@ where
     }
 }
 pub const __WORDSIZE: libc::c_int = 64;
-pub const __DARWIN_ONLY_64_BIT_INO_T: libc::c_int = 1;
+pub const __DARWIN_ONLY_64_BIT_INO_T: libc::c_int = 0;
 pub const __DARWIN_ONLY_UNIX_CONFORMANCE: libc::c_int = 1;
-pub const __DARWIN_ONLY_VERS_1050: libc::c_int = 1;
+pub const __DARWIN_ONLY_VERS_1050: libc::c_int = 0;
 pub const __DARWIN_UNIX03: libc::c_int = 1;
 pub const __DARWIN_64_BIT_INO_T: libc::c_int = 1;
 pub const __DARWIN_VERS_1050: libc::c_int = 1;
 pub const __DARWIN_NON_CANCELABLE: libc::c_int = 0;
+pub const __DARWIN_SUF_64_BIT_INO_T: &[u8; 9] = b"$INODE64\0";
+pub const __DARWIN_SUF_1050: &[u8; 6] = b"$1050\0";
 pub const __DARWIN_SUF_EXTSN: &[u8; 14] = b"$DARWIN_EXTSN\0";
 pub const __DARWIN_C_ANSI: libc::c_int = 4096;
 pub const __DARWIN_C_FULL: libc::c_int = 900000;
@@ -95,8 +97,6 @@ pub const __DARWIN_C_LEVEL: libc::c_int = 900000;
 pub const __STDC_WANT_LIB_EXT1__: libc::c_int = 1;
 pub const __DARWIN_NO_LONG_LONG: libc::c_int = 0;
 pub const _DARWIN_FEATURE_64_BIT_INODE: libc::c_int = 1;
-pub const _DARWIN_FEATURE_ONLY_64_BIT_INODE: libc::c_int = 1;
-pub const _DARWIN_FEATURE_ONLY_VERS_1050: libc::c_int = 1;
 pub const _DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE: libc::c_int = 1;
 pub const _DARWIN_FEATURE_UNIX_CONFORMANCE: libc::c_int = 3;
 pub const __has_ptrcheck: libc::c_int = 0;
@@ -428,6 +428,12 @@ pub const SCNoMAX: &[u8; 3] = b"jo\0";
 pub const SCNuMAX: &[u8; 3] = b"ju\0";
 pub const SCNxMAX: &[u8; 3] = b"jx\0";
 pub const __API_TO_BE_DEPRECATED: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_MACOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_IOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_TVOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_WATCHOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_MACCATALYST: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_DRIVERKIT: libc::c_int = 100000;
 pub const __MAC_10_0: libc::c_int = 1000;
 pub const __MAC_10_1: libc::c_int = 1010;
 pub const __MAC_10_2: libc::c_int = 1020;
@@ -471,6 +477,8 @@ pub const __MAC_12_0: libc::c_int = 120000;
 pub const __MAC_12_1: libc::c_int = 120100;
 pub const __MAC_12_2: libc::c_int = 120200;
 pub const __MAC_12_3: libc::c_int = 120300;
+pub const __MAC_13_0: libc::c_int = 130000;
+pub const __MAC_13_1: libc::c_int = 130100;
 pub const __IPHONE_2_0: libc::c_int = 20000;
 pub const __IPHONE_2_1: libc::c_int = 20100;
 pub const __IPHONE_2_2: libc::c_int = 20200;
@@ -531,6 +539,9 @@ pub const __IPHONE_15_1: libc::c_int = 150100;
 pub const __IPHONE_15_2: libc::c_int = 150200;
 pub const __IPHONE_15_3: libc::c_int = 150300;
 pub const __IPHONE_15_4: libc::c_int = 150400;
+pub const __IPHONE_16_0: libc::c_int = 160000;
+pub const __IPHONE_16_1: libc::c_int = 160100;
+pub const __IPHONE_16_2: libc::c_int = 160200;
 pub const __TVOS_9_0: libc::c_int = 90000;
 pub const __TVOS_9_1: libc::c_int = 90100;
 pub const __TVOS_9_2: libc::c_int = 90200;
@@ -564,6 +575,9 @@ pub const __TVOS_15_1: libc::c_int = 150100;
 pub const __TVOS_15_2: libc::c_int = 150200;
 pub const __TVOS_15_3: libc::c_int = 150300;
 pub const __TVOS_15_4: libc::c_int = 150400;
+pub const __TVOS_16_0: libc::c_int = 160000;
+pub const __TVOS_16_1: libc::c_int = 160100;
+pub const __TVOS_16_2: libc::c_int = 160200;
 pub const __WATCHOS_1_0: libc::c_int = 10000;
 pub const __WATCHOS_2_0: libc::c_int = 20000;
 pub const __WATCHOS_2_1: libc::c_int = 20100;
@@ -595,6 +609,9 @@ pub const __WATCHOS_8_1: libc::c_int = 80100;
 pub const __WATCHOS_8_3: libc::c_int = 80300;
 pub const __WATCHOS_8_4: libc::c_int = 80400;
 pub const __WATCHOS_8_5: libc::c_int = 80500;
+pub const __WATCHOS_9_0: libc::c_int = 90000;
+pub const __WATCHOS_9_1: libc::c_int = 90100;
+pub const __WATCHOS_9_2: libc::c_int = 90200;
 pub const MAC_OS_X_VERSION_10_0: libc::c_int = 1000;
 pub const MAC_OS_X_VERSION_10_1: libc::c_int = 1010;
 pub const MAC_OS_X_VERSION_10_2: libc::c_int = 1020;
@@ -629,10 +646,11 @@ pub const MAC_OS_X_VERSION_10_15_1: libc::c_int = 101501;
 pub const MAC_OS_X_VERSION_10_16: libc::c_int = 101600;
 pub const MAC_OS_VERSION_11_0: libc::c_int = 110000;
 pub const MAC_OS_VERSION_12_0: libc::c_int = 120000;
+pub const MAC_OS_VERSION_13_0: libc::c_int = 130000;
 pub const __DRIVERKIT_19_0: libc::c_int = 190000;
 pub const __DRIVERKIT_20_0: libc::c_int = 200000;
 pub const __DRIVERKIT_21_0: libc::c_int = 210000;
-pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 120300;
+pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 130100;
 pub const __ENABLE_LEGACY_MAC_AVAILABILITY: libc::c_int = 1;
 pub const __DARWIN_WCHAR_MIN: libc::c_int = -2147483648;
 pub const _FORTIFY_SOURCE: libc::c_int = 2;
@@ -724,7 +742,7 @@ pub const _POSIX_THREAD_KEYS_MAX: libc::c_int = 128;
 pub const _POSIX_THREAD_THREADS_MAX: libc::c_int = 64;
 pub const PTHREAD_DESTRUCTOR_ITERATIONS: libc::c_int = 4;
 pub const PTHREAD_KEYS_MAX: libc::c_int = 512;
-pub const PTHREAD_STACK_MIN: libc::c_int = 16384;
+pub const PTHREAD_STACK_MIN: libc::c_int = 8192;
 pub const _POSIX_HOST_NAME_MAX: libc::c_int = 255;
 pub const _POSIX_LOGIN_NAME_MAX: libc::c_int = 9;
 pub const _POSIX_SS_REPL_MAX: libc::c_int = 4;
@@ -752,9 +770,6 @@ pub const IOV_MAX: libc::c_int = 1024;
 pub const _XOPEN_NAME_MAX: libc::c_int = 255;
 pub const _XOPEN_PATH_MAX: libc::c_int = 1024;
 pub const FP_SUPERNORMAL: libc::c_int = 6;
-pub const FP_FAST_FMA: libc::c_int = 1;
-pub const FP_FAST_FMAF: libc::c_int = 1;
-pub const FP_FAST_FMAL: libc::c_int = 1;
 pub const FP_ILOGB0: libc::c_int = -2147483648;
 pub const FP_ILOGBNAN: libc::c_int = -2147483648;
 pub const MATH_ERRNO: libc::c_int = 1;
@@ -816,7 +831,7 @@ pub const L_ctermid: libc::c_int = 1024;
 pub const _USE_FORTIFY_LEVEL: libc::c_int = 2;
 pub const __DARWIN_NSIG: libc::c_int = 32;
 pub const NSIG: libc::c_int = 32;
-pub const _ARM_SIGNAL_: libc::c_int = 1;
+pub const _I386_SIGNAL_H_: libc::c_int = 1;
 pub const SIGHUP: libc::c_int = 1;
 pub const SIGINT: libc::c_int = 2;
 pub const SIGQUIT: libc::c_int = 3;
@@ -849,7 +864,17 @@ pub const SIGWINCH: libc::c_int = 28;
 pub const SIGINFO: libc::c_int = 29;
 pub const SIGUSR1: libc::c_int = 30;
 pub const SIGUSR2: libc::c_int = 31;
-pub const __DARWIN_OPAQUE_ARM_THREAD_STATE64: libc::c_int = 0;
+pub const FP_PREC_24B: libc::c_int = 0;
+pub const FP_PREC_53B: libc::c_int = 2;
+pub const FP_PREC_64B: libc::c_int = 3;
+pub const FP_RND_NEAR: libc::c_int = 0;
+pub const FP_RND_DOWN: libc::c_int = 1;
+pub const FP_RND_UP: libc::c_int = 2;
+pub const FP_CHOP: libc::c_int = 3;
+pub const FP_STATE_BYTES: libc::c_int = 512;
+pub const _X86_INSTRUCTION_STATE_MAX_INSN_BYTES: libc::c_int = 2380;
+pub const _X86_INSTRUCTION_STATE_CACHELINE_SIZE: libc::c_int = 64;
+pub const __LASTBRANCH_MAX: libc::c_int = 32;
 pub const SIGEV_NONE: libc::c_int = 0;
 pub const SIGEV_SIGNAL: libc::c_int = 1;
 pub const SIGEV_THREAD: libc::c_int = 3;
@@ -938,7 +963,8 @@ pub const RUSAGE_INFO_V2: libc::c_int = 2;
 pub const RUSAGE_INFO_V3: libc::c_int = 3;
 pub const RUSAGE_INFO_V4: libc::c_int = 4;
 pub const RUSAGE_INFO_V5: libc::c_int = 5;
-pub const RUSAGE_INFO_CURRENT: libc::c_int = 5;
+pub const RUSAGE_INFO_V6: libc::c_int = 6;
+pub const RUSAGE_INFO_CURRENT: libc::c_int = 6;
 pub const RU_PROC_RUNS_RESLIDE: libc::c_int = 1;
 pub const RLIMIT_CPU: libc::c_int = 0;
 pub const RLIMIT_FSIZE: libc::c_int = 1;
@@ -972,6 +998,7 @@ pub const IOPOL_TYPE_VFS_IGNORE_CONTENT_PROTECTION: libc::c_int = 6;
 pub const IOPOL_TYPE_VFS_IGNORE_PERMISSIONS: libc::c_int = 7;
 pub const IOPOL_TYPE_VFS_SKIP_MTIME_UPDATE: libc::c_int = 8;
 pub const IOPOL_TYPE_VFS_ALLOW_LOW_SPACE_WRITES: libc::c_int = 9;
+pub const IOPOL_TYPE_VFS_DISALLOW_RW_FOR_O_EVTONLY: libc::c_int = 10;
 pub const IOPOL_SCOPE_PROCESS: libc::c_int = 0;
 pub const IOPOL_SCOPE_THREAD: libc::c_int = 1;
 pub const IOPOL_SCOPE_DARWIN_BG: libc::c_int = 2;
@@ -1000,6 +1027,8 @@ pub const IOPOL_VFS_SKIP_MTIME_UPDATE_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_SKIP_MTIME_UPDATE_ON: libc::c_int = 1;
 pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_ON: libc::c_int = 1;
+pub const IOPOL_VFS_DISALLOW_RW_FOR_O_EVTONLY_DEFAULT: libc::c_int = 0;
+pub const IOPOL_VFS_DISALLOW_RW_FOR_O_EVTONLY_ON: libc::c_int = 1;
 pub const WNOHANG: libc::c_int = 1;
 pub const WUNTRACED: libc::c_int = 2;
 pub const WCOREFLAG: libc::c_int = 128;
@@ -2665,6 +2694,24 @@ extern "C" {
 extern "C" {
     pub static mut signgam: libc::c_int;
 }
+extern "C" {
+    pub fn rinttol(arg1: f64) -> libc::c_long;
+}
+extern "C" {
+    pub fn roundtol(arg1: f64) -> libc::c_long;
+}
+extern "C" {
+    pub fn drem(arg1: f64, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn finite(arg1: f64) -> libc::c_int;
+}
+extern "C" {
+    pub fn gamma(arg1: f64) -> f64;
+}
+extern "C" {
+    pub fn significand(arg1: f64) -> f64;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub struct exception {
@@ -2938,17 +2985,17 @@ extern "C" {
     pub fn vfprintf(
         arg1: *mut FILE,
         arg2: *const libc::c_char,
-        arg3: __builtin_va_list,
+        arg3: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
-    pub fn vprintf(arg1: *const libc::c_char, arg2: __builtin_va_list) -> libc::c_int;
+    pub fn vprintf(arg1: *const libc::c_char, arg2: *mut __va_list_tag) -> libc::c_int;
 }
 extern "C" {
     pub fn vsprintf(
         arg1: *mut libc::c_char,
         arg2: *const libc::c_char,
-        arg3: __builtin_va_list,
+        arg3: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
@@ -3015,32 +3062,36 @@ extern "C" {
     pub fn vfscanf(
         __stream: *mut FILE,
         __format: *const libc::c_char,
-        arg1: __builtin_va_list,
+        arg1: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
-    pub fn vscanf(__format: *const libc::c_char, arg1: __builtin_va_list) -> libc::c_int;
+    pub fn vscanf(__format: *const libc::c_char, arg1: *mut __va_list_tag) -> libc::c_int;
 }
 extern "C" {
     pub fn vsnprintf(
         __str: *mut libc::c_char,
         __size: libc::c_ulong,
         __format: *const libc::c_char,
-        arg1: __builtin_va_list,
+        arg1: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
     pub fn vsscanf(
         __str: *const libc::c_char,
         __format: *const libc::c_char,
-        arg1: __builtin_va_list,
+        arg1: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
     pub fn dprintf(arg1: libc::c_int, arg2: *const libc::c_char, ...) -> libc::c_int;
 }
 extern "C" {
-    pub fn vdprintf(arg1: libc::c_int, arg2: *const libc::c_char, arg3: va_list) -> libc::c_int;
+    pub fn vdprintf(
+        arg1: libc::c_int,
+        arg2: *const libc::c_char,
+        arg3: *mut __va_list_tag,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn getdelim(
@@ -3098,7 +3149,7 @@ extern "C" {
     pub fn vasprintf(
         arg1: *mut *mut libc::c_char,
         arg2: *const libc::c_char,
-        arg3: va_list,
+        arg3: *mut __va_list_tag,
     ) -> libc::c_int;
 }
 extern "C" {
@@ -3140,297 +3191,2181 @@ pub type id_t = __darwin_id_t;
 pub type sig_atomic_t = libc::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_exception_state {
-    pub __exception: __uint32_t,
-    pub __fsr: __uint32_t,
-    pub __far: __uint32_t,
+pub struct __darwin_i386_thread_state {
+    pub __eax: libc::c_uint,
+    pub __ebx: libc::c_uint,
+    pub __ecx: libc::c_uint,
+    pub __edx: libc::c_uint,
+    pub __edi: libc::c_uint,
+    pub __esi: libc::c_uint,
+    pub __ebp: libc::c_uint,
+    pub __esp: libc::c_uint,
+    pub __ss: libc::c_uint,
+    pub __eflags: libc::c_uint,
+    pub __eip: libc::c_uint,
+    pub __cs: libc::c_uint,
+    pub __ds: libc::c_uint,
+    pub __es: libc::c_uint,
+    pub __fs: libc::c_uint,
+    pub __gs: libc::c_uint,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_exception_state"]
-        [::std::mem::size_of::<__darwin_arm_exception_state>() - 12usize];
-    ["Alignment of __darwin_arm_exception_state"]
-        [::std::mem::align_of::<__darwin_arm_exception_state>() - 4usize];
-    ["Offset of field: __darwin_arm_exception_state::__exception"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state, __exception) - 0usize];
-    ["Offset of field: __darwin_arm_exception_state::__fsr"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state, __fsr) - 4usize];
-    ["Offset of field: __darwin_arm_exception_state::__far"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state, __far) - 8usize];
+    ["Size of __darwin_i386_thread_state"]
+        [::std::mem::size_of::<__darwin_i386_thread_state>() - 64usize];
+    ["Alignment of __darwin_i386_thread_state"]
+        [::std::mem::align_of::<__darwin_i386_thread_state>() - 4usize];
+    ["Offset of field: __darwin_i386_thread_state::__eax"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __eax) - 0usize];
+    ["Offset of field: __darwin_i386_thread_state::__ebx"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __ebx) - 4usize];
+    ["Offset of field: __darwin_i386_thread_state::__ecx"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __ecx) - 8usize];
+    ["Offset of field: __darwin_i386_thread_state::__edx"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __edx) - 12usize];
+    ["Offset of field: __darwin_i386_thread_state::__edi"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __edi) - 16usize];
+    ["Offset of field: __darwin_i386_thread_state::__esi"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __esi) - 20usize];
+    ["Offset of field: __darwin_i386_thread_state::__ebp"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __ebp) - 24usize];
+    ["Offset of field: __darwin_i386_thread_state::__esp"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __esp) - 28usize];
+    ["Offset of field: __darwin_i386_thread_state::__ss"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __ss) - 32usize];
+    ["Offset of field: __darwin_i386_thread_state::__eflags"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __eflags) - 36usize];
+    ["Offset of field: __darwin_i386_thread_state::__eip"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __eip) - 40usize];
+    ["Offset of field: __darwin_i386_thread_state::__cs"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __cs) - 44usize];
+    ["Offset of field: __darwin_i386_thread_state::__ds"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __ds) - 48usize];
+    ["Offset of field: __darwin_i386_thread_state::__es"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __es) - 52usize];
+    ["Offset of field: __darwin_i386_thread_state::__fs"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __fs) - 56usize];
+    ["Offset of field: __darwin_i386_thread_state::__gs"]
+        [::std::mem::offset_of!(__darwin_i386_thread_state, __gs) - 60usize];
 };
 #[repr(C)]
+#[repr(align(2))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_exception_state64 {
-    pub __far: __uint64_t,
-    pub __esr: __uint32_t,
-    pub __exception: __uint32_t,
+pub struct __darwin_fp_control {
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 2usize]>,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_exception_state64"]
-        [::std::mem::size_of::<__darwin_arm_exception_state64>() - 16usize];
-    ["Alignment of __darwin_arm_exception_state64"]
-        [::std::mem::align_of::<__darwin_arm_exception_state64>() - 8usize];
-    ["Offset of field: __darwin_arm_exception_state64::__far"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state64, __far) - 0usize];
-    ["Offset of field: __darwin_arm_exception_state64::__esr"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state64, __esr) - 8usize];
-    ["Offset of field: __darwin_arm_exception_state64::__exception"]
-        [::std::mem::offset_of!(__darwin_arm_exception_state64, __exception) - 12usize];
+    ["Size of __darwin_fp_control"][::std::mem::size_of::<__darwin_fp_control>() - 2usize];
+    ["Alignment of __darwin_fp_control"][::std::mem::align_of::<__darwin_fp_control>() - 2usize];
 };
+impl __darwin_fp_control {
+    #[inline]
+    pub fn __invalid(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___invalid(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __denorm(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___denorm(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __zdiv(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___zdiv(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __ovrfl(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___ovrfl(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __undfl(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___undfl(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __precis(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(5usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___precis(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(5usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __pc(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(8usize, 2u8) as u16) }
+    }
+    #[inline]
+    pub fn set___pc(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(8usize, 2u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __rc(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(10usize, 2u8) as u16) }
+    }
+    #[inline]
+    pub fn set___rc(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(10usize, 2u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        __invalid: libc::c_ushort,
+        __denorm: libc::c_ushort,
+        __zdiv: libc::c_ushort,
+        __ovrfl: libc::c_ushort,
+        __undfl: libc::c_ushort,
+        __precis: libc::c_ushort,
+        __pc: libc::c_ushort,
+        __rc: libc::c_ushort,
+    ) -> __BindgenBitfieldUnit<[u8; 2usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 2usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let __invalid: u16 = unsafe { ::std::mem::transmute(__invalid) };
+            __invalid as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let __denorm: u16 = unsafe { ::std::mem::transmute(__denorm) };
+            __denorm as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let __zdiv: u16 = unsafe { ::std::mem::transmute(__zdiv) };
+            __zdiv as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let __ovrfl: u16 = unsafe { ::std::mem::transmute(__ovrfl) };
+            __ovrfl as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 1u8, {
+            let __undfl: u16 = unsafe { ::std::mem::transmute(__undfl) };
+            __undfl as u64
+        });
+        __bindgen_bitfield_unit.set(5usize, 1u8, {
+            let __precis: u16 = unsafe { ::std::mem::transmute(__precis) };
+            __precis as u64
+        });
+        __bindgen_bitfield_unit.set(8usize, 2u8, {
+            let __pc: u16 = unsafe { ::std::mem::transmute(__pc) };
+            __pc as u64
+        });
+        __bindgen_bitfield_unit.set(10usize, 2u8, {
+            let __rc: u16 = unsafe { ::std::mem::transmute(__rc) };
+            __rc as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+pub type __darwin_fp_control_t = __darwin_fp_control;
 #[repr(C)]
+#[repr(align(2))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_thread_state {
-    pub __r: [__uint32_t; 13usize],
-    pub __sp: __uint32_t,
-    pub __lr: __uint32_t,
-    pub __pc: __uint32_t,
-    pub __cpsr: __uint32_t,
+pub struct __darwin_fp_status {
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 2usize]>,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_thread_state"]
-        [::std::mem::size_of::<__darwin_arm_thread_state>() - 68usize];
-    ["Alignment of __darwin_arm_thread_state"]
-        [::std::mem::align_of::<__darwin_arm_thread_state>() - 4usize];
-    ["Offset of field: __darwin_arm_thread_state::__r"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state, __r) - 0usize];
-    ["Offset of field: __darwin_arm_thread_state::__sp"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state, __sp) - 52usize];
-    ["Offset of field: __darwin_arm_thread_state::__lr"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state, __lr) - 56usize];
-    ["Offset of field: __darwin_arm_thread_state::__pc"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state, __pc) - 60usize];
-    ["Offset of field: __darwin_arm_thread_state::__cpsr"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state, __cpsr) - 64usize];
+    ["Size of __darwin_fp_status"][::std::mem::size_of::<__darwin_fp_status>() - 2usize];
+    ["Alignment of __darwin_fp_status"][::std::mem::align_of::<__darwin_fp_status>() - 2usize];
 };
+impl __darwin_fp_status {
+    #[inline]
+    pub fn __invalid(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___invalid(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __denorm(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___denorm(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __zdiv(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___zdiv(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __ovrfl(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___ovrfl(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __undfl(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(4usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___undfl(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(4usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __precis(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(5usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___precis(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(5usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __stkflt(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(6usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___stkflt(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(6usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __errsumm(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(7usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___errsumm(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(7usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __c0(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(8usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___c0(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(8usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __c1(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(9usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___c1(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(9usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __c2(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(10usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___c2(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(10usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __tos(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(11usize, 3u8) as u16) }
+    }
+    #[inline]
+    pub fn set___tos(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(11usize, 3u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __c3(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(14usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___c3(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(14usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __busy(&self) -> libc::c_ushort {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(15usize, 1u8) as u16) }
+    }
+    #[inline]
+    pub fn set___busy(&mut self, val: libc::c_ushort) {
+        unsafe {
+            let val: u16 = ::std::mem::transmute(val);
+            self._bitfield_1.set(15usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        __invalid: libc::c_ushort,
+        __denorm: libc::c_ushort,
+        __zdiv: libc::c_ushort,
+        __ovrfl: libc::c_ushort,
+        __undfl: libc::c_ushort,
+        __precis: libc::c_ushort,
+        __stkflt: libc::c_ushort,
+        __errsumm: libc::c_ushort,
+        __c0: libc::c_ushort,
+        __c1: libc::c_ushort,
+        __c2: libc::c_ushort,
+        __tos: libc::c_ushort,
+        __c3: libc::c_ushort,
+        __busy: libc::c_ushort,
+    ) -> __BindgenBitfieldUnit<[u8; 2usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 2usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let __invalid: u16 = unsafe { ::std::mem::transmute(__invalid) };
+            __invalid as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let __denorm: u16 = unsafe { ::std::mem::transmute(__denorm) };
+            __denorm as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let __zdiv: u16 = unsafe { ::std::mem::transmute(__zdiv) };
+            __zdiv as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 1u8, {
+            let __ovrfl: u16 = unsafe { ::std::mem::transmute(__ovrfl) };
+            __ovrfl as u64
+        });
+        __bindgen_bitfield_unit.set(4usize, 1u8, {
+            let __undfl: u16 = unsafe { ::std::mem::transmute(__undfl) };
+            __undfl as u64
+        });
+        __bindgen_bitfield_unit.set(5usize, 1u8, {
+            let __precis: u16 = unsafe { ::std::mem::transmute(__precis) };
+            __precis as u64
+        });
+        __bindgen_bitfield_unit.set(6usize, 1u8, {
+            let __stkflt: u16 = unsafe { ::std::mem::transmute(__stkflt) };
+            __stkflt as u64
+        });
+        __bindgen_bitfield_unit.set(7usize, 1u8, {
+            let __errsumm: u16 = unsafe { ::std::mem::transmute(__errsumm) };
+            __errsumm as u64
+        });
+        __bindgen_bitfield_unit.set(8usize, 1u8, {
+            let __c0: u16 = unsafe { ::std::mem::transmute(__c0) };
+            __c0 as u64
+        });
+        __bindgen_bitfield_unit.set(9usize, 1u8, {
+            let __c1: u16 = unsafe { ::std::mem::transmute(__c1) };
+            __c1 as u64
+        });
+        __bindgen_bitfield_unit.set(10usize, 1u8, {
+            let __c2: u16 = unsafe { ::std::mem::transmute(__c2) };
+            __c2 as u64
+        });
+        __bindgen_bitfield_unit.set(11usize, 3u8, {
+            let __tos: u16 = unsafe { ::std::mem::transmute(__tos) };
+            __tos as u64
+        });
+        __bindgen_bitfield_unit.set(14usize, 1u8, {
+            let __c3: u16 = unsafe { ::std::mem::transmute(__c3) };
+            __c3 as u64
+        });
+        __bindgen_bitfield_unit.set(15usize, 1u8, {
+            let __busy: u16 = unsafe { ::std::mem::transmute(__busy) };
+            __busy as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+pub type __darwin_fp_status_t = __darwin_fp_status;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_thread_state64 {
-    pub __x: [__uint64_t; 29usize],
-    pub __fp: __uint64_t,
-    pub __lr: __uint64_t,
-    pub __sp: __uint64_t,
-    pub __pc: __uint64_t,
-    pub __cpsr: __uint32_t,
-    pub __pad: __uint32_t,
+pub struct __darwin_mmst_reg {
+    pub __mmst_reg: [libc::c_char; 10usize],
+    pub __mmst_rsrv: [libc::c_char; 6usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_thread_state64"]
-        [::std::mem::size_of::<__darwin_arm_thread_state64>() - 272usize];
-    ["Alignment of __darwin_arm_thread_state64"]
-        [::std::mem::align_of::<__darwin_arm_thread_state64>() - 8usize];
-    ["Offset of field: __darwin_arm_thread_state64::__x"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __x) - 0usize];
-    ["Offset of field: __darwin_arm_thread_state64::__fp"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __fp) - 232usize];
-    ["Offset of field: __darwin_arm_thread_state64::__lr"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __lr) - 240usize];
-    ["Offset of field: __darwin_arm_thread_state64::__sp"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __sp) - 248usize];
-    ["Offset of field: __darwin_arm_thread_state64::__pc"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __pc) - 256usize];
-    ["Offset of field: __darwin_arm_thread_state64::__cpsr"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __cpsr) - 264usize];
-    ["Offset of field: __darwin_arm_thread_state64::__pad"]
-        [::std::mem::offset_of!(__darwin_arm_thread_state64, __pad) - 268usize];
+    ["Size of __darwin_mmst_reg"][::std::mem::size_of::<__darwin_mmst_reg>() - 16usize];
+    ["Alignment of __darwin_mmst_reg"][::std::mem::align_of::<__darwin_mmst_reg>() - 1usize];
+    ["Offset of field: __darwin_mmst_reg::__mmst_reg"]
+        [::std::mem::offset_of!(__darwin_mmst_reg, __mmst_reg) - 0usize];
+    ["Offset of field: __darwin_mmst_reg::__mmst_rsrv"]
+        [::std::mem::offset_of!(__darwin_mmst_reg, __mmst_rsrv) - 10usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_vfp_state {
-    pub __r: [__uint32_t; 64usize],
-    pub __fpscr: __uint32_t,
+pub struct __darwin_xmm_reg {
+    pub __xmm_reg: [libc::c_char; 16usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_vfp_state"][::std::mem::size_of::<__darwin_arm_vfp_state>() - 260usize];
-    ["Alignment of __darwin_arm_vfp_state"]
-        [::std::mem::align_of::<__darwin_arm_vfp_state>() - 4usize];
-    ["Offset of field: __darwin_arm_vfp_state::__r"]
-        [::std::mem::offset_of!(__darwin_arm_vfp_state, __r) - 0usize];
-    ["Offset of field: __darwin_arm_vfp_state::__fpscr"]
-        [::std::mem::offset_of!(__darwin_arm_vfp_state, __fpscr) - 256usize];
+    ["Size of __darwin_xmm_reg"][::std::mem::size_of::<__darwin_xmm_reg>() - 16usize];
+    ["Alignment of __darwin_xmm_reg"][::std::mem::align_of::<__darwin_xmm_reg>() - 1usize];
+    ["Offset of field: __darwin_xmm_reg::__xmm_reg"]
+        [::std::mem::offset_of!(__darwin_xmm_reg, __xmm_reg) - 0usize];
 };
 #[repr(C)]
-#[repr(align(16))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_neon_state64 {
-    pub __v: [__uint128_t; 32usize],
-    pub __fpsr: __uint32_t,
-    pub __fpcr: __uint32_t,
+pub struct __darwin_ymm_reg {
+    pub __ymm_reg: [libc::c_char; 32usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_neon_state64"]
-        [::std::mem::size_of::<__darwin_arm_neon_state64>() - 528usize];
-    ["Alignment of __darwin_arm_neon_state64"]
-        [::std::mem::align_of::<__darwin_arm_neon_state64>() - 16usize];
-    ["Offset of field: __darwin_arm_neon_state64::__v"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state64, __v) - 0usize];
-    ["Offset of field: __darwin_arm_neon_state64::__fpsr"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state64, __fpsr) - 512usize];
-    ["Offset of field: __darwin_arm_neon_state64::__fpcr"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state64, __fpcr) - 516usize];
+    ["Size of __darwin_ymm_reg"][::std::mem::size_of::<__darwin_ymm_reg>() - 32usize];
+    ["Alignment of __darwin_ymm_reg"][::std::mem::align_of::<__darwin_ymm_reg>() - 1usize];
+    ["Offset of field: __darwin_ymm_reg::__ymm_reg"]
+        [::std::mem::offset_of!(__darwin_ymm_reg, __ymm_reg) - 0usize];
 };
 #[repr(C)]
-#[repr(align(16))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_neon_state {
-    pub __v: [__uint128_t; 16usize],
-    pub __fpsr: __uint32_t,
-    pub __fpcr: __uint32_t,
+pub struct __darwin_zmm_reg {
+    pub __zmm_reg: [libc::c_char; 64usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_neon_state"]
-        [::std::mem::size_of::<__darwin_arm_neon_state>() - 272usize];
-    ["Alignment of __darwin_arm_neon_state"]
-        [::std::mem::align_of::<__darwin_arm_neon_state>() - 16usize];
-    ["Offset of field: __darwin_arm_neon_state::__v"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state, __v) - 0usize];
-    ["Offset of field: __darwin_arm_neon_state::__fpsr"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state, __fpsr) - 256usize];
-    ["Offset of field: __darwin_arm_neon_state::__fpcr"]
-        [::std::mem::offset_of!(__darwin_arm_neon_state, __fpcr) - 260usize];
+    ["Size of __darwin_zmm_reg"][::std::mem::size_of::<__darwin_zmm_reg>() - 64usize];
+    ["Alignment of __darwin_zmm_reg"][::std::mem::align_of::<__darwin_zmm_reg>() - 1usize];
+    ["Offset of field: __darwin_zmm_reg::__zmm_reg"]
+        [::std::mem::offset_of!(__darwin_zmm_reg, __zmm_reg) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __arm_pagein_state {
+pub struct __darwin_opmask_reg {
+    pub __opmask_reg: [libc::c_char; 8usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_opmask_reg"][::std::mem::size_of::<__darwin_opmask_reg>() - 8usize];
+    ["Alignment of __darwin_opmask_reg"][::std::mem::align_of::<__darwin_opmask_reg>() - 1usize];
+    ["Offset of field: __darwin_opmask_reg::__opmask_reg"]
+        [::std::mem::offset_of!(__darwin_opmask_reg, __opmask_reg) - 0usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_i386_float_state {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 224usize],
+    pub __fpu_reserved1: libc::c_int,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_i386_float_state"]
+        [::std::mem::size_of::<__darwin_i386_float_state>() - 524usize];
+    ["Alignment of __darwin_i386_float_state"]
+        [::std::mem::align_of::<__darwin_i386_float_state>() - 4usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_rsrv4) - 296usize];
+    ["Offset of field: __darwin_i386_float_state::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_i386_float_state, __fpu_reserved1) - 520usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_i386_avx_state {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 224usize],
+    pub __fpu_reserved1: libc::c_int,
+    pub __avx_reserved1: [libc::c_char; 64usize],
+    pub __fpu_ymmh0: __darwin_xmm_reg,
+    pub __fpu_ymmh1: __darwin_xmm_reg,
+    pub __fpu_ymmh2: __darwin_xmm_reg,
+    pub __fpu_ymmh3: __darwin_xmm_reg,
+    pub __fpu_ymmh4: __darwin_xmm_reg,
+    pub __fpu_ymmh5: __darwin_xmm_reg,
+    pub __fpu_ymmh6: __darwin_xmm_reg,
+    pub __fpu_ymmh7: __darwin_xmm_reg,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_i386_avx_state"]
+        [::std::mem::size_of::<__darwin_i386_avx_state>() - 716usize];
+    ["Alignment of __darwin_i386_avx_state"]
+        [::std::mem::align_of::<__darwin_i386_avx_state>() - 4usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_rsrv4) - 296usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_reserved1) - 520usize];
+    ["Offset of field: __darwin_i386_avx_state::__avx_reserved1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __avx_reserved1) - 524usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh0"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh0) - 588usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh1"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh1) - 604usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh2"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh2) - 620usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh3"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh3) - 636usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh4"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh4) - 652usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh5"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh5) - 668usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh6"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh6) - 684usize];
+    ["Offset of field: __darwin_i386_avx_state::__fpu_ymmh7"]
+        [::std::mem::offset_of!(__darwin_i386_avx_state, __fpu_ymmh7) - 700usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_i386_avx512_state {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 224usize],
+    pub __fpu_reserved1: libc::c_int,
+    pub __avx_reserved1: [libc::c_char; 64usize],
+    pub __fpu_ymmh0: __darwin_xmm_reg,
+    pub __fpu_ymmh1: __darwin_xmm_reg,
+    pub __fpu_ymmh2: __darwin_xmm_reg,
+    pub __fpu_ymmh3: __darwin_xmm_reg,
+    pub __fpu_ymmh4: __darwin_xmm_reg,
+    pub __fpu_ymmh5: __darwin_xmm_reg,
+    pub __fpu_ymmh6: __darwin_xmm_reg,
+    pub __fpu_ymmh7: __darwin_xmm_reg,
+    pub __fpu_k0: __darwin_opmask_reg,
+    pub __fpu_k1: __darwin_opmask_reg,
+    pub __fpu_k2: __darwin_opmask_reg,
+    pub __fpu_k3: __darwin_opmask_reg,
+    pub __fpu_k4: __darwin_opmask_reg,
+    pub __fpu_k5: __darwin_opmask_reg,
+    pub __fpu_k6: __darwin_opmask_reg,
+    pub __fpu_k7: __darwin_opmask_reg,
+    pub __fpu_zmmh0: __darwin_ymm_reg,
+    pub __fpu_zmmh1: __darwin_ymm_reg,
+    pub __fpu_zmmh2: __darwin_ymm_reg,
+    pub __fpu_zmmh3: __darwin_ymm_reg,
+    pub __fpu_zmmh4: __darwin_ymm_reg,
+    pub __fpu_zmmh5: __darwin_ymm_reg,
+    pub __fpu_zmmh6: __darwin_ymm_reg,
+    pub __fpu_zmmh7: __darwin_ymm_reg,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_i386_avx512_state"]
+        [::std::mem::size_of::<__darwin_i386_avx512_state>() - 1036usize];
+    ["Alignment of __darwin_i386_avx512_state"]
+        [::std::mem::align_of::<__darwin_i386_avx512_state>() - 4usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_rsrv4) - 296usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_reserved1) - 520usize];
+    ["Offset of field: __darwin_i386_avx512_state::__avx_reserved1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __avx_reserved1) - 524usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh0"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh0) - 588usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh1) - 604usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh2) - 620usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh3) - 636usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh4) - 652usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh5"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh5) - 668usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh6"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh6) - 684usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_ymmh7"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_ymmh7) - 700usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k0"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k0) - 716usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k1) - 724usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k2) - 732usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k3) - 740usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k4) - 748usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k5"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k5) - 756usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k6"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k6) - 764usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_k7"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_k7) - 772usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh0"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh0) - 780usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh1"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh1) - 812usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh2"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh2) - 844usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh3"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh3) - 876usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh4"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh4) - 908usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh5"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh5) - 940usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh6"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh6) - 972usize];
+    ["Offset of field: __darwin_i386_avx512_state::__fpu_zmmh7"]
+        [::std::mem::offset_of!(__darwin_i386_avx512_state, __fpu_zmmh7) - 1004usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_i386_exception_state {
+    pub __trapno: __uint16_t,
+    pub __cpu: __uint16_t,
+    pub __err: __uint32_t,
+    pub __faultvaddr: __uint32_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_i386_exception_state"]
+        [::std::mem::size_of::<__darwin_i386_exception_state>() - 12usize];
+    ["Alignment of __darwin_i386_exception_state"]
+        [::std::mem::align_of::<__darwin_i386_exception_state>() - 4usize];
+    ["Offset of field: __darwin_i386_exception_state::__trapno"]
+        [::std::mem::offset_of!(__darwin_i386_exception_state, __trapno) - 0usize];
+    ["Offset of field: __darwin_i386_exception_state::__cpu"]
+        [::std::mem::offset_of!(__darwin_i386_exception_state, __cpu) - 2usize];
+    ["Offset of field: __darwin_i386_exception_state::__err"]
+        [::std::mem::offset_of!(__darwin_i386_exception_state, __err) - 4usize];
+    ["Offset of field: __darwin_i386_exception_state::__faultvaddr"]
+        [::std::mem::offset_of!(__darwin_i386_exception_state, __faultvaddr) - 8usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_x86_debug_state32 {
+    pub __dr0: libc::c_uint,
+    pub __dr1: libc::c_uint,
+    pub __dr2: libc::c_uint,
+    pub __dr3: libc::c_uint,
+    pub __dr4: libc::c_uint,
+    pub __dr5: libc::c_uint,
+    pub __dr6: libc::c_uint,
+    pub __dr7: libc::c_uint,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_x86_debug_state32"]
+        [::std::mem::size_of::<__darwin_x86_debug_state32>() - 32usize];
+    ["Alignment of __darwin_x86_debug_state32"]
+        [::std::mem::align_of::<__darwin_x86_debug_state32>() - 4usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr0"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr0) - 0usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr1"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr1) - 4usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr2"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr2) - 8usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr3"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr3) - 12usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr4"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr4) - 16usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr5"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr5) - 20usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr6"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr6) - 24usize];
+    ["Offset of field: __darwin_x86_debug_state32::__dr7"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state32, __dr7) - 28usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __x86_instruction_state {
+    pub __insn_stream_valid_bytes: libc::c_int,
+    pub __insn_offset: libc::c_int,
+    pub __out_of_synch: libc::c_int,
+    pub __insn_bytes: [__uint8_t; 2380usize],
+    pub __insn_cacheline: [__uint8_t; 64usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __x86_instruction_state"]
+        [::std::mem::size_of::<__x86_instruction_state>() - 2456usize];
+    ["Alignment of __x86_instruction_state"]
+        [::std::mem::align_of::<__x86_instruction_state>() - 4usize];
+    ["Offset of field: __x86_instruction_state::__insn_stream_valid_bytes"]
+        [::std::mem::offset_of!(__x86_instruction_state, __insn_stream_valid_bytes) - 0usize];
+    ["Offset of field: __x86_instruction_state::__insn_offset"]
+        [::std::mem::offset_of!(__x86_instruction_state, __insn_offset) - 4usize];
+    ["Offset of field: __x86_instruction_state::__out_of_synch"]
+        [::std::mem::offset_of!(__x86_instruction_state, __out_of_synch) - 8usize];
+    ["Offset of field: __x86_instruction_state::__insn_bytes"]
+        [::std::mem::offset_of!(__x86_instruction_state, __insn_bytes) - 12usize];
+    ["Offset of field: __x86_instruction_state::__insn_cacheline"]
+        [::std::mem::offset_of!(__x86_instruction_state, __insn_cacheline) - 2392usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __last_branch_record {
+    pub __from_ip: __uint64_t,
+    pub __to_ip: __uint64_t,
+    pub _bitfield_align_1: [u16; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub __bindgen_padding_0: u32,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __last_branch_record"][::std::mem::size_of::<__last_branch_record>() - 24usize];
+    ["Alignment of __last_branch_record"][::std::mem::align_of::<__last_branch_record>() - 8usize];
+    ["Offset of field: __last_branch_record::__from_ip"]
+        [::std::mem::offset_of!(__last_branch_record, __from_ip) - 0usize];
+    ["Offset of field: __last_branch_record::__to_ip"]
+        [::std::mem::offset_of!(__last_branch_record, __to_ip) - 8usize];
+};
+impl __last_branch_record {
+    #[inline]
+    pub fn __mispredict(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set___mispredict(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __tsx_abort(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set___tsx_abort(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __in_tsx(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set___in_tsx(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __cycle_count(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(3usize, 16u8) as u32) }
+    }
+    #[inline]
+    pub fn set___cycle_count(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(3usize, 16u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __reserved(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(19usize, 13u8) as u32) }
+    }
+    #[inline]
+    pub fn set___reserved(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(19usize, 13u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        __mispredict: __uint32_t,
+        __tsx_abort: __uint32_t,
+        __in_tsx: __uint32_t,
+        __cycle_count: __uint32_t,
+        __reserved: __uint32_t,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let __mispredict: u32 = unsafe { ::std::mem::transmute(__mispredict) };
+            __mispredict as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let __tsx_abort: u32 = unsafe { ::std::mem::transmute(__tsx_abort) };
+            __tsx_abort as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 1u8, {
+            let __in_tsx: u32 = unsafe { ::std::mem::transmute(__in_tsx) };
+            __in_tsx as u64
+        });
+        __bindgen_bitfield_unit.set(3usize, 16u8, {
+            let __cycle_count: u32 = unsafe { ::std::mem::transmute(__cycle_count) };
+            __cycle_count as u64
+        });
+        __bindgen_bitfield_unit.set(19usize, 13u8, {
+            let __reserved: u32 = unsafe { ::std::mem::transmute(__reserved) };
+            __reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __last_branch_state {
+    pub __lbr_count: libc::c_int,
+    pub _bitfield_align_1: [u32; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub __lbrs: [__last_branch_record; 32usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __last_branch_state"][::std::mem::size_of::<__last_branch_state>() - 776usize];
+    ["Alignment of __last_branch_state"][::std::mem::align_of::<__last_branch_state>() - 8usize];
+    ["Offset of field: __last_branch_state::__lbr_count"]
+        [::std::mem::offset_of!(__last_branch_state, __lbr_count) - 0usize];
+    ["Offset of field: __last_branch_state::__lbrs"]
+        [::std::mem::offset_of!(__last_branch_state, __lbrs) - 8usize];
+};
+impl __last_branch_state {
+    #[inline]
+    pub fn __lbr_supported_tsx(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(0usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set___lbr_supported_tsx(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(0usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __lbr_supported_cycle_count(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(1usize, 1u8) as u32) }
+    }
+    #[inline]
+    pub fn set___lbr_supported_cycle_count(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(1usize, 1u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn __reserved(&self) -> __uint32_t {
+        unsafe { ::std::mem::transmute(self._bitfield_1.get(2usize, 30u8) as u32) }
+    }
+    #[inline]
+    pub fn set___reserved(&mut self, val: __uint32_t) {
+        unsafe {
+            let val: u32 = ::std::mem::transmute(val);
+            self._bitfield_1.set(2usize, 30u8, val as u64)
+        }
+    }
+    #[inline]
+    pub fn new_bitfield_1(
+        __lbr_supported_tsx: __uint32_t,
+        __lbr_supported_cycle_count: __uint32_t,
+        __reserved: __uint32_t,
+    ) -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit.set(0usize, 1u8, {
+            let __lbr_supported_tsx: u32 = unsafe { ::std::mem::transmute(__lbr_supported_tsx) };
+            __lbr_supported_tsx as u64
+        });
+        __bindgen_bitfield_unit.set(1usize, 1u8, {
+            let __lbr_supported_cycle_count: u32 =
+                unsafe { ::std::mem::transmute(__lbr_supported_cycle_count) };
+            __lbr_supported_cycle_count as u64
+        });
+        __bindgen_bitfield_unit.set(2usize, 30u8, {
+            let __reserved: u32 = unsafe { ::std::mem::transmute(__reserved) };
+            __reserved as u64
+        });
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __x86_pagein_state {
     pub __pagein_error: libc::c_int,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __arm_pagein_state"][::std::mem::size_of::<__arm_pagein_state>() - 4usize];
-    ["Alignment of __arm_pagein_state"][::std::mem::align_of::<__arm_pagein_state>() - 4usize];
-    ["Offset of field: __arm_pagein_state::__pagein_error"]
-        [::std::mem::offset_of!(__arm_pagein_state, __pagein_error) - 0usize];
+    ["Size of __x86_pagein_state"][::std::mem::size_of::<__x86_pagein_state>() - 4usize];
+    ["Alignment of __x86_pagein_state"][::std::mem::align_of::<__x86_pagein_state>() - 4usize];
+    ["Offset of field: __x86_pagein_state::__pagein_error"]
+        [::std::mem::offset_of!(__x86_pagein_state, __pagein_error) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __arm_legacy_debug_state {
-    pub __bvr: [__uint32_t; 16usize],
-    pub __bcr: [__uint32_t; 16usize],
-    pub __wvr: [__uint32_t; 16usize],
-    pub __wcr: [__uint32_t; 16usize],
+pub struct __darwin_x86_thread_state64 {
+    pub __rax: __uint64_t,
+    pub __rbx: __uint64_t,
+    pub __rcx: __uint64_t,
+    pub __rdx: __uint64_t,
+    pub __rdi: __uint64_t,
+    pub __rsi: __uint64_t,
+    pub __rbp: __uint64_t,
+    pub __rsp: __uint64_t,
+    pub __r8: __uint64_t,
+    pub __r9: __uint64_t,
+    pub __r10: __uint64_t,
+    pub __r11: __uint64_t,
+    pub __r12: __uint64_t,
+    pub __r13: __uint64_t,
+    pub __r14: __uint64_t,
+    pub __r15: __uint64_t,
+    pub __rip: __uint64_t,
+    pub __rflags: __uint64_t,
+    pub __cs: __uint64_t,
+    pub __fs: __uint64_t,
+    pub __gs: __uint64_t,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __arm_legacy_debug_state"]
-        [::std::mem::size_of::<__arm_legacy_debug_state>() - 256usize];
-    ["Alignment of __arm_legacy_debug_state"]
-        [::std::mem::align_of::<__arm_legacy_debug_state>() - 4usize];
-    ["Offset of field: __arm_legacy_debug_state::__bvr"]
-        [::std::mem::offset_of!(__arm_legacy_debug_state, __bvr) - 0usize];
-    ["Offset of field: __arm_legacy_debug_state::__bcr"]
-        [::std::mem::offset_of!(__arm_legacy_debug_state, __bcr) - 64usize];
-    ["Offset of field: __arm_legacy_debug_state::__wvr"]
-        [::std::mem::offset_of!(__arm_legacy_debug_state, __wvr) - 128usize];
-    ["Offset of field: __arm_legacy_debug_state::__wcr"]
-        [::std::mem::offset_of!(__arm_legacy_debug_state, __wcr) - 192usize];
+    ["Size of __darwin_x86_thread_state64"]
+        [::std::mem::size_of::<__darwin_x86_thread_state64>() - 168usize];
+    ["Alignment of __darwin_x86_thread_state64"]
+        [::std::mem::align_of::<__darwin_x86_thread_state64>() - 8usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rax"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rax) - 0usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rbx"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rbx) - 8usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rcx"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rcx) - 16usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rdx"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rdx) - 24usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rdi"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rdi) - 32usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rsi"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rsi) - 40usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rbp"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rbp) - 48usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rsp"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rsp) - 56usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r8"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r8) - 64usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r9"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r9) - 72usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r10"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r10) - 80usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r11"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r11) - 88usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r12"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r12) - 96usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r13"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r13) - 104usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r14"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r14) - 112usize];
+    ["Offset of field: __darwin_x86_thread_state64::__r15"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __r15) - 120usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rip"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rip) - 128usize];
+    ["Offset of field: __darwin_x86_thread_state64::__rflags"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __rflags) - 136usize];
+    ["Offset of field: __darwin_x86_thread_state64::__cs"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __cs) - 144usize];
+    ["Offset of field: __darwin_x86_thread_state64::__fs"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __fs) - 152usize];
+    ["Offset of field: __darwin_x86_thread_state64::__gs"]
+        [::std::mem::offset_of!(__darwin_x86_thread_state64, __gs) - 160usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_debug_state32 {
-    pub __bvr: [__uint32_t; 16usize],
-    pub __bcr: [__uint32_t; 16usize],
-    pub __wvr: [__uint32_t; 16usize],
-    pub __wcr: [__uint32_t; 16usize],
-    pub __mdscr_el1: __uint64_t,
+pub struct __darwin_x86_thread_full_state64 {
+    pub __ss64: __darwin_x86_thread_state64,
+    pub __ds: __uint64_t,
+    pub __es: __uint64_t,
+    pub __ss: __uint64_t,
+    pub __gsbase: __uint64_t,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_debug_state32"]
-        [::std::mem::size_of::<__darwin_arm_debug_state32>() - 264usize];
-    ["Alignment of __darwin_arm_debug_state32"]
-        [::std::mem::align_of::<__darwin_arm_debug_state32>() - 8usize];
-    ["Offset of field: __darwin_arm_debug_state32::__bvr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state32, __bvr) - 0usize];
-    ["Offset of field: __darwin_arm_debug_state32::__bcr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state32, __bcr) - 64usize];
-    ["Offset of field: __darwin_arm_debug_state32::__wvr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state32, __wvr) - 128usize];
-    ["Offset of field: __darwin_arm_debug_state32::__wcr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state32, __wcr) - 192usize];
-    ["Offset of field: __darwin_arm_debug_state32::__mdscr_el1"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state32, __mdscr_el1) - 256usize];
+    ["Size of __darwin_x86_thread_full_state64"]
+        [::std::mem::size_of::<__darwin_x86_thread_full_state64>() - 200usize];
+    ["Alignment of __darwin_x86_thread_full_state64"]
+        [::std::mem::align_of::<__darwin_x86_thread_full_state64>() - 8usize];
+    ["Offset of field: __darwin_x86_thread_full_state64::__ss64"]
+        [::std::mem::offset_of!(__darwin_x86_thread_full_state64, __ss64) - 0usize];
+    ["Offset of field: __darwin_x86_thread_full_state64::__ds"]
+        [::std::mem::offset_of!(__darwin_x86_thread_full_state64, __ds) - 168usize];
+    ["Offset of field: __darwin_x86_thread_full_state64::__es"]
+        [::std::mem::offset_of!(__darwin_x86_thread_full_state64, __es) - 176usize];
+    ["Offset of field: __darwin_x86_thread_full_state64::__ss"]
+        [::std::mem::offset_of!(__darwin_x86_thread_full_state64, __ss) - 184usize];
+    ["Offset of field: __darwin_x86_thread_full_state64::__gsbase"]
+        [::std::mem::offset_of!(__darwin_x86_thread_full_state64, __gsbase) - 192usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_debug_state64 {
-    pub __bvr: [__uint64_t; 16usize],
-    pub __bcr: [__uint64_t; 16usize],
-    pub __wvr: [__uint64_t; 16usize],
-    pub __wcr: [__uint64_t; 16usize],
-    pub __mdscr_el1: __uint64_t,
+pub struct __darwin_x86_float_state64 {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_xmm8: __darwin_xmm_reg,
+    pub __fpu_xmm9: __darwin_xmm_reg,
+    pub __fpu_xmm10: __darwin_xmm_reg,
+    pub __fpu_xmm11: __darwin_xmm_reg,
+    pub __fpu_xmm12: __darwin_xmm_reg,
+    pub __fpu_xmm13: __darwin_xmm_reg,
+    pub __fpu_xmm14: __darwin_xmm_reg,
+    pub __fpu_xmm15: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 96usize],
+    pub __fpu_reserved1: libc::c_int,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_debug_state64"]
-        [::std::mem::size_of::<__darwin_arm_debug_state64>() - 520usize];
-    ["Alignment of __darwin_arm_debug_state64"]
-        [::std::mem::align_of::<__darwin_arm_debug_state64>() - 8usize];
-    ["Offset of field: __darwin_arm_debug_state64::__bvr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state64, __bvr) - 0usize];
-    ["Offset of field: __darwin_arm_debug_state64::__bcr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state64, __bcr) - 128usize];
-    ["Offset of field: __darwin_arm_debug_state64::__wvr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state64, __wvr) - 256usize];
-    ["Offset of field: __darwin_arm_debug_state64::__wcr"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state64, __wcr) - 384usize];
-    ["Offset of field: __darwin_arm_debug_state64::__mdscr_el1"]
-        [::std::mem::offset_of!(__darwin_arm_debug_state64, __mdscr_el1) - 512usize];
+    ["Size of __darwin_x86_float_state64"]
+        [::std::mem::size_of::<__darwin_x86_float_state64>() - 524usize];
+    ["Alignment of __darwin_x86_float_state64"]
+        [::std::mem::align_of::<__darwin_x86_float_state64>() - 4usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm8"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm8) - 296usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm9"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm9) - 312usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm10"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm10) - 328usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm11"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm11) - 344usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm12"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm12) - 360usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm13"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm13) - 376usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm14"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm14) - 392usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_xmm15"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_xmm15) - 408usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_rsrv4) - 424usize];
+    ["Offset of field: __darwin_x86_float_state64::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_x86_float_state64, __fpu_reserved1) - 520usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_arm_cpmu_state64 {
+pub struct __darwin_x86_avx_state64 {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_xmm8: __darwin_xmm_reg,
+    pub __fpu_xmm9: __darwin_xmm_reg,
+    pub __fpu_xmm10: __darwin_xmm_reg,
+    pub __fpu_xmm11: __darwin_xmm_reg,
+    pub __fpu_xmm12: __darwin_xmm_reg,
+    pub __fpu_xmm13: __darwin_xmm_reg,
+    pub __fpu_xmm14: __darwin_xmm_reg,
+    pub __fpu_xmm15: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 96usize],
+    pub __fpu_reserved1: libc::c_int,
+    pub __avx_reserved1: [libc::c_char; 64usize],
+    pub __fpu_ymmh0: __darwin_xmm_reg,
+    pub __fpu_ymmh1: __darwin_xmm_reg,
+    pub __fpu_ymmh2: __darwin_xmm_reg,
+    pub __fpu_ymmh3: __darwin_xmm_reg,
+    pub __fpu_ymmh4: __darwin_xmm_reg,
+    pub __fpu_ymmh5: __darwin_xmm_reg,
+    pub __fpu_ymmh6: __darwin_xmm_reg,
+    pub __fpu_ymmh7: __darwin_xmm_reg,
+    pub __fpu_ymmh8: __darwin_xmm_reg,
+    pub __fpu_ymmh9: __darwin_xmm_reg,
+    pub __fpu_ymmh10: __darwin_xmm_reg,
+    pub __fpu_ymmh11: __darwin_xmm_reg,
+    pub __fpu_ymmh12: __darwin_xmm_reg,
+    pub __fpu_ymmh13: __darwin_xmm_reg,
+    pub __fpu_ymmh14: __darwin_xmm_reg,
+    pub __fpu_ymmh15: __darwin_xmm_reg,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_x86_avx_state64"]
+        [::std::mem::size_of::<__darwin_x86_avx_state64>() - 844usize];
+    ["Alignment of __darwin_x86_avx_state64"]
+        [::std::mem::align_of::<__darwin_x86_avx_state64>() - 4usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm8"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm8) - 296usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm9"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm9) - 312usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm10"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm10) - 328usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm11"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm11) - 344usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm12"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm12) - 360usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm13"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm13) - 376usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm14"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm14) - 392usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_xmm15"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_xmm15) - 408usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_rsrv4) - 424usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_reserved1) - 520usize];
+    ["Offset of field: __darwin_x86_avx_state64::__avx_reserved1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __avx_reserved1) - 524usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh0"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh0) - 588usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh1"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh1) - 604usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh2"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh2) - 620usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh3"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh3) - 636usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh4"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh4) - 652usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh5"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh5) - 668usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh6"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh6) - 684usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh7"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh7) - 700usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh8"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh8) - 716usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh9"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh9) - 732usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh10"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh10) - 748usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh11"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh11) - 764usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh12"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh12) - 780usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh13"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh13) - 796usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh14"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh14) - 812usize];
+    ["Offset of field: __darwin_x86_avx_state64::__fpu_ymmh15"]
+        [::std::mem::offset_of!(__darwin_x86_avx_state64, __fpu_ymmh15) - 828usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_x86_avx512_state64 {
+    pub __fpu_reserved: [libc::c_int; 2usize],
+    pub __fpu_fcw: __darwin_fp_control,
+    pub __fpu_fsw: __darwin_fp_status,
+    pub __fpu_ftw: __uint8_t,
+    pub __fpu_rsrv1: __uint8_t,
+    pub __fpu_fop: __uint16_t,
+    pub __fpu_ip: __uint32_t,
+    pub __fpu_cs: __uint16_t,
+    pub __fpu_rsrv2: __uint16_t,
+    pub __fpu_dp: __uint32_t,
+    pub __fpu_ds: __uint16_t,
+    pub __fpu_rsrv3: __uint16_t,
+    pub __fpu_mxcsr: __uint32_t,
+    pub __fpu_mxcsrmask: __uint32_t,
+    pub __fpu_stmm0: __darwin_mmst_reg,
+    pub __fpu_stmm1: __darwin_mmst_reg,
+    pub __fpu_stmm2: __darwin_mmst_reg,
+    pub __fpu_stmm3: __darwin_mmst_reg,
+    pub __fpu_stmm4: __darwin_mmst_reg,
+    pub __fpu_stmm5: __darwin_mmst_reg,
+    pub __fpu_stmm6: __darwin_mmst_reg,
+    pub __fpu_stmm7: __darwin_mmst_reg,
+    pub __fpu_xmm0: __darwin_xmm_reg,
+    pub __fpu_xmm1: __darwin_xmm_reg,
+    pub __fpu_xmm2: __darwin_xmm_reg,
+    pub __fpu_xmm3: __darwin_xmm_reg,
+    pub __fpu_xmm4: __darwin_xmm_reg,
+    pub __fpu_xmm5: __darwin_xmm_reg,
+    pub __fpu_xmm6: __darwin_xmm_reg,
+    pub __fpu_xmm7: __darwin_xmm_reg,
+    pub __fpu_xmm8: __darwin_xmm_reg,
+    pub __fpu_xmm9: __darwin_xmm_reg,
+    pub __fpu_xmm10: __darwin_xmm_reg,
+    pub __fpu_xmm11: __darwin_xmm_reg,
+    pub __fpu_xmm12: __darwin_xmm_reg,
+    pub __fpu_xmm13: __darwin_xmm_reg,
+    pub __fpu_xmm14: __darwin_xmm_reg,
+    pub __fpu_xmm15: __darwin_xmm_reg,
+    pub __fpu_rsrv4: [libc::c_char; 96usize],
+    pub __fpu_reserved1: libc::c_int,
+    pub __avx_reserved1: [libc::c_char; 64usize],
+    pub __fpu_ymmh0: __darwin_xmm_reg,
+    pub __fpu_ymmh1: __darwin_xmm_reg,
+    pub __fpu_ymmh2: __darwin_xmm_reg,
+    pub __fpu_ymmh3: __darwin_xmm_reg,
+    pub __fpu_ymmh4: __darwin_xmm_reg,
+    pub __fpu_ymmh5: __darwin_xmm_reg,
+    pub __fpu_ymmh6: __darwin_xmm_reg,
+    pub __fpu_ymmh7: __darwin_xmm_reg,
+    pub __fpu_ymmh8: __darwin_xmm_reg,
+    pub __fpu_ymmh9: __darwin_xmm_reg,
+    pub __fpu_ymmh10: __darwin_xmm_reg,
+    pub __fpu_ymmh11: __darwin_xmm_reg,
+    pub __fpu_ymmh12: __darwin_xmm_reg,
+    pub __fpu_ymmh13: __darwin_xmm_reg,
+    pub __fpu_ymmh14: __darwin_xmm_reg,
+    pub __fpu_ymmh15: __darwin_xmm_reg,
+    pub __fpu_k0: __darwin_opmask_reg,
+    pub __fpu_k1: __darwin_opmask_reg,
+    pub __fpu_k2: __darwin_opmask_reg,
+    pub __fpu_k3: __darwin_opmask_reg,
+    pub __fpu_k4: __darwin_opmask_reg,
+    pub __fpu_k5: __darwin_opmask_reg,
+    pub __fpu_k6: __darwin_opmask_reg,
+    pub __fpu_k7: __darwin_opmask_reg,
+    pub __fpu_zmmh0: __darwin_ymm_reg,
+    pub __fpu_zmmh1: __darwin_ymm_reg,
+    pub __fpu_zmmh2: __darwin_ymm_reg,
+    pub __fpu_zmmh3: __darwin_ymm_reg,
+    pub __fpu_zmmh4: __darwin_ymm_reg,
+    pub __fpu_zmmh5: __darwin_ymm_reg,
+    pub __fpu_zmmh6: __darwin_ymm_reg,
+    pub __fpu_zmmh7: __darwin_ymm_reg,
+    pub __fpu_zmmh8: __darwin_ymm_reg,
+    pub __fpu_zmmh9: __darwin_ymm_reg,
+    pub __fpu_zmmh10: __darwin_ymm_reg,
+    pub __fpu_zmmh11: __darwin_ymm_reg,
+    pub __fpu_zmmh12: __darwin_ymm_reg,
+    pub __fpu_zmmh13: __darwin_ymm_reg,
+    pub __fpu_zmmh14: __darwin_ymm_reg,
+    pub __fpu_zmmh15: __darwin_ymm_reg,
+    pub __fpu_zmm16: __darwin_zmm_reg,
+    pub __fpu_zmm17: __darwin_zmm_reg,
+    pub __fpu_zmm18: __darwin_zmm_reg,
+    pub __fpu_zmm19: __darwin_zmm_reg,
+    pub __fpu_zmm20: __darwin_zmm_reg,
+    pub __fpu_zmm21: __darwin_zmm_reg,
+    pub __fpu_zmm22: __darwin_zmm_reg,
+    pub __fpu_zmm23: __darwin_zmm_reg,
+    pub __fpu_zmm24: __darwin_zmm_reg,
+    pub __fpu_zmm25: __darwin_zmm_reg,
+    pub __fpu_zmm26: __darwin_zmm_reg,
+    pub __fpu_zmm27: __darwin_zmm_reg,
+    pub __fpu_zmm28: __darwin_zmm_reg,
+    pub __fpu_zmm29: __darwin_zmm_reg,
+    pub __fpu_zmm30: __darwin_zmm_reg,
+    pub __fpu_zmm31: __darwin_zmm_reg,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_x86_avx512_state64"]
+        [::std::mem::size_of::<__darwin_x86_avx512_state64>() - 2444usize];
+    ["Alignment of __darwin_x86_avx512_state64"]
+        [::std::mem::align_of::<__darwin_x86_avx512_state64>() - 4usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_reserved"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_reserved) - 0usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_fcw"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_fcw) - 8usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_fsw"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_fsw) - 10usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ftw"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ftw) - 12usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_rsrv1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_rsrv1) - 13usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_fop"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_fop) - 14usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ip"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ip) - 16usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_cs"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_cs) - 20usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_rsrv2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_rsrv2) - 22usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_dp"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_dp) - 24usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ds"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ds) - 28usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_rsrv3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_rsrv3) - 30usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_mxcsr"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_mxcsr) - 32usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_mxcsrmask"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_mxcsrmask) - 36usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm0"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm0) - 40usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm1) - 56usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm2) - 72usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm3) - 88usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm4) - 104usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm5"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm5) - 120usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm6"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm6) - 136usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_stmm7"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_stmm7) - 152usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm0"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm0) - 168usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm1) - 184usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm2) - 200usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm3) - 216usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm4) - 232usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm5"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm5) - 248usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm6"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm6) - 264usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm7"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm7) - 280usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm8"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm8) - 296usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm9"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm9) - 312usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm10"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm10) - 328usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm11"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm11) - 344usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm12"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm12) - 360usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm13"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm13) - 376usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm14"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm14) - 392usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_xmm15"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_xmm15) - 408usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_rsrv4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_rsrv4) - 424usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_reserved1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_reserved1) - 520usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__avx_reserved1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __avx_reserved1) - 524usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh0"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh0) - 588usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh1) - 604usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh2) - 620usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh3) - 636usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh4) - 652usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh5"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh5) - 668usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh6"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh6) - 684usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh7"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh7) - 700usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh8"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh8) - 716usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh9"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh9) - 732usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh10"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh10) - 748usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh11"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh11) - 764usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh12"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh12) - 780usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh13"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh13) - 796usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh14"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh14) - 812usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_ymmh15"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_ymmh15) - 828usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k0"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k0) - 844usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k1) - 852usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k2) - 860usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k3) - 868usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k4) - 876usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k5"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k5) - 884usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k6"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k6) - 892usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_k7"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_k7) - 900usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh0"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh0) - 908usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh1"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh1) - 940usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh2"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh2) - 972usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh3"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh3) - 1004usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh4"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh4) - 1036usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh5"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh5) - 1068usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh6"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh6) - 1100usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh7"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh7) - 1132usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh8"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh8) - 1164usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh9"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh9) - 1196usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh10"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh10) - 1228usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh11"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh11) - 1260usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh12"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh12) - 1292usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh13"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh13) - 1324usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh14"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh14) - 1356usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmmh15"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmmh15) - 1388usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm16"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm16) - 1420usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm17"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm17) - 1484usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm18"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm18) - 1548usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm19"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm19) - 1612usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm20"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm20) - 1676usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm21"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm21) - 1740usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm22"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm22) - 1804usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm23"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm23) - 1868usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm24"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm24) - 1932usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm25"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm25) - 1996usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm26"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm26) - 2060usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm27"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm27) - 2124usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm28"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm28) - 2188usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm29"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm29) - 2252usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm30"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm30) - 2316usize];
+    ["Offset of field: __darwin_x86_avx512_state64::__fpu_zmm31"]
+        [::std::mem::offset_of!(__darwin_x86_avx512_state64, __fpu_zmm31) - 2380usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_x86_exception_state64 {
+    pub __trapno: __uint16_t,
+    pub __cpu: __uint16_t,
+    pub __err: __uint32_t,
+    pub __faultvaddr: __uint64_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_x86_exception_state64"]
+        [::std::mem::size_of::<__darwin_x86_exception_state64>() - 16usize];
+    ["Alignment of __darwin_x86_exception_state64"]
+        [::std::mem::align_of::<__darwin_x86_exception_state64>() - 8usize];
+    ["Offset of field: __darwin_x86_exception_state64::__trapno"]
+        [::std::mem::offset_of!(__darwin_x86_exception_state64, __trapno) - 0usize];
+    ["Offset of field: __darwin_x86_exception_state64::__cpu"]
+        [::std::mem::offset_of!(__darwin_x86_exception_state64, __cpu) - 2usize];
+    ["Offset of field: __darwin_x86_exception_state64::__err"]
+        [::std::mem::offset_of!(__darwin_x86_exception_state64, __err) - 4usize];
+    ["Offset of field: __darwin_x86_exception_state64::__faultvaddr"]
+        [::std::mem::offset_of!(__darwin_x86_exception_state64, __faultvaddr) - 8usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_x86_debug_state64 {
+    pub __dr0: __uint64_t,
+    pub __dr1: __uint64_t,
+    pub __dr2: __uint64_t,
+    pub __dr3: __uint64_t,
+    pub __dr4: __uint64_t,
+    pub __dr5: __uint64_t,
+    pub __dr6: __uint64_t,
+    pub __dr7: __uint64_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_x86_debug_state64"]
+        [::std::mem::size_of::<__darwin_x86_debug_state64>() - 64usize];
+    ["Alignment of __darwin_x86_debug_state64"]
+        [::std::mem::align_of::<__darwin_x86_debug_state64>() - 8usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr0"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr0) - 0usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr1"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr1) - 8usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr2"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr2) - 16usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr3"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr3) - 24usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr4"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr4) - 32usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr5"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr5) - 40usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr6"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr6) - 48usize];
+    ["Offset of field: __darwin_x86_debug_state64::__dr7"]
+        [::std::mem::offset_of!(__darwin_x86_debug_state64, __dr7) - 56usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_x86_cpmu_state64 {
     pub __ctrs: [__uint64_t; 16usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_arm_cpmu_state64"]
-        [::std::mem::size_of::<__darwin_arm_cpmu_state64>() - 128usize];
-    ["Alignment of __darwin_arm_cpmu_state64"]
-        [::std::mem::align_of::<__darwin_arm_cpmu_state64>() - 8usize];
-    ["Offset of field: __darwin_arm_cpmu_state64::__ctrs"]
-        [::std::mem::offset_of!(__darwin_arm_cpmu_state64, __ctrs) - 0usize];
+    ["Size of __darwin_x86_cpmu_state64"]
+        [::std::mem::size_of::<__darwin_x86_cpmu_state64>() - 128usize];
+    ["Alignment of __darwin_x86_cpmu_state64"]
+        [::std::mem::align_of::<__darwin_x86_cpmu_state64>() - 8usize];
+    ["Offset of field: __darwin_x86_cpmu_state64::__ctrs"]
+        [::std::mem::offset_of!(__darwin_x86_cpmu_state64, __ctrs) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct __darwin_mcontext32 {
-    pub __es: __darwin_arm_exception_state,
-    pub __ss: __darwin_arm_thread_state,
-    pub __fs: __darwin_arm_vfp_state,
+    pub __es: __darwin_i386_exception_state,
+    pub __ss: __darwin_i386_thread_state,
+    pub __fs: __darwin_i386_float_state,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_mcontext32"][::std::mem::size_of::<__darwin_mcontext32>() - 340usize];
+    ["Size of __darwin_mcontext32"][::std::mem::size_of::<__darwin_mcontext32>() - 600usize];
     ["Alignment of __darwin_mcontext32"][::std::mem::align_of::<__darwin_mcontext32>() - 4usize];
     ["Offset of field: __darwin_mcontext32::__es"]
         [::std::mem::offset_of!(__darwin_mcontext32, __es) - 0usize];
     ["Offset of field: __darwin_mcontext32::__ss"]
         [::std::mem::offset_of!(__darwin_mcontext32, __ss) - 12usize];
     ["Offset of field: __darwin_mcontext32::__fs"]
-        [::std::mem::offset_of!(__darwin_mcontext32, __fs) - 80usize];
+        [::std::mem::offset_of!(__darwin_mcontext32, __fs) - 76usize];
 };
 #[repr(C)]
-#[repr(align(16))]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __darwin_mcontext64 {
-    pub __es: __darwin_arm_exception_state64,
-    pub __ss: __darwin_arm_thread_state64,
-    pub __ns: __darwin_arm_neon_state64,
+pub struct __darwin_mcontext_avx32 {
+    pub __es: __darwin_i386_exception_state,
+    pub __ss: __darwin_i386_thread_state,
+    pub __fs: __darwin_i386_avx_state,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of __darwin_mcontext64"][::std::mem::size_of::<__darwin_mcontext64>() - 816usize];
-    ["Alignment of __darwin_mcontext64"][::std::mem::align_of::<__darwin_mcontext64>() - 16usize];
+    ["Size of __darwin_mcontext_avx32"]
+        [::std::mem::size_of::<__darwin_mcontext_avx32>() - 792usize];
+    ["Alignment of __darwin_mcontext_avx32"]
+        [::std::mem::align_of::<__darwin_mcontext_avx32>() - 4usize];
+    ["Offset of field: __darwin_mcontext_avx32::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx32, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx32::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx32, __ss) - 12usize];
+    ["Offset of field: __darwin_mcontext_avx32::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx32, __fs) - 76usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext_avx512_32 {
+    pub __es: __darwin_i386_exception_state,
+    pub __ss: __darwin_i386_thread_state,
+    pub __fs: __darwin_i386_avx512_state,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext_avx512_32"]
+        [::std::mem::size_of::<__darwin_mcontext_avx512_32>() - 1112usize];
+    ["Alignment of __darwin_mcontext_avx512_32"]
+        [::std::mem::align_of::<__darwin_mcontext_avx512_32>() - 4usize];
+    ["Offset of field: __darwin_mcontext_avx512_32::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_32, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx512_32::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_32, __ss) - 12usize];
+    ["Offset of field: __darwin_mcontext_avx512_32::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_32, __fs) - 76usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext64 {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_state64,
+    pub __fs: __darwin_x86_float_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext64"][::std::mem::size_of::<__darwin_mcontext64>() - 712usize];
+    ["Alignment of __darwin_mcontext64"][::std::mem::align_of::<__darwin_mcontext64>() - 8usize];
     ["Offset of field: __darwin_mcontext64::__es"]
         [::std::mem::offset_of!(__darwin_mcontext64, __es) - 0usize];
     ["Offset of field: __darwin_mcontext64::__ss"]
         [::std::mem::offset_of!(__darwin_mcontext64, __ss) - 16usize];
-    ["Offset of field: __darwin_mcontext64::__ns"]
-        [::std::mem::offset_of!(__darwin_mcontext64, __ns) - 288usize];
+    ["Offset of field: __darwin_mcontext64::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext64, __fs) - 184usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext64_full {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_full_state64,
+    pub __fs: __darwin_x86_float_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext64_full"]
+        [::std::mem::size_of::<__darwin_mcontext64_full>() - 744usize];
+    ["Alignment of __darwin_mcontext64_full"]
+        [::std::mem::align_of::<__darwin_mcontext64_full>() - 8usize];
+    ["Offset of field: __darwin_mcontext64_full::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext64_full, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext64_full::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext64_full, __ss) - 16usize];
+    ["Offset of field: __darwin_mcontext64_full::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext64_full, __fs) - 216usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext_avx64 {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_state64,
+    pub __fs: __darwin_x86_avx_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext_avx64"]
+        [::std::mem::size_of::<__darwin_mcontext_avx64>() - 1032usize];
+    ["Alignment of __darwin_mcontext_avx64"]
+        [::std::mem::align_of::<__darwin_mcontext_avx64>() - 8usize];
+    ["Offset of field: __darwin_mcontext_avx64::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx64::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64, __ss) - 16usize];
+    ["Offset of field: __darwin_mcontext_avx64::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64, __fs) - 184usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext_avx64_full {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_full_state64,
+    pub __fs: __darwin_x86_avx_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext_avx64_full"]
+        [::std::mem::size_of::<__darwin_mcontext_avx64_full>() - 1064usize];
+    ["Alignment of __darwin_mcontext_avx64_full"]
+        [::std::mem::align_of::<__darwin_mcontext_avx64_full>() - 8usize];
+    ["Offset of field: __darwin_mcontext_avx64_full::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64_full, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx64_full::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64_full, __ss) - 16usize];
+    ["Offset of field: __darwin_mcontext_avx64_full::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx64_full, __fs) - 216usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext_avx512_64 {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_state64,
+    pub __fs: __darwin_x86_avx512_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext_avx512_64"]
+        [::std::mem::size_of::<__darwin_mcontext_avx512_64>() - 2632usize];
+    ["Alignment of __darwin_mcontext_avx512_64"]
+        [::std::mem::align_of::<__darwin_mcontext_avx512_64>() - 8usize];
+    ["Offset of field: __darwin_mcontext_avx512_64::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx512_64::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64, __ss) - 16usize];
+    ["Offset of field: __darwin_mcontext_avx512_64::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64, __fs) - 184usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_mcontext_avx512_64_full {
+    pub __es: __darwin_x86_exception_state64,
+    pub __ss: __darwin_x86_thread_full_state64,
+    pub __fs: __darwin_x86_avx512_state64,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_mcontext_avx512_64_full"]
+        [::std::mem::size_of::<__darwin_mcontext_avx512_64_full>() - 2664usize];
+    ["Alignment of __darwin_mcontext_avx512_64_full"]
+        [::std::mem::align_of::<__darwin_mcontext_avx512_64_full>() - 8usize];
+    ["Offset of field: __darwin_mcontext_avx512_64_full::__es"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64_full, __es) - 0usize];
+    ["Offset of field: __darwin_mcontext_avx512_64_full::__ss"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64_full, __ss) - 16usize];
+    ["Offset of field: __darwin_mcontext_avx512_64_full::__fs"]
+        [::std::mem::offset_of!(__darwin_mcontext_avx512_64_full, __fs) - 216usize];
 };
 pub type mcontext_t = *mut __darwin_mcontext64;
 pub type pthread_attr_t = __darwin_pthread_attr_t;
@@ -4209,7 +6144,148 @@ const _: () = {
     ["Offset of field: rusage_info_v5::ri_flags"]
         [::std::mem::offset_of!(rusage_info_v5, ri_flags) - 296usize];
 };
-pub type rusage_info_current = rusage_info_v5;
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct rusage_info_v6 {
+    pub ri_uuid: [u8; 16usize],
+    pub ri_user_time: u64,
+    pub ri_system_time: u64,
+    pub ri_pkg_idle_wkups: u64,
+    pub ri_interrupt_wkups: u64,
+    pub ri_pageins: u64,
+    pub ri_wired_size: u64,
+    pub ri_resident_size: u64,
+    pub ri_phys_footprint: u64,
+    pub ri_proc_start_abstime: u64,
+    pub ri_proc_exit_abstime: u64,
+    pub ri_child_user_time: u64,
+    pub ri_child_system_time: u64,
+    pub ri_child_pkg_idle_wkups: u64,
+    pub ri_child_interrupt_wkups: u64,
+    pub ri_child_pageins: u64,
+    pub ri_child_elapsed_abstime: u64,
+    pub ri_diskio_bytesread: u64,
+    pub ri_diskio_byteswritten: u64,
+    pub ri_cpu_time_qos_default: u64,
+    pub ri_cpu_time_qos_maintenance: u64,
+    pub ri_cpu_time_qos_background: u64,
+    pub ri_cpu_time_qos_utility: u64,
+    pub ri_cpu_time_qos_legacy: u64,
+    pub ri_cpu_time_qos_user_initiated: u64,
+    pub ri_cpu_time_qos_user_interactive: u64,
+    pub ri_billed_system_time: u64,
+    pub ri_serviced_system_time: u64,
+    pub ri_logical_writes: u64,
+    pub ri_lifetime_max_phys_footprint: u64,
+    pub ri_instructions: u64,
+    pub ri_cycles: u64,
+    pub ri_billed_energy: u64,
+    pub ri_serviced_energy: u64,
+    pub ri_interval_max_phys_footprint: u64,
+    pub ri_runnable_time: u64,
+    pub ri_flags: u64,
+    pub ri_user_ptime: u64,
+    pub ri_system_ptime: u64,
+    pub ri_pinstructions: u64,
+    pub ri_pcycles: u64,
+    pub ri_energy_nj: u64,
+    pub ri_penergy_nj: u64,
+    pub ri_reserved: [u64; 14usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of rusage_info_v6"][::std::mem::size_of::<rusage_info_v6>() - 464usize];
+    ["Alignment of rusage_info_v6"][::std::mem::align_of::<rusage_info_v6>() - 8usize];
+    ["Offset of field: rusage_info_v6::ri_uuid"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_uuid) - 0usize];
+    ["Offset of field: rusage_info_v6::ri_user_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_user_time) - 16usize];
+    ["Offset of field: rusage_info_v6::ri_system_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_system_time) - 24usize];
+    ["Offset of field: rusage_info_v6::ri_pkg_idle_wkups"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_pkg_idle_wkups) - 32usize];
+    ["Offset of field: rusage_info_v6::ri_interrupt_wkups"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_interrupt_wkups) - 40usize];
+    ["Offset of field: rusage_info_v6::ri_pageins"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_pageins) - 48usize];
+    ["Offset of field: rusage_info_v6::ri_wired_size"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_wired_size) - 56usize];
+    ["Offset of field: rusage_info_v6::ri_resident_size"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_resident_size) - 64usize];
+    ["Offset of field: rusage_info_v6::ri_phys_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_phys_footprint) - 72usize];
+    ["Offset of field: rusage_info_v6::ri_proc_start_abstime"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_proc_start_abstime) - 80usize];
+    ["Offset of field: rusage_info_v6::ri_proc_exit_abstime"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_proc_exit_abstime) - 88usize];
+    ["Offset of field: rusage_info_v6::ri_child_user_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_user_time) - 96usize];
+    ["Offset of field: rusage_info_v6::ri_child_system_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_system_time) - 104usize];
+    ["Offset of field: rusage_info_v6::ri_child_pkg_idle_wkups"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_pkg_idle_wkups) - 112usize];
+    ["Offset of field: rusage_info_v6::ri_child_interrupt_wkups"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_interrupt_wkups) - 120usize];
+    ["Offset of field: rusage_info_v6::ri_child_pageins"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_pageins) - 128usize];
+    ["Offset of field: rusage_info_v6::ri_child_elapsed_abstime"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_child_elapsed_abstime) - 136usize];
+    ["Offset of field: rusage_info_v6::ri_diskio_bytesread"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_diskio_bytesread) - 144usize];
+    ["Offset of field: rusage_info_v6::ri_diskio_byteswritten"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_diskio_byteswritten) - 152usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_default"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_default) - 160usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_maintenance"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_maintenance) - 168usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_background"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_background) - 176usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_utility"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_utility) - 184usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_legacy"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_legacy) - 192usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_user_initiated"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_user_initiated) - 200usize];
+    ["Offset of field: rusage_info_v6::ri_cpu_time_qos_user_interactive"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cpu_time_qos_user_interactive) - 208usize];
+    ["Offset of field: rusage_info_v6::ri_billed_system_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_billed_system_time) - 216usize];
+    ["Offset of field: rusage_info_v6::ri_serviced_system_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_serviced_system_time) - 224usize];
+    ["Offset of field: rusage_info_v6::ri_logical_writes"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_logical_writes) - 232usize];
+    ["Offset of field: rusage_info_v6::ri_lifetime_max_phys_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_lifetime_max_phys_footprint) - 240usize];
+    ["Offset of field: rusage_info_v6::ri_instructions"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_instructions) - 248usize];
+    ["Offset of field: rusage_info_v6::ri_cycles"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_cycles) - 256usize];
+    ["Offset of field: rusage_info_v6::ri_billed_energy"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_billed_energy) - 264usize];
+    ["Offset of field: rusage_info_v6::ri_serviced_energy"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_serviced_energy) - 272usize];
+    ["Offset of field: rusage_info_v6::ri_interval_max_phys_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_interval_max_phys_footprint) - 280usize];
+    ["Offset of field: rusage_info_v6::ri_runnable_time"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_runnable_time) - 288usize];
+    ["Offset of field: rusage_info_v6::ri_flags"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_flags) - 296usize];
+    ["Offset of field: rusage_info_v6::ri_user_ptime"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_user_ptime) - 304usize];
+    ["Offset of field: rusage_info_v6::ri_system_ptime"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_system_ptime) - 312usize];
+    ["Offset of field: rusage_info_v6::ri_pinstructions"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_pinstructions) - 320usize];
+    ["Offset of field: rusage_info_v6::ri_pcycles"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_pcycles) - 328usize];
+    ["Offset of field: rusage_info_v6::ri_energy_nj"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_energy_nj) - 336usize];
+    ["Offset of field: rusage_info_v6::ri_penergy_nj"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_penergy_nj) - 344usize];
+    ["Offset of field: rusage_info_v6::ri_reserved"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_reserved) - 352usize];
+};
+pub type rusage_info_current = rusage_info_v6;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct rlimit {
@@ -4261,42 +6337,6 @@ extern "C" {
 extern "C" {
     pub fn setrlimit(arg1: libc::c_int, arg2: *const rlimit) -> libc::c_int;
 }
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU16 {
-    pub __val: u16,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU16"][::std::mem::size_of::<_OSUnalignedU16>() - 2usize];
-    ["Alignment of _OSUnalignedU16"][::std::mem::align_of::<_OSUnalignedU16>() - 1usize];
-    ["Offset of field: _OSUnalignedU16::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU16, __val) - 0usize];
-};
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU32 {
-    pub __val: u32,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU32"][::std::mem::size_of::<_OSUnalignedU32>() - 4usize];
-    ["Alignment of _OSUnalignedU32"][::std::mem::align_of::<_OSUnalignedU32>() - 1usize];
-    ["Offset of field: _OSUnalignedU32::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU32, __val) - 0usize];
-};
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU64 {
-    pub __val: u64,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU64"][::std::mem::size_of::<_OSUnalignedU64>() - 8usize];
-    ["Alignment of _OSUnalignedU64"][::std::mem::align_of::<_OSUnalignedU64>() - 1usize];
-    ["Offset of field: _OSUnalignedU64::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU64, __val) - 0usize];
-};
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union wait {
@@ -4884,6 +6924,7 @@ extern "C" {
     ) -> libc::c_int;
 }
 extern "C" {
+    #[link_name = "\u{1}_daemon$1050"]
     pub fn daemon(arg1: libc::c_int, arg2: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -5721,7 +7762,7 @@ extern "C" {
         avcl: *mut libc::c_void,
         level: libc::c_int,
         fmt: *const libc::c_char,
-        vl: va_list,
+        vl: *mut __va_list_tag,
     );
 }
 extern "C" {
@@ -5740,7 +7781,7 @@ extern "C" {
                 arg1: *mut libc::c_void,
                 arg2: libc::c_int,
                 arg3: *const libc::c_char,
-                arg4: va_list,
+                arg4: *mut __va_list_tag,
             ),
         >,
     );
@@ -5751,7 +7792,7 @@ extern "C" {
         avcl: *mut libc::c_void,
         level: libc::c_int,
         fmt: *const libc::c_char,
-        vl: va_list,
+        vl: *mut __va_list_tag,
     );
 }
 extern "C" {
@@ -5767,7 +7808,7 @@ extern "C" {
         ptr: *mut libc::c_void,
         level: libc::c_int,
         fmt: *const libc::c_char,
-        vl: va_list,
+        vl: *mut __va_list_tag,
         line: *mut libc::c_char,
         line_size: libc::c_int,
         print_prefix: *mut libc::c_int,
@@ -5779,7 +7820,7 @@ extern "C" {
         ptr: *mut libc::c_void,
         level: libc::c_int,
         fmt: *const libc::c_char,
-        vl: va_list,
+        vl: *mut __va_list_tag,
         line: *mut libc::c_char,
         line_size: libc::c_int,
         print_prefix: *mut libc::c_int,
@@ -11520,7 +13561,11 @@ extern "C" {
 }
 extern "C" {
     #[doc = " Writes a formatted string to the context taking a va_list.\n @return number of bytes written, < 0 on error."]
-    pub fn avio_vprintf(s: *mut AVIOContext, fmt: *const libc::c_char, ap: va_list) -> libc::c_int;
+    pub fn avio_vprintf(
+        s: *mut AVIOContext,
+        fmt: *const libc::c_char,
+        ap: *mut __va_list_tag,
+    ) -> libc::c_int;
 }
 extern "C" {
     #[doc = " Writes a formatted string to the context.\n @return number of bytes written, < 0 on error."]
@@ -14651,7 +16696,7 @@ extern "C" {
 }
 extern "C" {
     #[doc = " Append a formatted string to a print buffer."]
-    pub fn av_vbprintf(buf: *mut AVBPrint, fmt: *const libc::c_char, vl_arg: va_list);
+    pub fn av_vbprintf(buf: *mut AVBPrint, fmt: *const libc::c_char, vl_arg: *mut __va_list_tag);
 }
 extern "C" {
     #[doc = " Append char c n times to a print buffer."]
@@ -17071,8 +19116,28 @@ const _: () = {
     ["Offset of field: AVDRMDeviceContext::fd"]
         [::std::mem::offset_of!(AVDRMDeviceContext, fd) - 0usize];
 };
-pub type __builtin_va_list = *mut libc::c_char;
-pub type __uint128_t = u128;
+pub type __builtin_va_list = [__va_list_tag; 1usize];
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __va_list_tag {
+    pub gp_offset: libc::c_uint,
+    pub fp_offset: libc::c_uint,
+    pub overflow_arg_area: *mut libc::c_void,
+    pub reg_save_area: *mut libc::c_void,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __va_list_tag"][::std::mem::size_of::<__va_list_tag>() - 24usize];
+    ["Alignment of __va_list_tag"][::std::mem::align_of::<__va_list_tag>() - 8usize];
+    ["Offset of field: __va_list_tag::gp_offset"]
+        [::std::mem::offset_of!(__va_list_tag, gp_offset) - 0usize];
+    ["Offset of field: __va_list_tag::fp_offset"]
+        [::std::mem::offset_of!(__va_list_tag, fp_offset) - 4usize];
+    ["Offset of field: __va_list_tag::overflow_arg_area"]
+        [::std::mem::offset_of!(__va_list_tag, overflow_arg_area) - 8usize];
+    ["Offset of field: __va_list_tag::reg_save_area"]
+        [::std::mem::offset_of!(__va_list_tag, reg_save_area) - 16usize];
+};
 #[doc = " Private context used for internal data.\n\n Unlike priv_data, this is not codec-specific. It is used in general\n libavcodec functions."]
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
