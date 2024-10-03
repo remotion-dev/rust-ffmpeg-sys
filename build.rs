@@ -700,155 +700,22 @@ fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
     let ffmpeg_major_version: u32 = env!("CARGO_PKG_VERSION_MAJOR").parse().unwrap();
 
-    let include_paths: Vec<PathBuf> = if env::var("CARGO_FEATURE_BUILD").is_ok() {
-        println!(
-            "cargo:rustc-link-search=native={}",
-            search().join("lib").to_string_lossy()
-        );
-        link_to_libraries(statik);
-        if fs::metadata(search().join("lib").join("libavutil.a")).is_err() {
-            fs::create_dir_all(output()).expect("failed to create build directory");
-            fetch().unwrap();
-            build().unwrap();
-        }
+    let target = env::var("TARGET").unwrap();
+    std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
 
-        // Check additional required libraries.
-        {
-            let config_mak = source().join("ffbuild/config.mak");
-            let file = File::open(config_mak).unwrap();
-            let reader = BufReader::new(file);
-            let extra_linker_args = reader
-                .lines()
-                .filter_map(|line| {
-                    let line = line.as_ref().ok()?;
+    let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
+    let ffmpeg_dir = PathBuf::from(manifest_dir)
+        .join("extracted")
+        .join(target.clone())
+        .join("remotion");
 
-                    if line.starts_with("EXTRALIBS") {
-                        Some(
-                            line.split('=')
-                                .last()
-                                .unwrap()
-                                .split(' ')
-                                .map(|s| s.to_string())
-                                .collect::<Vec<_>>(),
-                        )
-                    } else {
-                        None
-                    }
-                })
-                .flatten()
-                .collect::<Vec<_>>();
-
-            extra_linker_args
-                .iter()
-                .filter(|flag| flag.starts_with("-l"))
-                .map(|lib| &lib[2..])
-                .for_each(|lib| println!("cargo:rustc-link-lib={}", lib));
-
-            extra_linker_args
-                .iter()
-                .filter(|v| v.starts_with("-L"))
-                .map(|flag| {
-                    let path = &flag[2..];
-                    if path.starts_with('/') {
-                        PathBuf::from(path)
-                    } else {
-                        source().join(path)
-                    }
-                })
-                .for_each(|lib_search_path| {
-                    println!(
-                        "cargo:rustc-link-search=native={}",
-                        lib_search_path.to_str().unwrap()
-                    );
-                })
-        }
-
-        vec![search().join("include")]
-    }
-    // Use prebuilt library
-    else if let Ok(ffmpeg_dir) = env::var("FFMPEG_DIR") {
-        let ffmpeg_dir = PathBuf::from(ffmpeg_dir);
-        if ffmpeg_dir.join("lib/amd64").exists()
-            && env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("x86_64")
-        {
-            println!(
-                "cargo:rustc-link-search=native={}",
-                ffmpeg_dir.join("lib/amd64").to_string_lossy()
-            );
-        } else if ffmpeg_dir.join("lib/armhf").exists()
-            && env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("arm")
-        {
-            println!(
-                "cargo:rustc-link-search=native={}",
-                ffmpeg_dir.join("lib/armhf").to_string_lossy()
-            );
-        } else if ffmpeg_dir.join("lib/arm64").exists()
-            && env::var("CARGO_CFG_TARGET_ARCH").as_deref() == Ok("aarch64")
-        {
-            println!(
-                "cargo:rustc-link-search=native={}",
-                ffmpeg_dir.join("lib/arm64").to_string_lossy()
-            );
-        } else {
-            println!(
-                "cargo:rustc-link-search=native={}",
-                ffmpeg_dir.join("lib").to_string_lossy()
-            );
-        }
-        link_to_libraries(statik);
-        vec![ffmpeg_dir.join("include")]
-    } else if let Some(paths) = try_vcpkg(statik) {
-        // vcpkg doesn't detect the "system" dependencies
-        if statik {
-            if cfg!(feature = "avcodec") || cfg!(feature = "avdevice") {
-                println!("cargo:rustc-link-lib=ole32");
-            }
-
-            if cfg!(feature = "avformat") {
-                println!("cargo:rustc-link-lib=secur32");
-                println!("cargo:rustc-link-lib=ws2_32");
-            }
-
-            // avutil depdendencies
-            println!("cargo:rustc-link-lib=bcrypt");
-            println!("cargo:rustc-link-lib=user32");
-        }
-
-        paths
-    }
-    // Fallback to pkg-config
-    else {
-        pkg_config::Config::new()
-            .statik(statik)
-            .probe("libavutil")
-            .unwrap();
-
-        let mut libs = vec![
-            ("libavformat", "AVFORMAT"),
-            ("libavfilter", "AVFILTER"),
-            ("libavdevice", "AVDEVICE"),
-            ("libswscale", "SWSCALE"),
-            ("libswresample", "SWRESAMPLE"),
-        ];
-        if ffmpeg_major_version < 5 {
-            libs.push(("libavresample", "AVRESAMPLE"));
-        }
-
-        for (lib_name, env_variable_name) in libs.iter() {
-            if env::var(format!("CARGO_FEATURE_{}", env_variable_name)).is_ok() {
-                pkg_config::Config::new()
-                    .statik(statik)
-                    .probe(lib_name)
-                    .unwrap();
-            }
-        }
-
-        pkg_config::Config::new()
-            .statik(statik)
-            .probe("libavcodec")
-            .unwrap()
-            .include_paths
-    };
+    println!("cargo:rustc-env={}={}", "TARGET", target.clone());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        ffmpeg_dir.join("lib").to_string_lossy()
+    );
+    link_to_libraries(statik);
+    let include_paths = vec![ffmpeg_dir.join("include")];
 
     if statik && cfg!(target_os = "macos") {
         let frameworks = vec![
