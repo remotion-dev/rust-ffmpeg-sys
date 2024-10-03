@@ -9,7 +9,7 @@ use flate2::read::GzDecoder;
 use std::env;
 use std::fmt::Write as FmtWrite;
 use std::fs::{self, File};
-use std::io::{self, BufRead, BufReader, Read, Write};
+use std::io::{self, BufReader, Read, Write};
 use std::path::PathBuf;
 use std::process::Command;
 use std::str;
@@ -700,8 +700,29 @@ fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
     let ffmpeg_major_version: u32 = env!("CARGO_PKG_VERSION_MAJOR").parse().unwrap();
 
+    // Read zips/macos.gz in as a Vec<u8>
+    // std::fs::remove_dir_all("extracted").unwrap_or(());
     let target = env::var("TARGET").unwrap();
     std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
+    let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
+    let input_reader = BufReader::new(input_file);
+
+    let mut gz_decoder = GzDecoder::new(input_reader);
+
+    // Read the decompressed data into a Vec<u8>
+    let mut tar_data = Vec::new();
+    gz_decoder.read_to_end(&mut tar_data).unwrap();
+
+    // Create a cursor to read the decompressed tar data
+    let cursor = std::io::Cursor::new(tar_data);
+
+    // Create a new tar Archive to handle the tar contents
+    let mut archive = Archive::new(cursor);
+
+    let target_dir = PathBuf::from("extracted").join(target.clone()); // Doesn't need to exist
+
+    // Extract the contents of the tar archive to the destination directory
+    archive.unpack(target_dir).unwrap();
 
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
     let ffmpeg_dir = PathBuf::from(manifest_dir)
@@ -1269,30 +1290,6 @@ fn main() {
     bindings
         .write_to_file(output().join("bindings.rs"))
         .expect("Couldn't write bindings!");
-
-    // Read zips/macos.gz in as a Vec<u8>
-    // std::fs::remove_dir_all("extracted").unwrap_or(());
-    let target = env::var("TARGET").unwrap();
-    std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
-    let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
-    let input_reader = BufReader::new(input_file);
-
-    let mut gz_decoder = GzDecoder::new(input_reader);
-
-    // Read the decompressed data into a Vec<u8>
-    let mut tar_data = Vec::new();
-    gz_decoder.read_to_end(&mut tar_data).unwrap();
-
-    // Create a cursor to read the decompressed tar data
-    let cursor = std::io::Cursor::new(tar_data);
-
-    // Create a new tar Archive to handle the tar contents
-    let mut archive = Archive::new(cursor);
-
-    let target_dir = PathBuf::from("extracted").join(target.clone()); // Doesn't need to exist
-
-    // Extract the contents of the tar archive to the destination directory
-    archive.unpack(target_dir).unwrap();
 
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
 
