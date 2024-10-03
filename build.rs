@@ -5,20 +5,19 @@ extern crate num_cpus;
 extern crate pkg_config;
 extern crate tar;
 
+use flate2::read::GzDecoder;
 use std::env;
 use std::fmt::Write as FmtWrite;
-use std::fs::File;
-use std::io::Read;
-use std::io::{BufReader, Write};
+use std::fs::{self, File};
+use std::io::{self, BufRead, BufReader, Read, Write};
 use std::path::PathBuf;
 use std::process::Command;
 use std::str;
+use tar::Archive;
 
 use bindgen::callbacks::{
     EnumVariantCustomBehavior, EnumVariantValue, IntKind, MacroParsingBehavior, ParseCallbacks,
 };
-use flate2::read::GzDecoder;
-use tar::Archive;
 
 #[derive(Debug)]
 struct Library {
@@ -131,6 +130,44 @@ impl ParseCallbacks for Callbacks {
             _ => Default,
         }
     }
+}
+
+fn get_zip_name() -> String {
+    match env::var("TARGET") {
+        Ok(target) => match target.as_str() {
+            "aarch64-unknown-linux-gnu" => "linux-arm.gz".to_string(),
+            "aarch64-unknown-linux-musl" => "linux-arm-musl.gz".to_string(),
+            "x86_64-unknown-linux-gnu" => "linux-x64.gz".to_string(),
+            "x86_64-unknown-linux-musl" => "linux-x64-musl.gz".to_string(),
+            "x86_64-apple-darwin" => "macos-x64.gz".to_string(),
+            "aarch64-apple-darwin" => "macos-arm.gz".to_string(),
+            "x86_64-pc-windows-gnu" => "windows.gz".to_string(),
+
+            // Alternative spellings
+            "linux-arm" => "aarch64-unknown-linux-gnu.gz".to_string(),
+            "linux-arm-musl" => "aarch64-unknown-linux-musl.gz".to_string(),
+            "linux-x64" => "x86_64-unknown-linux-gnu.gz".to_string(),
+            "linux-x64-musl" => "x86_64-unknown-linux-musl.gz".to_string(),
+            "macos-x64" => "x86_64-apple-darwin.gz".to_string(),
+            "macos-arm" => "aarch64-apple-darwin.gz".to_string(),
+            "windows" => "x86_64-pc-windows-gnu.gz".to_string(),
+            tar => panic!("Unsupported target {}", tar),
+        },
+        Err(_) => panic!("TARGET environment variable not set"),
+    }
+}
+
+fn version() -> String {
+    let major: u8 = env::var("CARGO_PKG_VERSION_MAJOR")
+        .unwrap()
+        .parse()
+        .unwrap();
+    let minor: u8 = env::var("CARGO_PKG_VERSION_MINOR")
+        .unwrap()
+        .parse()
+        .unwrap();
+
+    format!("{}.{}", major, minor)
 }
 
 fn output() -> PathBuf {
@@ -627,6 +664,25 @@ fn check_features(
     }
 }
 
+fn search_include(include_paths: &[PathBuf], header: &str) -> String {
+    for dir in include_paths {
+        let include = dir.join(header);
+        if fs::metadata(&include).is_ok() {
+            return include.as_path().to_str().unwrap().to_string();
+        }
+    }
+    format!("/usr/include/{}", header)
+}
+
+fn maybe_search_include(include_paths: &[PathBuf], header: &str) -> Option<String> {
+    let path = search_include(include_paths, header);
+    if fs::metadata(&path).is_ok() {
+        Some(path)
+    } else {
+        None
+    }
+}
+
 fn link_to_libraries(statik: bool) {
     let ffmpeg_ty = if statik { "static" } else { "dylib" };
     for lib in LIBRARIES {
@@ -640,39 +696,9 @@ fn link_to_libraries(statik: bool) {
     }
 }
 
-fn get_zip_name() -> String {
-    match env::var("TARGET") {
-        Ok(target) => match target.as_str() {
-            "aarch64-unknown-linux-gnu" => "linux-arm.gz".to_string(),
-            "aarch64-unknown-linux-musl" => "linux-arm-musl.gz".to_string(),
-            "x86_64-unknown-linux-gnu" => "linux-x64.gz".to_string(),
-            "x86_64-unknown-linux-musl" => "linux-x64-musl.gz".to_string(),
-            "x86_64-apple-darwin" => "macos-x64.gz".to_string(),
-            "aarch64-apple-darwin" => "macos-arm.gz".to_string(),
-            "x86_64-pc-windows-gnu" => "windows.gz".to_string(),
-
-            // Alternative spellings
-            "linux-arm" => "aarch64-unknown-linux-gnu.gz".to_string(),
-            "linux-arm-musl" => "aarch64-unknown-linux-musl.gz".to_string(),
-            "linux-x64" => "x86_64-unknown-linux-gnu.gz".to_string(),
-            "linux-x64-musl" => "x86_64-unknown-linux-musl.gz".to_string(),
-            "macos-x64" => "x86_64-apple-darwin.gz".to_string(),
-            "macos-arm" => "aarch64-apple-darwin.gz".to_string(),
-            "windows" => "x86_64-pc-windows-gnu.gz".to_string(),
-            tar => panic!("Unsupported target {}", tar),
-        },
-        Err(_) => panic!("TARGET environment variable not set"),
-    }
-}
-
 fn main() {
     let statik = env::var("CARGO_FEATURE_STATIC").is_ok();
-    // Read zips/macos.gz in as a Vec<u8>
-    // std::fs::remove_dir_all("extracted").unwrap_or(());
-    let target = env::var("TARGET").unwrap();
-    std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
-    let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
-    let input_reader = BufReader::new(input_file);
+    let ffmpeg_major_version: u32 = env!("CARGO_PKG_VERSION_MAJOR").parse().unwrap();
 
     let include_paths: Vec<PathBuf> = if env::var("CARGO_FEATURE_BUILD").is_ok() {
         println!(
@@ -778,23 +804,51 @@ fn main() {
                 println!("cargo:rustc-link-lib=ole32");
             }
 
-    // Extract the contents of the tar archive to the destination directory
-    archive.unpack(target_dir).unwrap();
+            if cfg!(feature = "avformat") {
+                println!("cargo:rustc-link-lib=secur32");
+                println!("cargo:rustc-link-lib=ws2_32");
+            }
 
-    let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
+            // avutil depdendencies
+            println!("cargo:rustc-link-lib=bcrypt");
+            println!("cargo:rustc-link-lib=user32");
+        }
 
-    let ffmpeg_dir = PathBuf::from(manifest_dir)
-        .join("extracted")
-        .join(target.clone())
-        .join("remotion");
+        paths
+    }
+    // Fallback to pkg-config
+    else {
+        pkg_config::Config::new()
+            .statik(statik)
+            .probe("libavutil")
+            .unwrap();
 
-    println!("cargo:rustc-env={}={}", "TARGET", target.clone());
-    println!(
-        "cargo:rustc-link-search=native={}",
-        ffmpeg_dir.join("lib").to_string_lossy()
-    );
-    link_to_libraries(statik);
-    let include_paths = vec![ffmpeg_dir.join("include")];
+        let mut libs = vec![
+            ("libavformat", "AVFORMAT"),
+            ("libavfilter", "AVFILTER"),
+            ("libavdevice", "AVDEVICE"),
+            ("libswscale", "SWSCALE"),
+            ("libswresample", "SWRESAMPLE"),
+        ];
+        if ffmpeg_major_version < 5 {
+            libs.push(("libavresample", "AVRESAMPLE"));
+        }
+
+        for (lib_name, env_variable_name) in libs.iter() {
+            if env::var(format!("CARGO_FEATURE_{}", env_variable_name)).is_ok() {
+                pkg_config::Config::new()
+                    .statik(statik)
+                    .probe(lib_name)
+                    .unwrap();
+            }
+        }
+
+        pkg_config::Config::new()
+            .statik(statik)
+            .probe("libavcodec")
+            .unwrap()
+            .include_paths
+    };
 
     if statik && cfg!(target_os = "macos") {
         let frameworks = vec![
@@ -1121,4 +1175,269 @@ fn main() {
             ("libswscale/swscale.h", Some("swscale"), "FF_API_ARCH_BFIN"),
         ],
     );
+
+    let clang_includes = include_paths
+        .iter()
+        .map(|include| format!("-I{}", include.to_string_lossy()));
+
+    // The bindgen::Builder is the main entry point
+    // to bindgen, and lets you build up options for
+    // the resulting bindings.
+    let mut builder = bindgen::Builder::default()
+        .clang_args(clang_includes)
+        .ctypes_prefix("libc")
+        // https://github.com/rust-lang/rust-bindgen/issues/550
+        .blocklist_type("max_align_t")
+        .blocklist_function("_.*")
+        // Blocklist functions with u128 in signature.
+        // https://github.com/zmwangx/rust-ffmpeg-sys/issues/1
+        // https://github.com/rust-lang/rust-bindgen/issues/1549
+        .blocklist_function("acoshl")
+        .blocklist_function("acosl")
+        .blocklist_function("asinhl")
+        .blocklist_function("asinl")
+        .blocklist_function("atan2l")
+        .blocklist_function("atanhl")
+        .blocklist_function("atanl")
+        .blocklist_function("cbrtl")
+        .blocklist_function("ceill")
+        .blocklist_function("copysignl")
+        .blocklist_function("coshl")
+        .blocklist_function("cosl")
+        .blocklist_function("dreml")
+        .blocklist_function("ecvt_r")
+        .blocklist_function("erfcl")
+        .blocklist_function("erfl")
+        .blocklist_function("exp2l")
+        .blocklist_function("expl")
+        .blocklist_function("expm1l")
+        .blocklist_function("fabsl")
+        .blocklist_function("fcvt_r")
+        .blocklist_function("fdiml")
+        .blocklist_function("finitel")
+        .blocklist_function("floorl")
+        .blocklist_function("fmal")
+        .blocklist_function("fmaxl")
+        .blocklist_function("fminl")
+        .blocklist_function("fmodl")
+        .blocklist_function("frexpl")
+        .blocklist_function("gammal")
+        .blocklist_function("hypotl")
+        .blocklist_function("ilogbl")
+        .blocklist_function("isinfl")
+        .blocklist_function("isnanl")
+        .blocklist_function("j0l")
+        .blocklist_function("j1l")
+        .blocklist_function("jnl")
+        .blocklist_function("ldexpl")
+        .blocklist_function("lgammal")
+        .blocklist_function("lgammal_r")
+        .blocklist_function("llrintl")
+        .blocklist_function("llroundl")
+        .blocklist_function("log10l")
+        .blocklist_function("log1pl")
+        .blocklist_function("log2l")
+        .blocklist_function("logbl")
+        .blocklist_function("logl")
+        .blocklist_function("lrintl")
+        .blocklist_function("lroundl")
+        .blocklist_function("modfl")
+        .blocklist_function("nanl")
+        .blocklist_function("nearbyintl")
+        .blocklist_function("nextafterl")
+        .blocklist_function("nexttoward")
+        .blocklist_function("nexttowardf")
+        .blocklist_function("nexttowardl")
+        .blocklist_function("powl")
+        .blocklist_function("qecvt")
+        .blocklist_function("qecvt_r")
+        .blocklist_function("qfcvt")
+        .blocklist_function("qfcvt_r")
+        .blocklist_function("qgcvt")
+        .blocklist_function("remainderl")
+        .blocklist_function("remquol")
+        .blocklist_function("rintl")
+        .blocklist_function("roundl")
+        .blocklist_function("scalbl")
+        .blocklist_function("scalblnl")
+        .blocklist_function("scalbnl")
+        .blocklist_function("significandl")
+        .blocklist_function("sinhl")
+        .blocklist_function("sinl")
+        .blocklist_function("sqrtl")
+        .blocklist_function("strtold")
+        .blocklist_function("tanhl")
+        .blocklist_function("tanl")
+        .blocklist_function("tgammal")
+        .blocklist_function("truncl")
+        .blocklist_function("y0l")
+        .blocklist_function("y1l")
+        .blocklist_function("ynl")
+        .opaque_type("__mingw_ldbl_type_t")
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: env::var("CARGO_FEATURE_NON_EXHAUSTIVE_ENUMS").is_ok(),
+        })
+        .prepend_enum_name(false)
+        .derive_eq(true)
+        .size_t_is_usize(true)
+        .parse_callbacks(Box::new(Callbacks));
+
+    // The input headers we would like to generate
+    // bindings for.
+    if env::var("CARGO_FEATURE_AVCODEC").is_ok() {
+        builder = builder
+            .header(search_include(&include_paths, "libavcodec/avcodec.h"))
+            .header(search_include(&include_paths, "libavcodec/dv_profile.h"))
+            .header(search_include(&include_paths, "libavcodec/avfft.h"))
+            .header(search_include(&include_paths, "libavcodec/vorbis_parser.h"));
+
+        if ffmpeg_major_version < 5 {
+            builder = builder.header(search_include(&include_paths, "libavcodec/vaapi.h"))
+        }
+    }
+
+    if env::var("CARGO_FEATURE_AVDEVICE").is_ok() {
+        builder = builder.header(search_include(&include_paths, "libavdevice/avdevice.h"));
+    }
+
+    if env::var("CARGO_FEATURE_AVFILTER").is_ok() {
+        builder = builder
+            .header(search_include(&include_paths, "libavfilter/buffersink.h"))
+            .header(search_include(&include_paths, "libavfilter/buffersrc.h"))
+            .header(search_include(&include_paths, "libavfilter/avfilter.h"));
+    }
+
+    if env::var("CARGO_FEATURE_AVFORMAT").is_ok() {
+        builder = builder
+            .header(search_include(&include_paths, "libavformat/avformat.h"))
+            .header(search_include(&include_paths, "libavformat/avio.h"));
+    }
+
+    if env::var("CARGO_FEATURE_AVRESAMPLE").is_ok() {
+        builder = builder.header(search_include(&include_paths, "libavresample/avresample.h"));
+    }
+
+    builder = builder
+        .header(search_include(&include_paths, "libavutil/adler32.h"))
+        .header(search_include(&include_paths, "libavutil/aes.h"))
+        .header(search_include(&include_paths, "libavutil/audio_fifo.h"))
+        .header(search_include(&include_paths, "libavutil/base64.h"))
+        .header(search_include(&include_paths, "libavutil/blowfish.h"))
+        .header(search_include(&include_paths, "libavutil/bprint.h"))
+        .header(search_include(&include_paths, "libavutil/buffer.h"))
+        .header(search_include(&include_paths, "libavutil/camellia.h"))
+        .header(search_include(&include_paths, "libavutil/cast5.h"))
+        .header(search_include(&include_paths, "libavutil/channel_layout.h"))
+        // Here until https://github.com/rust-lang/rust-bindgen/issues/2192 /
+        // https://github.com/rust-lang/rust-bindgen/issues/258 is fixed.
+        .header("channel_layout_fixed.h")
+        .header(search_include(&include_paths, "libavutil/cpu.h"))
+        .header(search_include(&include_paths, "libavutil/crc.h"))
+        .header(search_include(&include_paths, "libavutil/dict.h"))
+        .header(search_include(&include_paths, "libavutil/display.h"))
+        .header(search_include(&include_paths, "libavutil/downmix_info.h"))
+        .header(search_include(&include_paths, "libavutil/error.h"))
+        .header(search_include(&include_paths, "libavutil/eval.h"))
+        .header(search_include(&include_paths, "libavutil/fifo.h"))
+        .header(search_include(&include_paths, "libavutil/file.h"))
+        .header(search_include(&include_paths, "libavutil/frame.h"))
+        .header(search_include(&include_paths, "libavutil/hash.h"))
+        .header(search_include(&include_paths, "libavutil/hmac.h"))
+        .header(search_include(&include_paths, "libavutil/hwcontext.h"))
+        .header(search_include(&include_paths, "libavutil/imgutils.h"))
+        .header(search_include(&include_paths, "libavutil/lfg.h"))
+        .header(search_include(&include_paths, "libavutil/log.h"))
+        .header(search_include(&include_paths, "libavutil/lzo.h"))
+        .header(search_include(&include_paths, "libavutil/macros.h"))
+        .header(search_include(&include_paths, "libavutil/mathematics.h"))
+        .header(search_include(&include_paths, "libavutil/md5.h"))
+        .header(search_include(&include_paths, "libavutil/mem.h"))
+        .header(search_include(&include_paths, "libavutil/motion_vector.h"))
+        .header(search_include(&include_paths, "libavutil/murmur3.h"))
+        .header(search_include(&include_paths, "libavutil/opt.h"))
+        .header(search_include(&include_paths, "libavutil/parseutils.h"))
+        .header(search_include(&include_paths, "libavutil/pixdesc.h"))
+        .header(search_include(&include_paths, "libavutil/pixfmt.h"))
+        .header(search_include(&include_paths, "libavutil/random_seed.h"))
+        .header(search_include(&include_paths, "libavutil/rational.h"))
+        .header(search_include(&include_paths, "libavutil/replaygain.h"))
+        .header(search_include(&include_paths, "libavutil/ripemd.h"))
+        .header(search_include(&include_paths, "libavutil/samplefmt.h"))
+        .header(search_include(&include_paths, "libavutil/sha.h"))
+        .header(search_include(&include_paths, "libavutil/sha512.h"))
+        .header(search_include(&include_paths, "libavutil/stereo3d.h"))
+        .header(search_include(&include_paths, "libavutil/avstring.h"))
+        .header(search_include(&include_paths, "libavutil/threadmessage.h"))
+        .header(search_include(&include_paths, "libavutil/time.h"))
+        .header(search_include(&include_paths, "libavutil/timecode.h"))
+        .header(search_include(&include_paths, "libavutil/twofish.h"))
+        .header(search_include(&include_paths, "libavutil/avutil.h"))
+        .header(search_include(&include_paths, "libavutil/xtea.h"));
+
+    if env::var("CARGO_FEATURE_POSTPROC").is_ok() {
+        builder = builder.header(search_include(&include_paths, "libpostproc/postprocess.h"));
+    }
+
+    if env::var("CARGO_FEATURE_SWRESAMPLE").is_ok() {
+        builder = builder.header(search_include(&include_paths, "libswresample/swresample.h"));
+    }
+
+    if env::var("CARGO_FEATURE_SWSCALE").is_ok() {
+        builder = builder.header(search_include(&include_paths, "libswscale/swscale.h"));
+    }
+
+    if let Some(hwcontext_drm_header) =
+        maybe_search_include(&include_paths, "libavutil/hwcontext_drm.h")
+    {
+        builder = builder.header(hwcontext_drm_header);
+    }
+
+    // Finish the builder and generate the bindings.
+    let bindings = builder
+        .generate()
+        // Unwrap the Result and panic on failure.
+        .expect("Unable to generate bindings");
+
+    // Write the bindings to the $OUT_DIR/bindings.rs file.
+    bindings
+        .write_to_file(output().join("bindings.rs"))
+        .expect("Couldn't write bindings!");
+
+    // Read zips/macos.gz in as a Vec<u8>
+    // std::fs::remove_dir_all("extracted").unwrap_or(());
+    let target = env::var("TARGET").unwrap();
+    std::env::set_var("TARGET", get_zip_name().replace(".gz", ""));
+    let input_file = File::open(format!("zips/{}", get_zip_name())).unwrap();
+    let input_reader = BufReader::new(input_file);
+
+    let mut gz_decoder = GzDecoder::new(input_reader);
+
+    // Read the decompressed data into a Vec<u8>
+    let mut tar_data = Vec::new();
+    gz_decoder.read_to_end(&mut tar_data).unwrap();
+
+    // Create a cursor to read the decompressed tar data
+    let cursor = std::io::Cursor::new(tar_data);
+
+    // Create a new tar Archive to handle the tar contents
+    let mut archive = Archive::new(cursor);
+
+    let target_dir = PathBuf::from("extracted").join(target.clone()); // Doesn't need to exist
+
+    // Extract the contents of the tar archive to the destination directory
+    archive.unpack(target_dir).unwrap();
+
+    let manifest_dir = env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR is not set");
+
+    let ffmpeg_dir = PathBuf::from(manifest_dir)
+        .join("extracted")
+        .join(target.clone())
+        .join("remotion");
+
+    println!("cargo:rustc-env={}={}", "TARGET", target.clone());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        ffmpeg_dir.join("lib").to_string_lossy()
+    );
+    link_to_libraries(statik);
 }
