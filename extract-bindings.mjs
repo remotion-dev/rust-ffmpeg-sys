@@ -15,6 +15,9 @@ for (const file of readdirSync("zips")) {
   if (file.includes("SOURCE")) {
     continue;
   }
+  if (file.includes(".DS_Store")) {
+    continue;
+  }
   mkdirSync("bindings", { recursive: true });
   execSync(`tar xf zips/${file} --include='bindings.rs' -C bindings`);
   execSync(`cp bindings/bindings.rs bindings/${mapping[file]}.rs`);
