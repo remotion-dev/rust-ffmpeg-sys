@@ -83,6 +83,7 @@ where
 pub const _STDINT_H: libc::c_int = 1;
 pub const _FEATURES_H: libc::c_int = 1;
 pub const _DEFAULT_SOURCE: libc::c_int = 1;
+pub const __GLIBC_USE_ISOC2X: libc::c_int = 0;
 pub const __USE_ISOC11: libc::c_int = 1;
 pub const __USE_ISOC99: libc::c_int = 1;
 pub const __USE_ISOC95: libc::c_int = 1;
@@ -100,30 +101,36 @@ pub const __USE_MISC: libc::c_int = 1;
 pub const __USE_ATFILE: libc::c_int = 1;
 pub const __USE_FORTIFY_LEVEL: libc::c_int = 0;
 pub const __GLIBC_USE_DEPRECATED_GETS: libc::c_int = 0;
+pub const __GLIBC_USE_DEPRECATED_SCANF: libc::c_int = 0;
 pub const _STDC_PREDEF_H: libc::c_int = 1;
 pub const __STDC_IEC_559__: libc::c_int = 1;
 pub const __STDC_IEC_559_COMPLEX__: libc::c_int = 1;
 pub const __STDC_ISO_10646__: libc::c_int = 201706;
-pub const __STDC_NO_THREADS__: libc::c_int = 1;
 pub const __GNU_LIBRARY__: libc::c_int = 6;
 pub const __GLIBC__: libc::c_int = 2;
-pub const __GLIBC_MINOR__: libc::c_int = 26;
+pub const __GLIBC_MINOR__: libc::c_int = 31;
 pub const _SYS_CDEFS_H: libc::c_int = 1;
 pub const __glibc_c99_flexarr_available: libc::c_int = 1;
 pub const __WORDSIZE: libc::c_int = 64;
 pub const __WORDSIZE_TIME64_COMPAT32: libc::c_int = 1;
 pub const __SYSCALL_WORDSIZE: libc::c_int = 64;
+pub const __LONG_DOUBLE_USES_FLOAT128: libc::c_int = 0;
 pub const __HAVE_GENERIC_SELECTION: libc::c_int = 1;
 pub const __GLIBC_USE_LIB_EXT2: libc::c_int = 0;
 pub const __GLIBC_USE_IEC_60559_BFP_EXT: libc::c_int = 0;
+pub const __GLIBC_USE_IEC_60559_BFP_EXT_C2X: libc::c_int = 0;
 pub const __GLIBC_USE_IEC_60559_FUNCS_EXT: libc::c_int = 0;
+pub const __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X: libc::c_int = 0;
 pub const __GLIBC_USE_IEC_60559_TYPES_EXT: libc::c_int = 0;
 pub const _BITS_TYPES_H: libc::c_int = 1;
+pub const __TIMESIZE: libc::c_int = 64;
 pub const _BITS_TYPESIZES_H: libc::c_int = 1;
 pub const __OFF_T_MATCHES_OFF64_T: libc::c_int = 1;
 pub const __INO_T_MATCHES_INO64_T: libc::c_int = 1;
 pub const __RLIM_T_MATCHES_RLIM64_T: libc::c_int = 1;
+pub const __STATFS_MATCHES_STATFS64: libc::c_int = 1;
 pub const __FD_SETSIZE: libc::c_int = 1024;
+pub const _BITS_TIME64_H: libc::c_int = 1;
 pub const _BITS_WCHAR_H: libc::c_int = 1;
 pub const _BITS_STDINT_INTN_H: libc::c_int = 1;
 pub const _BITS_STDINT_UINTN_H: libc::c_int = 1;
@@ -546,6 +553,20 @@ pub const _MATH_H: libc::c_int = 1;
 pub const _BITS_LIBM_SIMD_DECL_STUBS_H: libc::c_int = 1;
 pub const __HAVE_FLOAT128: libc::c_int = 0;
 pub const __HAVE_DISTINCT_FLOAT128: libc::c_int = 0;
+pub const __HAVE_FLOAT64X: libc::c_int = 1;
+pub const __HAVE_FLOAT64X_LONG_DOUBLE: libc::c_int = 1;
+pub const __HAVE_FLOAT16: libc::c_int = 0;
+pub const __HAVE_FLOAT32: libc::c_int = 1;
+pub const __HAVE_FLOAT64: libc::c_int = 1;
+pub const __HAVE_FLOAT32X: libc::c_int = 1;
+pub const __HAVE_FLOAT128X: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT16: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT32: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT64: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT32X: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT64X: libc::c_int = 0;
+pub const __HAVE_DISTINCT_FLOAT128X: libc::c_int = 0;
+pub const __HAVE_FLOATN_NOT_TYPEDEF: libc::c_int = 0;
 pub const __FP_LOGB0_IS_MIN: libc::c_int = 1;
 pub const __FP_LOGBNAN_IS_MIN: libc::c_int = 1;
 pub const FP_ILOGB0: libc::c_int = -2147483648;
@@ -556,12 +577,6 @@ pub const __MATH_DECLARE_LDOUBLE: libc::c_int = 1;
 pub const MATH_ERRNO: libc::c_int = 1;
 pub const MATH_ERREXCEPT: libc::c_int = 2;
 pub const math_errhandling: libc::c_int = 3;
-pub const DOMAIN: libc::c_int = 1;
-pub const SING: libc::c_int = 2;
-pub const OVERFLOW: libc::c_int = 3;
-pub const UNDERFLOW: libc::c_int = 4;
-pub const TLOSS: libc::c_int = 5;
-pub const PLOSS: libc::c_int = 6;
 pub const M_E: f64 = 2.718281828459045;
 pub const M_LOG2E: f64 = 1.4426950408889634;
 pub const M_LOG10E: f64 = 0.4342944819032518;
@@ -576,69 +591,21 @@ pub const M_2_SQRTPI: f64 = 1.1283791670955126;
 pub const M_SQRT2: f64 = 1.4142135623730951;
 pub const M_SQRT1_2: f64 = 0.7071067811865476;
 pub const _STDIO_H: libc::c_int = 1;
+pub const __GNUC_VA_LIST: libc::c_int = 1;
+pub const _____fpos_t_defined: libc::c_int = 1;
+pub const ____mbstate_t_defined: libc::c_int = 1;
+pub const _____fpos64_t_defined: libc::c_int = 1;
 pub const ____FILE_defined: libc::c_int = 1;
 pub const __FILE_defined: libc::c_int = 1;
-pub const _G_config_h: libc::c_int = 1;
-pub const ____mbstate_t_defined: libc::c_int = 1;
-pub const _G_HAVE_MMAP: libc::c_int = 1;
-pub const _G_HAVE_MREMAP: libc::c_int = 1;
-pub const _G_IO_IO_FILE_VERSION: libc::c_int = 131073;
-pub const _G_BUFSIZ: libc::c_int = 8192;
-pub const _IO_BUFSIZ: libc::c_int = 8192;
-pub const __GNUC_VA_LIST: libc::c_int = 1;
-pub const _IO_UNIFIED_JUMPTABLES: libc::c_int = 1;
-pub const EOF: libc::c_int = -1;
-pub const _IOS_INPUT: libc::c_int = 1;
-pub const _IOS_OUTPUT: libc::c_int = 2;
-pub const _IOS_ATEND: libc::c_int = 4;
-pub const _IOS_APPEND: libc::c_int = 8;
-pub const _IOS_TRUNC: libc::c_int = 16;
-pub const _IOS_NOCREATE: libc::c_int = 32;
-pub const _IOS_NOREPLACE: libc::c_int = 64;
-pub const _IOS_BIN: libc::c_int = 128;
-pub const _IO_MAGIC: u32 = 4222418944;
-pub const _OLD_STDIO_MAGIC: u32 = 4206624768;
-pub const _IO_MAGIC_MASK: u32 = 4294901760;
-pub const _IO_USER_BUF: libc::c_int = 1;
-pub const _IO_UNBUFFERED: libc::c_int = 2;
-pub const _IO_NO_READS: libc::c_int = 4;
-pub const _IO_NO_WRITES: libc::c_int = 8;
+pub const __struct_FILE_defined: libc::c_int = 1;
 pub const _IO_EOF_SEEN: libc::c_int = 16;
 pub const _IO_ERR_SEEN: libc::c_int = 32;
-pub const _IO_DELETE_DONT_CLOSE: libc::c_int = 64;
-pub const _IO_LINKED: libc::c_int = 128;
-pub const _IO_IN_BACKUP: libc::c_int = 256;
-pub const _IO_LINE_BUF: libc::c_int = 512;
-pub const _IO_TIED_PUT_GET: libc::c_int = 1024;
-pub const _IO_CURRENTLY_PUTTING: libc::c_int = 2048;
-pub const _IO_IS_APPENDING: libc::c_int = 4096;
-pub const _IO_IS_FILEBUF: libc::c_int = 8192;
-pub const _IO_BAD_SEEN: libc::c_int = 16384;
 pub const _IO_USER_LOCK: libc::c_int = 32768;
-pub const _IO_FLAGS2_MMAP: libc::c_int = 1;
-pub const _IO_FLAGS2_NOTCANCEL: libc::c_int = 2;
-pub const _IO_FLAGS2_USER_WBUF: libc::c_int = 8;
-pub const _IO_SKIPWS: libc::c_int = 1;
-pub const _IO_LEFT: libc::c_int = 2;
-pub const _IO_RIGHT: libc::c_int = 4;
-pub const _IO_INTERNAL: libc::c_int = 8;
-pub const _IO_DEC: libc::c_int = 16;
-pub const _IO_OCT: libc::c_int = 32;
-pub const _IO_HEX: libc::c_int = 64;
-pub const _IO_SHOWBASE: libc::c_int = 128;
-pub const _IO_SHOWPOINT: libc::c_int = 256;
-pub const _IO_UPPERCASE: libc::c_int = 512;
-pub const _IO_SHOWPOS: libc::c_int = 1024;
-pub const _IO_SCIENTIFIC: libc::c_int = 2048;
-pub const _IO_FIXED: libc::c_int = 4096;
-pub const _IO_UNITBUF: libc::c_int = 8192;
-pub const _IO_STDIO: libc::c_int = 16384;
-pub const _IO_DONT_CLOSE: libc::c_int = 32768;
-pub const _IO_BOOLALPHA: libc::c_int = 65536;
 pub const _IOFBF: libc::c_int = 0;
 pub const _IOLBF: libc::c_int = 1;
 pub const _IONBF: libc::c_int = 2;
 pub const BUFSIZ: libc::c_int = 8192;
+pub const EOF: libc::c_int = -1;
 pub const SEEK_SET: libc::c_int = 0;
 pub const SEEK_CUR: libc::c_int = 1;
 pub const SEEK_END: libc::c_int = 2;
@@ -659,6 +626,7 @@ pub const WNOWAIT: libc::c_int = 16777216;
 pub const __WNOTHREAD: libc::c_int = 536870912;
 pub const __WALL: libc::c_int = 1073741824;
 pub const __WCLONE: u32 = 2147483648;
+pub const __ENUM_IDTYPE_T: libc::c_int = 1;
 pub const __W_CONTINUED: libc::c_int = 65535;
 pub const __WCOREFLAG: libc::c_int = 128;
 pub const __ldiv_t_defined: libc::c_int = 1;
@@ -673,9 +641,11 @@ pub const __time_t_defined: libc::c_int = 1;
 pub const __timer_t_defined: libc::c_int = 1;
 pub const __BIT_TYPES_DEFINED__: libc::c_int = 1;
 pub const _ENDIAN_H: libc::c_int = 1;
+pub const _BITS_ENDIAN_H: libc::c_int = 1;
 pub const __LITTLE_ENDIAN: libc::c_int = 1234;
 pub const __BIG_ENDIAN: libc::c_int = 4321;
 pub const __PDP_ENDIAN: libc::c_int = 3412;
+pub const _BITS_ENDIANNESS_H: libc::c_int = 1;
 pub const __BYTE_ORDER: libc::c_int = 1234;
 pub const __FLOAT_WORD_ORDER: libc::c_int = 1234;
 pub const LITTLE_ENDIAN: libc::c_int = 1234;
@@ -690,8 +660,6 @@ pub const __sigset_t_defined: libc::c_int = 1;
 pub const __timeval_defined: libc::c_int = 1;
 pub const _STRUCT_TIMESPEC: libc::c_int = 1;
 pub const FD_SETSIZE: libc::c_int = 1024;
-pub const _SYS_SYSMACROS_H: libc::c_int = 1;
-pub const _BITS_SYSMACROS_H: libc::c_int = 1;
 pub const _BITS_PTHREADTYPES_COMMON_H: libc::c_int = 1;
 pub const _THREAD_SHARED_TYPES_H: libc::c_int = 1;
 pub const _BITS_PTHREADTYPES_ARCH_H: libc::c_int = 1;
@@ -704,10 +672,7 @@ pub const __SIZEOF_PTHREAD_COND_T: libc::c_int = 48;
 pub const __SIZEOF_PTHREAD_CONDATTR_T: libc::c_int = 4;
 pub const __SIZEOF_PTHREAD_RWLOCKATTR_T: libc::c_int = 8;
 pub const __SIZEOF_PTHREAD_BARRIERATTR_T: libc::c_int = 4;
-pub const __PTHREAD_MUTEX_LOCK_ELISION: libc::c_int = 1;
-pub const __PTHREAD_MUTEX_NUSERS_AFTER_KIND: libc::c_int = 0;
-pub const __PTHREAD_MUTEX_USE_UNION: libc::c_int = 0;
-pub const __PTHREAD_RWLOCK_INT_FLAGS_SHARED: libc::c_int = 1;
+pub const _THREAD_MUTEX_INTERNAL_H: libc::c_int = 1;
 pub const __PTHREAD_MUTEX_HAVE_PREV: libc::c_int = 1;
 pub const __have_pthread_attr_t: libc::c_int = 1;
 pub const _ALLOCA_H: libc::c_int = 1;
@@ -1480,6 +1445,14 @@ pub type __int32_t = libc::c_int;
 pub type __uint32_t = libc::c_uint;
 pub type __int64_t = libc::c_long;
 pub type __uint64_t = libc::c_ulong;
+pub type __int_least8_t = __int8_t;
+pub type __uint_least8_t = __uint8_t;
+pub type __int_least16_t = __int16_t;
+pub type __uint_least16_t = __uint16_t;
+pub type __int_least32_t = __int32_t;
+pub type __uint_least32_t = __uint32_t;
+pub type __int_least64_t = __int64_t;
+pub type __uint_least64_t = __uint64_t;
 pub type __quad_t = libc::c_long;
 pub type __u_quad_t = libc::c_ulong;
 pub type __intmax_t = libc::c_long;
@@ -1528,19 +1501,18 @@ pub type __ssize_t = libc::c_long;
 pub type __syscall_slong_t = libc::c_long;
 pub type __syscall_ulong_t = libc::c_ulong;
 pub type __loff_t = __off64_t;
-pub type __qaddr_t = *mut __quad_t;
 pub type __caddr_t = *mut libc::c_char;
 pub type __intptr_t = libc::c_long;
 pub type __socklen_t = libc::c_uint;
 pub type __sig_atomic_t = libc::c_int;
-pub type int_least8_t = libc::c_schar;
-pub type int_least16_t = libc::c_short;
-pub type int_least32_t = libc::c_int;
-pub type int_least64_t = libc::c_long;
-pub type uint_least8_t = libc::c_uchar;
-pub type uint_least16_t = libc::c_ushort;
-pub type uint_least32_t = libc::c_uint;
-pub type uint_least64_t = libc::c_ulong;
+pub type int_least8_t = __int_least8_t;
+pub type int_least16_t = __int_least16_t;
+pub type int_least32_t = __int_least32_t;
+pub type int_least64_t = __int_least64_t;
+pub type uint_least8_t = __uint_least8_t;
+pub type uint_least16_t = __uint_least16_t;
+pub type uint_least32_t = __uint_least32_t;
+pub type uint_least64_t = __uint_least64_t;
 pub type int_fast8_t = libc::c_schar;
 pub type int_fast16_t = libc::c_long;
 pub type int_fast32_t = libc::c_long;
@@ -1794,6 +1766,10 @@ extern "C" {
         __base: libc::c_int,
     ) -> uintmax_t;
 }
+pub type _Float32 = f32;
+pub type _Float64 = f64;
+pub type _Float32x = f64;
+pub type _Float64x = u128;
 pub type float_t = f32;
 pub type double_t = f64;
 extern "C" {
@@ -2233,42 +2209,8 @@ pub enum _bindgen_ty_1 {
     FP_SUBNORMAL = 3,
     FP_NORMAL = 4,
 }
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _LIB_VERSION_TYPE {
-    _IEEE_ = -1,
-    _SVID_ = 0,
-    _XOPEN_ = 1,
-    _POSIX_ = 2,
-    _ISOC_ = 3,
-}
-extern "C" {
-    pub static mut _LIB_VERSION: _LIB_VERSION_TYPE;
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub struct exception {
-    pub type_: libc::c_int,
-    pub name: *mut libc::c_char,
-    pub arg1: f64,
-    pub arg2: f64,
-    pub retval: f64,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of exception"][::std::mem::size_of::<exception>() - 40usize];
-    ["Alignment of exception"][::std::mem::align_of::<exception>() - 8usize];
-    ["Offset of field: exception::type_"][::std::mem::offset_of!(exception, type_) - 0usize];
-    ["Offset of field: exception::name"][::std::mem::offset_of!(exception, name) - 8usize];
-    ["Offset of field: exception::arg1"][::std::mem::offset_of!(exception, arg1) - 16usize];
-    ["Offset of field: exception::arg2"][::std::mem::offset_of!(exception, arg2) - 24usize];
-    ["Offset of field: exception::retval"][::std::mem::offset_of!(exception, retval) - 32usize];
-};
-extern "C" {
-    pub fn matherr(__exc: *mut exception) -> libc::c_int;
-}
-pub type __FILE = _IO_FILE;
-pub type FILE = _IO_FILE;
+pub type va_list = __builtin_va_list;
+pub type __gnuc_va_list = __builtin_va_list;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct __mbstate_t {
@@ -2314,6 +2256,7 @@ const _: () = {
     ["Offset of field: _G_fpos_t::__pos"][::std::mem::offset_of!(_G_fpos_t, __pos) - 0usize];
     ["Offset of field: _G_fpos_t::__state"][::std::mem::offset_of!(_G_fpos_t, __state) - 8usize];
 };
+pub type __fpos_t = _G_fpos_t;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct _G_fpos64_t {
@@ -2328,37 +2271,25 @@ const _: () = {
     ["Offset of field: _G_fpos64_t::__state"]
         [::std::mem::offset_of!(_G_fpos64_t, __state) - 8usize];
 };
-pub type va_list = __builtin_va_list;
-pub type __gnuc_va_list = __builtin_va_list;
+pub type __fpos64_t = _G_fpos64_t;
+pub type __FILE = _IO_FILE;
+pub type FILE = _IO_FILE;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct _IO_jump_t {
+pub struct _IO_marker {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _IO_codecvt {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _IO_wide_data {
     _unused: [u8; 0],
 }
 pub type _IO_lock_t = libc::c_void;
-#[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _IO_marker {
-    pub _next: *mut _IO_marker,
-    pub _sbuf: *mut _IO_FILE,
-    pub _pos: libc::c_int,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _IO_marker"][::std::mem::size_of::<_IO_marker>() - 24usize];
-    ["Alignment of _IO_marker"][::std::mem::align_of::<_IO_marker>() - 8usize];
-    ["Offset of field: _IO_marker::_next"][::std::mem::offset_of!(_IO_marker, _next) - 0usize];
-    ["Offset of field: _IO_marker::_sbuf"][::std::mem::offset_of!(_IO_marker, _sbuf) - 8usize];
-    ["Offset of field: _IO_marker::_pos"][::std::mem::offset_of!(_IO_marker, _pos) - 16usize];
-};
-#[repr(u32)]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum __codecvt_result {
-    __codecvt_ok = 0,
-    __codecvt_partial = 1,
-    __codecvt_error = 2,
-    __codecvt_noconv = 3,
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct _IO_FILE {
@@ -2384,10 +2315,10 @@ pub struct _IO_FILE {
     pub _shortbuf: [libc::c_char; 1usize],
     pub _lock: *mut _IO_lock_t,
     pub _offset: __off64_t,
-    pub __pad1: *mut libc::c_void,
-    pub __pad2: *mut libc::c_void,
-    pub __pad3: *mut libc::c_void,
-    pub __pad4: *mut libc::c_void,
+    pub _codecvt: *mut _IO_codecvt,
+    pub _wide_data: *mut _IO_wide_data,
+    pub _freeres_list: *mut _IO_FILE,
+    pub _freeres_buf: *mut libc::c_void,
     pub __pad5: usize,
     pub _mode: libc::c_int,
     pub _unused2: [libc::c_char; 20usize],
@@ -2433,61 +2364,27 @@ const _: () = {
         [::std::mem::offset_of!(_IO_FILE, _shortbuf) - 131usize];
     ["Offset of field: _IO_FILE::_lock"][::std::mem::offset_of!(_IO_FILE, _lock) - 136usize];
     ["Offset of field: _IO_FILE::_offset"][::std::mem::offset_of!(_IO_FILE, _offset) - 144usize];
-    ["Offset of field: _IO_FILE::__pad1"][::std::mem::offset_of!(_IO_FILE, __pad1) - 152usize];
-    ["Offset of field: _IO_FILE::__pad2"][::std::mem::offset_of!(_IO_FILE, __pad2) - 160usize];
-    ["Offset of field: _IO_FILE::__pad3"][::std::mem::offset_of!(_IO_FILE, __pad3) - 168usize];
-    ["Offset of field: _IO_FILE::__pad4"][::std::mem::offset_of!(_IO_FILE, __pad4) - 176usize];
+    ["Offset of field: _IO_FILE::_codecvt"][::std::mem::offset_of!(_IO_FILE, _codecvt) - 152usize];
+    ["Offset of field: _IO_FILE::_wide_data"]
+        [::std::mem::offset_of!(_IO_FILE, _wide_data) - 160usize];
+    ["Offset of field: _IO_FILE::_freeres_list"]
+        [::std::mem::offset_of!(_IO_FILE, _freeres_list) - 168usize];
+    ["Offset of field: _IO_FILE::_freeres_buf"]
+        [::std::mem::offset_of!(_IO_FILE, _freeres_buf) - 176usize];
     ["Offset of field: _IO_FILE::__pad5"][::std::mem::offset_of!(_IO_FILE, __pad5) - 184usize];
     ["Offset of field: _IO_FILE::_mode"][::std::mem::offset_of!(_IO_FILE, _mode) - 192usize];
     ["Offset of field: _IO_FILE::_unused2"][::std::mem::offset_of!(_IO_FILE, _unused2) - 196usize];
 };
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct _IO_FILE_plus {
-    _unused: [u8; 0],
-}
-extern "C" {
-    pub static mut _IO_2_1_stdin_: _IO_FILE_plus;
-}
-extern "C" {
-    pub static mut _IO_2_1_stdout_: _IO_FILE_plus;
-}
-extern "C" {
-    pub static mut _IO_2_1_stderr_: _IO_FILE_plus;
-}
-pub type __io_read_fn = ::std::option::Option<
-    unsafe extern "C" fn(
-        __cookie: *mut libc::c_void,
-        __buf: *mut libc::c_char,
-        __nbytes: usize,
-    ) -> __ssize_t,
->;
-pub type __io_write_fn = ::std::option::Option<
-    unsafe extern "C" fn(
-        __cookie: *mut libc::c_void,
-        __buf: *const libc::c_char,
-        __n: usize,
-    ) -> __ssize_t,
->;
-pub type __io_seek_fn = ::std::option::Option<
-    unsafe extern "C" fn(
-        __cookie: *mut libc::c_void,
-        __pos: *mut __off64_t,
-        __w: libc::c_int,
-    ) -> libc::c_int,
->;
-pub type __io_close_fn =
-    ::std::option::Option<unsafe extern "C" fn(__cookie: *mut libc::c_void) -> libc::c_int>;
 pub type off_t = __off_t;
-pub type fpos_t = _G_fpos_t;
+pub type fpos_t = __fpos_t;
 extern "C" {
-    pub static mut stdin: *mut _IO_FILE;
+    pub static mut stdin: *mut FILE;
 }
 extern "C" {
-    pub static mut stdout: *mut _IO_FILE;
+    pub static mut stdout: *mut FILE;
 }
 extern "C" {
-    pub static mut stderr: *mut _IO_FILE;
+    pub static mut stderr: *mut FILE;
 }
 extern "C" {
     pub fn remove(__filename: *const libc::c_char) -> libc::c_int;
@@ -2852,6 +2749,13 @@ extern "C" {
     pub fn funlockfile(__stream: *mut FILE);
 }
 pub type wchar_t = libc::c_int;
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum idtype_t {
+    P_ALL = 0,
+    P_PID = 1,
+    P_PGID = 2,
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct div_t {
@@ -2983,10 +2887,10 @@ pub type timer_t = __timer_t;
 pub type ulong = libc::c_ulong;
 pub type ushort = libc::c_ushort;
 pub type uint = libc::c_uint;
-pub type u_int8_t = libc::c_uchar;
-pub type u_int16_t = libc::c_ushort;
-pub type u_int32_t = libc::c_uint;
-pub type u_int64_t = libc::c_ulong;
+pub type u_int8_t = __uint8_t;
+pub type u_int16_t = __uint16_t;
+pub type u_int32_t = __uint32_t;
+pub type u_int64_t = __uint64_t;
 pub type register_t = libc::c_long;
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -3059,19 +2963,75 @@ extern "C" {
         __sigmask: *const __sigset_t,
     ) -> libc::c_int;
 }
-extern "C" {
-    pub fn gnu_dev_major(__dev: __dev_t) -> libc::c_uint;
-}
-extern "C" {
-    pub fn gnu_dev_minor(__dev: __dev_t) -> libc::c_uint;
-}
-extern "C" {
-    pub fn gnu_dev_makedev(__major: libc::c_uint, __minor: libc::c_uint) -> __dev_t;
-}
 pub type blksize_t = __blksize_t;
 pub type blkcnt_t = __blkcnt_t;
 pub type fsblkcnt_t = __fsblkcnt_t;
 pub type fsfilcnt_t = __fsfilcnt_t;
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __pthread_internal_list {
+    pub __prev: *mut __pthread_internal_list,
+    pub __next: *mut __pthread_internal_list,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __pthread_internal_list"][::std::mem::size_of::<__pthread_internal_list>() - 16usize];
+    ["Alignment of __pthread_internal_list"]
+        [::std::mem::align_of::<__pthread_internal_list>() - 8usize];
+    ["Offset of field: __pthread_internal_list::__prev"]
+        [::std::mem::offset_of!(__pthread_internal_list, __prev) - 0usize];
+    ["Offset of field: __pthread_internal_list::__next"]
+        [::std::mem::offset_of!(__pthread_internal_list, __next) - 8usize];
+};
+pub type __pthread_list_t = __pthread_internal_list;
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __pthread_internal_slist {
+    pub __next: *mut __pthread_internal_slist,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __pthread_internal_slist"]
+        [::std::mem::size_of::<__pthread_internal_slist>() - 8usize];
+    ["Alignment of __pthread_internal_slist"]
+        [::std::mem::align_of::<__pthread_internal_slist>() - 8usize];
+    ["Offset of field: __pthread_internal_slist::__next"]
+        [::std::mem::offset_of!(__pthread_internal_slist, __next) - 0usize];
+};
+pub type __pthread_slist_t = __pthread_internal_slist;
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __pthread_mutex_s {
+    pub __lock: libc::c_int,
+    pub __count: libc::c_uint,
+    pub __owner: libc::c_int,
+    pub __nusers: libc::c_uint,
+    pub __kind: libc::c_int,
+    pub __spins: libc::c_short,
+    pub __elision: libc::c_short,
+    pub __list: __pthread_list_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __pthread_mutex_s"][::std::mem::size_of::<__pthread_mutex_s>() - 40usize];
+    ["Alignment of __pthread_mutex_s"][::std::mem::align_of::<__pthread_mutex_s>() - 8usize];
+    ["Offset of field: __pthread_mutex_s::__lock"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __lock) - 0usize];
+    ["Offset of field: __pthread_mutex_s::__count"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __count) - 4usize];
+    ["Offset of field: __pthread_mutex_s::__owner"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __owner) - 8usize];
+    ["Offset of field: __pthread_mutex_s::__nusers"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __nusers) - 12usize];
+    ["Offset of field: __pthread_mutex_s::__kind"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __kind) - 16usize];
+    ["Offset of field: __pthread_mutex_s::__spins"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __spins) - 20usize];
+    ["Offset of field: __pthread_mutex_s::__elision"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __elision) - 22usize];
+    ["Offset of field: __pthread_mutex_s::__list"]
+        [::std::mem::offset_of!(__pthread_mutex_s, __list) - 24usize];
+};
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct __pthread_rwlock_arch_t {
@@ -3117,56 +3077,6 @@ const _: () = {
         [::std::mem::offset_of!(__pthread_rwlock_arch_t, __pad2) - 40usize];
     ["Offset of field: __pthread_rwlock_arch_t::__flags"]
         [::std::mem::offset_of!(__pthread_rwlock_arch_t, __flags) - 48usize];
-};
-#[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __pthread_internal_list {
-    pub __prev: *mut __pthread_internal_list,
-    pub __next: *mut __pthread_internal_list,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of __pthread_internal_list"][::std::mem::size_of::<__pthread_internal_list>() - 16usize];
-    ["Alignment of __pthread_internal_list"]
-        [::std::mem::align_of::<__pthread_internal_list>() - 8usize];
-    ["Offset of field: __pthread_internal_list::__prev"]
-        [::std::mem::offset_of!(__pthread_internal_list, __prev) - 0usize];
-    ["Offset of field: __pthread_internal_list::__next"]
-        [::std::mem::offset_of!(__pthread_internal_list, __next) - 8usize];
-};
-pub type __pthread_list_t = __pthread_internal_list;
-#[repr(C)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct __pthread_mutex_s {
-    pub __lock: libc::c_int,
-    pub __count: libc::c_uint,
-    pub __owner: libc::c_int,
-    pub __nusers: libc::c_uint,
-    pub __kind: libc::c_int,
-    pub __spins: libc::c_short,
-    pub __elision: libc::c_short,
-    pub __list: __pthread_list_t,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of __pthread_mutex_s"][::std::mem::size_of::<__pthread_mutex_s>() - 40usize];
-    ["Alignment of __pthread_mutex_s"][::std::mem::align_of::<__pthread_mutex_s>() - 8usize];
-    ["Offset of field: __pthread_mutex_s::__lock"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __lock) - 0usize];
-    ["Offset of field: __pthread_mutex_s::__count"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __count) - 4usize];
-    ["Offset of field: __pthread_mutex_s::__owner"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __owner) - 8usize];
-    ["Offset of field: __pthread_mutex_s::__nusers"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __nusers) - 12usize];
-    ["Offset of field: __pthread_mutex_s::__kind"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __kind) - 16usize];
-    ["Offset of field: __pthread_mutex_s::__spins"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __spins) - 20usize];
-    ["Offset of field: __pthread_mutex_s::__elision"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __elision) - 22usize];
-    ["Offset of field: __pthread_mutex_s::__list"]
-        [::std::mem::offset_of!(__pthread_mutex_s, __list) - 24usize];
 };
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -3577,6 +3487,13 @@ extern "C" {
     pub fn realloc(__ptr: *mut libc::c_void, __size: libc::c_ulong) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn reallocarray(
+        __ptr: *mut libc::c_void,
+        __nmemb: usize,
+        __size: usize,
+    ) -> *mut libc::c_void;
+}
+extern "C" {
     pub fn free(__ptr: *mut libc::c_void);
 }
 extern "C" {
@@ -3941,6 +3858,12 @@ extern "C" {
 }
 extern "C" {
     pub fn ffs(__i: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn ffsl(__l: libc::c_long) -> libc::c_int;
+}
+extern "C" {
+    pub fn ffsll(__ll: libc::c_longlong) -> libc::c_int;
 }
 extern "C" {
     pub fn strcasecmp(__s1: *const libc::c_char, __s2: *const libc::c_char) -> libc::c_int;
@@ -14577,9 +14500,6 @@ extern "C" {
 }
 extern "C" {
     pub static mut timezone: libc::c_long;
-}
-extern "C" {
-    pub fn stime(__when: *const time_t) -> libc::c_int;
 }
 extern "C" {
     pub fn timegm(__tp: *mut tm) -> time_t;
