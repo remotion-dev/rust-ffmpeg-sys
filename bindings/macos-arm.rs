@@ -81,6 +81,7 @@ where
     }
 }
 pub const __WORDSIZE: libc::c_int = 64;
+pub const __has_safe_buffers: libc::c_int = 1;
 pub const __DARWIN_ONLY_64_BIT_INO_T: libc::c_int = 1;
 pub const __DARWIN_ONLY_UNIX_CONFORMANCE: libc::c_int = 1;
 pub const __DARWIN_ONLY_VERS_1050: libc::c_int = 1;
@@ -100,6 +101,8 @@ pub const _DARWIN_FEATURE_ONLY_VERS_1050: libc::c_int = 1;
 pub const _DARWIN_FEATURE_ONLY_UNIX_CONFORMANCE: libc::c_int = 1;
 pub const _DARWIN_FEATURE_UNIX_CONFORMANCE: libc::c_int = 3;
 pub const __has_ptrcheck: libc::c_int = 0;
+pub const __has_bounds_safety_attributes: libc::c_int = 0;
+pub const USE_CLANG_TYPES: libc::c_int = 0;
 pub const __PTHREAD_SIZE__: libc::c_int = 8176;
 pub const __PTHREAD_ATTR_SIZE__: libc::c_int = 56;
 pub const __PTHREAD_MUTEXATTR_SIZE__: libc::c_int = 8;
@@ -429,12 +432,19 @@ pub const SCNuMAX: &[u8; 3] = b"ju\0";
 pub const SCNxMAX: &[u8; 3] = b"jx\0";
 pub const __API_TO_BE_DEPRECATED: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_MACOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_MACOSAPPLICATIONEXTENSION: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_IOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_IOSAPPLICATIONEXTENSION: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_MACCATALYST: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_MACCATALYSTAPPLICATIONEXTENSION: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_WATCHOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_WATCHOSAPPLICATIONEXTENSION: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_TVOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_TVOSAPPLICATIONEXTENSION: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_DRIVERKIT: libc::c_int = 100000;
 pub const __API_TO_BE_DEPRECATED_VISIONOS: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_VISIONOSAPPLICATIONEXTENSION: libc::c_int = 100000;
+pub const __API_TO_BE_DEPRECATED_KERNELKIT: libc::c_int = 100000;
 pub const __MAC_10_0: libc::c_int = 1000;
 pub const __MAC_10_1: libc::c_int = 1010;
 pub const __MAC_10_2: libc::c_int = 1020;
@@ -490,9 +500,21 @@ pub const __MAC_13_3: libc::c_int = 130300;
 pub const __MAC_13_4: libc::c_int = 130400;
 pub const __MAC_13_5: libc::c_int = 130500;
 pub const __MAC_13_6: libc::c_int = 130600;
+pub const __MAC_13_7: libc::c_int = 130700;
 pub const __MAC_14_0: libc::c_int = 140000;
 pub const __MAC_14_1: libc::c_int = 140100;
 pub const __MAC_14_2: libc::c_int = 140200;
+pub const __MAC_14_3: libc::c_int = 140300;
+pub const __MAC_14_4: libc::c_int = 140400;
+pub const __MAC_14_5: libc::c_int = 140500;
+pub const __MAC_14_6: libc::c_int = 140600;
+pub const __MAC_14_7: libc::c_int = 140700;
+pub const __MAC_15_0: libc::c_int = 150000;
+pub const __MAC_15_1: libc::c_int = 150100;
+pub const __MAC_15_2: libc::c_int = 150200;
+pub const __MAC_15_3: libc::c_int = 150300;
+pub const __MAC_15_4: libc::c_int = 150400;
+pub const __MAC_15_5: libc::c_int = 150500;
 pub const __IPHONE_2_0: libc::c_int = 20000;
 pub const __IPHONE_2_1: libc::c_int = 20100;
 pub const __IPHONE_2_2: libc::c_int = 20200;
@@ -556,6 +578,8 @@ pub const __IPHONE_15_3: libc::c_int = 150300;
 pub const __IPHONE_15_4: libc::c_int = 150400;
 pub const __IPHONE_15_5: libc::c_int = 150500;
 pub const __IPHONE_15_6: libc::c_int = 150600;
+pub const __IPHONE_15_7: libc::c_int = 150700;
+pub const __IPHONE_15_8: libc::c_int = 150800;
 pub const __IPHONE_16_0: libc::c_int = 160000;
 pub const __IPHONE_16_1: libc::c_int = 160100;
 pub const __IPHONE_16_2: libc::c_int = 160200;
@@ -567,6 +591,17 @@ pub const __IPHONE_16_7: libc::c_int = 160700;
 pub const __IPHONE_17_0: libc::c_int = 170000;
 pub const __IPHONE_17_1: libc::c_int = 170100;
 pub const __IPHONE_17_2: libc::c_int = 170200;
+pub const __IPHONE_17_3: libc::c_int = 170300;
+pub const __IPHONE_17_4: libc::c_int = 170400;
+pub const __IPHONE_17_5: libc::c_int = 170500;
+pub const __IPHONE_17_6: libc::c_int = 170600;
+pub const __IPHONE_17_7: libc::c_int = 170700;
+pub const __IPHONE_18_0: libc::c_int = 180000;
+pub const __IPHONE_18_1: libc::c_int = 180100;
+pub const __IPHONE_18_2: libc::c_int = 180200;
+pub const __IPHONE_18_3: libc::c_int = 180300;
+pub const __IPHONE_18_4: libc::c_int = 180400;
+pub const __IPHONE_18_5: libc::c_int = 180500;
 pub const __WATCHOS_1_0: libc::c_int = 10000;
 pub const __WATCHOS_2_0: libc::c_int = 20000;
 pub const __WATCHOS_2_1: libc::c_int = 20100;
@@ -600,6 +635,7 @@ pub const __WATCHOS_8_4: libc::c_int = 80400;
 pub const __WATCHOS_8_5: libc::c_int = 80500;
 pub const __WATCHOS_8_6: libc::c_int = 80600;
 pub const __WATCHOS_8_7: libc::c_int = 80700;
+pub const __WATCHOS_8_8: libc::c_int = 80800;
 pub const __WATCHOS_9_0: libc::c_int = 90000;
 pub const __WATCHOS_9_1: libc::c_int = 90100;
 pub const __WATCHOS_9_2: libc::c_int = 90200;
@@ -610,6 +646,17 @@ pub const __WATCHOS_9_6: libc::c_int = 90600;
 pub const __WATCHOS_10_0: libc::c_int = 100000;
 pub const __WATCHOS_10_1: libc::c_int = 100100;
 pub const __WATCHOS_10_2: libc::c_int = 100200;
+pub const __WATCHOS_10_3: libc::c_int = 100300;
+pub const __WATCHOS_10_4: libc::c_int = 100400;
+pub const __WATCHOS_10_5: libc::c_int = 100500;
+pub const __WATCHOS_10_6: libc::c_int = 100600;
+pub const __WATCHOS_10_7: libc::c_int = 100700;
+pub const __WATCHOS_11_0: libc::c_int = 110000;
+pub const __WATCHOS_11_1: libc::c_int = 110100;
+pub const __WATCHOS_11_2: libc::c_int = 110200;
+pub const __WATCHOS_11_3: libc::c_int = 110300;
+pub const __WATCHOS_11_4: libc::c_int = 110400;
+pub const __WATCHOS_11_5: libc::c_int = 110500;
 pub const __TVOS_9_0: libc::c_int = 90000;
 pub const __TVOS_9_1: libc::c_int = 90100;
 pub const __TVOS_9_2: libc::c_int = 90200;
@@ -655,6 +702,16 @@ pub const __TVOS_16_6: libc::c_int = 160600;
 pub const __TVOS_17_0: libc::c_int = 170000;
 pub const __TVOS_17_1: libc::c_int = 170100;
 pub const __TVOS_17_2: libc::c_int = 170200;
+pub const __TVOS_17_3: libc::c_int = 170300;
+pub const __TVOS_17_4: libc::c_int = 170400;
+pub const __TVOS_17_5: libc::c_int = 170500;
+pub const __TVOS_17_6: libc::c_int = 170600;
+pub const __TVOS_18_0: libc::c_int = 180000;
+pub const __TVOS_18_1: libc::c_int = 180100;
+pub const __TVOS_18_2: libc::c_int = 180200;
+pub const __TVOS_18_3: libc::c_int = 180300;
+pub const __TVOS_18_4: libc::c_int = 180400;
+pub const __TVOS_18_5: libc::c_int = 180500;
 pub const __BRIDGEOS_2_0: libc::c_int = 20000;
 pub const __BRIDGEOS_3_0: libc::c_int = 30000;
 pub const __BRIDGEOS_3_1: libc::c_int = 30100;
@@ -678,6 +735,16 @@ pub const __BRIDGEOS_7_6: libc::c_int = 70600;
 pub const __BRIDGEOS_8_0: libc::c_int = 80000;
 pub const __BRIDGEOS_8_1: libc::c_int = 80100;
 pub const __BRIDGEOS_8_2: libc::c_int = 80200;
+pub const __BRIDGEOS_8_3: libc::c_int = 80300;
+pub const __BRIDGEOS_8_4: libc::c_int = 80400;
+pub const __BRIDGEOS_8_5: libc::c_int = 80500;
+pub const __BRIDGEOS_8_6: libc::c_int = 80600;
+pub const __BRIDGEOS_9_0: libc::c_int = 90000;
+pub const __BRIDGEOS_9_1: libc::c_int = 90100;
+pub const __BRIDGEOS_9_2: libc::c_int = 90200;
+pub const __BRIDGEOS_9_3: libc::c_int = 90300;
+pub const __BRIDGEOS_9_4: libc::c_int = 90400;
+pub const __BRIDGEOS_9_5: libc::c_int = 90500;
 pub const __DRIVERKIT_19_0: libc::c_int = 190000;
 pub const __DRIVERKIT_20_0: libc::c_int = 200000;
 pub const __DRIVERKIT_21_0: libc::c_int = 210000;
@@ -688,7 +755,26 @@ pub const __DRIVERKIT_22_6: libc::c_int = 220600;
 pub const __DRIVERKIT_23_0: libc::c_int = 230000;
 pub const __DRIVERKIT_23_1: libc::c_int = 230100;
 pub const __DRIVERKIT_23_2: libc::c_int = 230200;
+pub const __DRIVERKIT_23_3: libc::c_int = 230300;
+pub const __DRIVERKIT_23_4: libc::c_int = 230400;
+pub const __DRIVERKIT_23_5: libc::c_int = 230500;
+pub const __DRIVERKIT_23_6: libc::c_int = 230600;
+pub const __DRIVERKIT_24_0: libc::c_int = 240000;
+pub const __DRIVERKIT_24_1: libc::c_int = 240100;
+pub const __DRIVERKIT_24_2: libc::c_int = 240200;
+pub const __DRIVERKIT_24_3: libc::c_int = 240300;
+pub const __DRIVERKIT_24_4: libc::c_int = 240400;
+pub const __DRIVERKIT_24_5: libc::c_int = 240500;
 pub const __VISIONOS_1_0: libc::c_int = 10000;
+pub const __VISIONOS_1_1: libc::c_int = 10100;
+pub const __VISIONOS_1_2: libc::c_int = 10200;
+pub const __VISIONOS_1_3: libc::c_int = 10300;
+pub const __VISIONOS_2_0: libc::c_int = 20000;
+pub const __VISIONOS_2_1: libc::c_int = 20100;
+pub const __VISIONOS_2_2: libc::c_int = 20200;
+pub const __VISIONOS_2_3: libc::c_int = 20300;
+pub const __VISIONOS_2_4: libc::c_int = 20400;
+pub const __VISIONOS_2_5: libc::c_int = 20500;
 pub const MAC_OS_X_VERSION_10_0: libc::c_int = 1000;
 pub const MAC_OS_X_VERSION_10_1: libc::c_int = 1010;
 pub const MAC_OS_X_VERSION_10_2: libc::c_int = 1020;
@@ -744,14 +830,31 @@ pub const MAC_OS_VERSION_13_3: libc::c_int = 130300;
 pub const MAC_OS_VERSION_13_4: libc::c_int = 130400;
 pub const MAC_OS_VERSION_13_5: libc::c_int = 130500;
 pub const MAC_OS_VERSION_13_6: libc::c_int = 130600;
+pub const MAC_OS_VERSION_13_7: libc::c_int = 130700;
 pub const MAC_OS_VERSION_14_0: libc::c_int = 140000;
 pub const MAC_OS_VERSION_14_1: libc::c_int = 140100;
 pub const MAC_OS_VERSION_14_2: libc::c_int = 140200;
-pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 140200;
+pub const MAC_OS_VERSION_14_3: libc::c_int = 140300;
+pub const MAC_OS_VERSION_14_4: libc::c_int = 140400;
+pub const MAC_OS_VERSION_14_5: libc::c_int = 140500;
+pub const MAC_OS_VERSION_14_6: libc::c_int = 140600;
+pub const MAC_OS_VERSION_14_7: libc::c_int = 140700;
+pub const MAC_OS_VERSION_15_0: libc::c_int = 150000;
+pub const MAC_OS_VERSION_15_1: libc::c_int = 150100;
+pub const MAC_OS_VERSION_15_2: libc::c_int = 150200;
+pub const MAC_OS_VERSION_15_3: libc::c_int = 150300;
+pub const MAC_OS_VERSION_15_4: libc::c_int = 150400;
+pub const MAC_OS_VERSION_15_5: libc::c_int = 150500;
+pub const __AVAILABILITY_VERSIONS_VERSION_HASH: libc::c_int = 93585900;
+pub const __AVAILABILITY_VERSIONS_VERSION_STRING: &[u8; 6] = b"Local\0";
+pub const __AVAILABILITY_FILE: &[u8; 23] = b"AvailabilityVersions.h\0";
+pub const __MAC_OS_X_VERSION_MAX_ALLOWED: libc::c_int = 150500;
 pub const __ENABLE_LEGACY_MAC_AVAILABILITY: libc::c_int = 1;
 pub const __DARWIN_WCHAR_MIN: libc::c_int = -2147483648;
 pub const _FORTIFY_SOURCE: libc::c_int = 2;
+pub const USE_CLANG_STDDEF: libc::c_int = 0;
 pub const __DARWIN_CLK_TCK: libc::c_int = 100;
+pub const USE_CLANG_LIMITS: libc::c_int = 0;
 pub const MB_LEN_MAX: libc::c_int = 6;
 pub const CLK_TCK: libc::c_int = 100;
 pub const CHAR_BIT: libc::c_int = 8;
@@ -893,6 +996,7 @@ pub const OVERFLOW: libc::c_int = 3;
 pub const UNDERFLOW: libc::c_int = 4;
 pub const TLOSS: libc::c_int = 5;
 pub const PLOSS: libc::c_int = 6;
+pub const USE_CLANG_STDARG: libc::c_int = 0;
 pub const RENAME_SECLUDE: libc::c_int = 1;
 pub const RENAME_SWAP: libc::c_int = 2;
 pub const RENAME_EXCL: libc::c_int = 4;
@@ -1117,6 +1221,7 @@ pub const IOPOL_VFS_IGNORE_PERMISSIONS_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_IGNORE_PERMISSIONS_ON: libc::c_int = 1;
 pub const IOPOL_VFS_SKIP_MTIME_UPDATE_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_SKIP_MTIME_UPDATE_ON: libc::c_int = 1;
+pub const IOPOL_VFS_SKIP_MTIME_UPDATE_IGNORE: libc::c_int = 2;
 pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_OFF: libc::c_int = 0;
 pub const IOPOL_VFS_ALLOW_LOW_SPACE_WRITES_ON: libc::c_int = 1;
 pub const IOPOL_VFS_DISALLOW_RW_FOR_O_EVTONLY_DEFAULT: libc::c_int = 0;
@@ -1138,10 +1243,10 @@ pub const _QUAD_LOWWORD: libc::c_int = 0;
 pub const __DARWIN_LITTLE_ENDIAN: libc::c_int = 1234;
 pub const __DARWIN_BIG_ENDIAN: libc::c_int = 4321;
 pub const __DARWIN_PDP_ENDIAN: libc::c_int = 3412;
-pub const __DARWIN_BYTE_ORDER: libc::c_int = 1234;
 pub const LITTLE_ENDIAN: libc::c_int = 1234;
 pub const BIG_ENDIAN: libc::c_int = 4321;
 pub const PDP_ENDIAN: libc::c_int = 3412;
+pub const __DARWIN_BYTE_ORDER: libc::c_int = 1234;
 pub const BYTE_ORDER: libc::c_int = 1234;
 pub const EXIT_FAILURE: libc::c_int = 1;
 pub const EXIT_SUCCESS: libc::c_int = 0;
@@ -1171,7 +1276,6 @@ pub const M_2_PIf: f64 = 0.6366197723675814;
 pub const M_2_SQRTPIf: f64 = 1.1283791670955126;
 pub const M_SQRT1_2f: f64 = 0.7071067811865476;
 pub const M_SQRT2f: f64 = 1.4142135623730951;
-pub const __GNUC_VA_LIST: libc::c_int = 1;
 pub const AV_LOG_QUIET: libc::c_int = -8;
 pub const AV_LOG_PANIC: libc::c_int = 0;
 pub const AV_LOG_FATAL: libc::c_int = 8;
@@ -2138,19 +2242,6 @@ pub type __darwin_pthread_once_t = _opaque_pthread_once_t;
 pub type __darwin_pthread_rwlock_t = _opaque_pthread_rwlock_t;
 pub type __darwin_pthread_rwlockattr_t = _opaque_pthread_rwlockattr_t;
 pub type __darwin_pthread_t = *mut _opaque_pthread_t;
-pub type u_int8_t = libc::c_uchar;
-pub type u_int16_t = libc::c_ushort;
-pub type u_int32_t = libc::c_uint;
-pub type u_int64_t = libc::c_ulonglong;
-pub type register_t = i64;
-pub type user_addr_t = u_int64_t;
-pub type user_size_t = u_int64_t;
-pub type user_ssize_t = i64;
-pub type user_long_t = i64;
-pub type user_ulong_t = u_int64_t;
-pub type user_time_t = i64;
-pub type user_off_t = i64;
-pub type syscall_arg_t = u_int64_t;
 pub type intmax_t = libc::c_long;
 pub type uintmax_t = libc::c_ulong;
 #[repr(i32)]
@@ -2807,6 +2898,19 @@ const _: () = {
     ["Offset of field: exception::arg2"][::std::mem::offset_of!(exception, arg2) - 24usize];
     ["Offset of field: exception::retval"][::std::mem::offset_of!(exception, retval) - 32usize];
 };
+pub type u_int8_t = libc::c_uchar;
+pub type u_int16_t = libc::c_ushort;
+pub type u_int32_t = libc::c_uint;
+pub type u_int64_t = libc::c_ulonglong;
+pub type register_t = i64;
+pub type user_addr_t = u_int64_t;
+pub type user_size_t = u_int64_t;
+pub type user_ssize_t = i64;
+pub type user_long_t = i64;
+pub type user_ulong_t = u_int64_t;
+pub type user_time_t = i64;
+pub type user_off_t = i64;
+pub type syscall_arg_t = u_int64_t;
 pub type va_list = __darwin_va_list;
 extern "C" {
     pub fn renameat(
@@ -2831,6 +2935,9 @@ extern "C" {
         arg4: *const libc::c_char,
         arg5: libc::c_uint,
     ) -> libc::c_int;
+}
+extern "C" {
+    pub fn printf(arg1: *const libc::c_char, ...) -> libc::c_int;
 }
 pub type fpos_t = __darwin_off_t;
 #[repr(C)]
@@ -2867,7 +2974,7 @@ pub struct __sFILE {
         unsafe extern "C" fn(
             arg1: *mut libc::c_void,
             arg2: *mut libc::c_char,
-            arg3: libc::c_int,
+            __n: libc::c_int,
         ) -> libc::c_int,
     >,
     pub _seek: ::std::option::Option<
@@ -2877,7 +2984,7 @@ pub struct __sFILE {
         unsafe extern "C" fn(
             arg1: *mut libc::c_void,
             arg2: *const libc::c_char,
-            arg3: libc::c_int,
+            __n: libc::c_int,
         ) -> libc::c_int,
     >,
     pub _ub: __sbuf,
@@ -2946,7 +3053,11 @@ extern "C" {
     pub fn fgetpos(arg1: *mut FILE, arg2: *mut fpos_t) -> libc::c_int;
 }
 extern "C" {
-    pub fn fgets(arg1: *mut libc::c_char, arg2: libc::c_int, arg3: *mut FILE) -> *mut libc::c_char;
+    pub fn fgets(
+        arg1: *mut libc::c_char,
+        __size: libc::c_int,
+        arg2: *mut FILE,
+    ) -> *mut libc::c_char;
 }
 extern "C" {
     pub fn fopen(__filename: *const libc::c_char, __mode: *const libc::c_char) -> *mut FILE;
@@ -3008,9 +3119,6 @@ extern "C" {
     pub fn perror(arg1: *const libc::c_char);
 }
 extern "C" {
-    pub fn printf(arg1: *const libc::c_char, ...) -> libc::c_int;
-}
-extern "C" {
     pub fn putc(arg1: libc::c_int, arg2: *mut FILE) -> libc::c_int;
 }
 extern "C" {
@@ -3039,7 +3147,7 @@ extern "C" {
         arg1: *mut FILE,
         arg2: *mut libc::c_char,
         arg3: libc::c_int,
-        arg4: usize,
+        __size: usize,
     ) -> libc::c_int;
 }
 extern "C" {
@@ -3203,7 +3311,7 @@ extern "C" {
     pub fn ctermid_r(arg1: *mut libc::c_char) -> *mut libc::c_char;
 }
 extern "C" {
-    pub fn fgetln(arg1: *mut FILE, arg2: *mut usize) -> *mut libc::c_char;
+    pub fn fgetln(arg1: *mut FILE, __len: *mut usize) -> *mut libc::c_char;
 }
 extern "C" {
     pub fn fmtcheck(arg1: *const libc::c_char, arg2: *const libc::c_char) -> *const libc::c_char;
@@ -3212,7 +3320,7 @@ extern "C" {
     pub fn fpurge(arg1: *mut FILE) -> libc::c_int;
 }
 extern "C" {
-    pub fn setbuffer(arg1: *mut FILE, arg2: *mut libc::c_char, arg3: libc::c_int);
+    pub fn setbuffer(arg1: *mut FILE, arg2: *mut libc::c_char, __size: libc::c_int);
 }
 extern "C" {
     pub fn setlinebuf(arg1: *mut FILE) -> libc::c_int;
@@ -3231,14 +3339,14 @@ extern "C" {
             unsafe extern "C" fn(
                 arg1: *mut libc::c_void,
                 arg2: *mut libc::c_char,
-                arg3: libc::c_int,
+                __n: libc::c_int,
             ) -> libc::c_int,
         >,
         arg3: ::std::option::Option<
             unsafe extern "C" fn(
                 arg1: *mut libc::c_void,
                 arg2: *const libc::c_char,
-                arg3: libc::c_int,
+                __n: libc::c_int,
             ) -> libc::c_int,
         >,
         arg4: ::std::option::Option<
@@ -3300,6 +3408,23 @@ const _: () = {
         [::std::mem::offset_of!(__darwin_arm_exception_state64, __esr) - 8usize];
     ["Offset of field: __darwin_arm_exception_state64::__exception"]
         [::std::mem::offset_of!(__darwin_arm_exception_state64, __exception) - 12usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_exception_state64_v2 {
+    pub __far: __uint64_t,
+    pub __esr: __uint64_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_exception_state64_v2"]
+        [::std::mem::size_of::<__darwin_arm_exception_state64_v2>() - 16usize];
+    ["Alignment of __darwin_arm_exception_state64_v2"]
+        [::std::mem::align_of::<__darwin_arm_exception_state64_v2>() - 8usize];
+    ["Offset of field: __darwin_arm_exception_state64_v2::__far"]
+        [::std::mem::offset_of!(__darwin_arm_exception_state64_v2, __far) - 0usize];
+    ["Offset of field: __darwin_arm_exception_state64_v2::__esr"]
+        [::std::mem::offset_of!(__darwin_arm_exception_state64_v2, __esr) - 8usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -3428,6 +3553,84 @@ const _: () = {
     ["Alignment of __arm_pagein_state"][::std::mem::align_of::<__arm_pagein_state>() - 4usize];
     ["Offset of field: __arm_pagein_state::__pagein_error"]
         [::std::mem::offset_of!(__arm_pagein_state, __pagein_error) - 0usize];
+};
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_sme_state {
+    pub __svcr: __uint64_t,
+    pub __tpidr2_el0: __uint64_t,
+    pub __svl_b: __uint16_t,
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_sme_state"][::std::mem::size_of::<__darwin_arm_sme_state>() - 24usize];
+    ["Alignment of __darwin_arm_sme_state"]
+        [::std::mem::align_of::<__darwin_arm_sme_state>() - 8usize];
+    ["Offset of field: __darwin_arm_sme_state::__svcr"]
+        [::std::mem::offset_of!(__darwin_arm_sme_state, __svcr) - 0usize];
+    ["Offset of field: __darwin_arm_sme_state::__tpidr2_el0"]
+        [::std::mem::offset_of!(__darwin_arm_sme_state, __tpidr2_el0) - 8usize];
+    ["Offset of field: __darwin_arm_sme_state::__svl_b"]
+        [::std::mem::offset_of!(__darwin_arm_sme_state, __svl_b) - 16usize];
+};
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_sve_z_state {
+    pub __z: [[libc::c_char; 256usize]; 16usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_sve_z_state"]
+        [::std::mem::size_of::<__darwin_arm_sve_z_state>() - 4096usize];
+    ["Alignment of __darwin_arm_sve_z_state"]
+        [::std::mem::align_of::<__darwin_arm_sve_z_state>() - 4usize];
+    ["Offset of field: __darwin_arm_sve_z_state::__z"]
+        [::std::mem::offset_of!(__darwin_arm_sve_z_state, __z) - 0usize];
+};
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_sve_p_state {
+    pub __p: [[libc::c_char; 32usize]; 16usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_sve_p_state"]
+        [::std::mem::size_of::<__darwin_arm_sve_p_state>() - 512usize];
+    ["Alignment of __darwin_arm_sve_p_state"]
+        [::std::mem::align_of::<__darwin_arm_sve_p_state>() - 4usize];
+    ["Offset of field: __darwin_arm_sve_p_state::__p"]
+        [::std::mem::offset_of!(__darwin_arm_sve_p_state, __p) - 0usize];
+};
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_sme_za_state {
+    pub __za: [libc::c_char; 4096usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_sme_za_state"]
+        [::std::mem::size_of::<__darwin_arm_sme_za_state>() - 4096usize];
+    ["Alignment of __darwin_arm_sme_za_state"]
+        [::std::mem::align_of::<__darwin_arm_sme_za_state>() - 4usize];
+    ["Offset of field: __darwin_arm_sme_za_state::__za"]
+        [::std::mem::offset_of!(__darwin_arm_sme_za_state, __za) - 0usize];
+};
+#[repr(C)]
+#[repr(align(4))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct __darwin_arm_sme2_state {
+    pub __zt0: [libc::c_char; 64usize],
+}
+#[allow(clippy::unnecessary_operation, clippy::identity_op)]
+const _: () = {
+    ["Size of __darwin_arm_sme2_state"][::std::mem::size_of::<__darwin_arm_sme2_state>() - 64usize];
+    ["Alignment of __darwin_arm_sme2_state"]
+        [::std::mem::align_of::<__darwin_arm_sme2_state>() - 4usize];
+    ["Offset of field: __darwin_arm_sme2_state::__zt0"]
+        [::std::mem::offset_of!(__darwin_arm_sme2_state, __zt0) - 0usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -4378,7 +4581,12 @@ pub struct rusage_info_v6 {
     pub ri_pcycles: u64,
     pub ri_energy_nj: u64,
     pub ri_penergy_nj: u64,
-    pub ri_reserved: [u64; 14usize],
+    pub ri_secure_time_in_system: u64,
+    pub ri_secure_ptime_in_system: u64,
+    pub ri_neural_footprint: u64,
+    pub ri_lifetime_max_neural_footprint: u64,
+    pub ri_interval_max_neural_footprint: u64,
+    pub ri_reserved: [u64; 9usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
@@ -4470,8 +4678,18 @@ const _: () = {
         [::std::mem::offset_of!(rusage_info_v6, ri_energy_nj) - 336usize];
     ["Offset of field: rusage_info_v6::ri_penergy_nj"]
         [::std::mem::offset_of!(rusage_info_v6, ri_penergy_nj) - 344usize];
+    ["Offset of field: rusage_info_v6::ri_secure_time_in_system"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_secure_time_in_system) - 352usize];
+    ["Offset of field: rusage_info_v6::ri_secure_ptime_in_system"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_secure_ptime_in_system) - 360usize];
+    ["Offset of field: rusage_info_v6::ri_neural_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_neural_footprint) - 368usize];
+    ["Offset of field: rusage_info_v6::ri_lifetime_max_neural_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_lifetime_max_neural_footprint) - 376usize];
+    ["Offset of field: rusage_info_v6::ri_interval_max_neural_footprint"]
+        [::std::mem::offset_of!(rusage_info_v6, ri_interval_max_neural_footprint) - 384usize];
     ["Offset of field: rusage_info_v6::ri_reserved"]
-        [::std::mem::offset_of!(rusage_info_v6, ri_reserved) - 352usize];
+        [::std::mem::offset_of!(rusage_info_v6, ri_reserved) - 392usize];
 };
 pub type rusage_info_current = rusage_info_v6;
 #[repr(C)]
@@ -4525,42 +4743,6 @@ extern "C" {
 extern "C" {
     pub fn setrlimit(arg1: libc::c_int, arg2: *const rlimit) -> libc::c_int;
 }
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU16 {
-    pub __val: u16,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU16"][::std::mem::size_of::<_OSUnalignedU16>() - 2usize];
-    ["Alignment of _OSUnalignedU16"][::std::mem::align_of::<_OSUnalignedU16>() - 1usize];
-    ["Offset of field: _OSUnalignedU16::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU16, __val) - 0usize];
-};
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU32 {
-    pub __val: u32,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU32"][::std::mem::size_of::<_OSUnalignedU32>() - 4usize];
-    ["Alignment of _OSUnalignedU32"][::std::mem::align_of::<_OSUnalignedU32>() - 1usize];
-    ["Offset of field: _OSUnalignedU32::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU32, __val) - 0usize];
-};
-#[repr(C, packed)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct _OSUnalignedU64 {
-    pub __val: u64,
-}
-#[allow(clippy::unnecessary_operation, clippy::identity_op)]
-const _: () = {
-    ["Size of _OSUnalignedU64"][::std::mem::size_of::<_OSUnalignedU64>() - 8usize];
-    ["Alignment of _OSUnalignedU64"][::std::mem::align_of::<_OSUnalignedU64>() - 1usize];
-    ["Offset of field: _OSUnalignedU64::__val"]
-        [::std::mem::offset_of!(_OSUnalignedU64, __val) - 0usize];
-};
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union wait {
@@ -4754,7 +4936,7 @@ extern "C" {
     ) -> pid_t;
 }
 extern "C" {
-    pub fn alloca(arg1: libc::c_ulong) -> *mut libc::c_void;
+    pub fn alloca(__size: libc::c_ulong) -> *mut libc::c_void;
 }
 pub type ct_rune_t = __darwin_ct_rune_t;
 pub type rune_t = __darwin_rune_t;
@@ -4903,7 +5085,10 @@ extern "C" {
     pub fn realloc(__ptr: *mut libc::c_void, __size: libc::c_ulong) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn valloc(arg1: usize) -> *mut libc::c_void;
+    pub fn reallocf(__ptr: *mut libc::c_void, __size: usize) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn valloc(__size: usize) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn aligned_alloc(__alignment: libc::c_ulong, __size: libc::c_ulong) -> *mut libc::c_void;
@@ -4923,6 +5108,9 @@ extern "C" {
 }
 extern "C" {
     pub fn atexit(arg1: ::std::option::Option<unsafe extern "C" fn()>) -> libc::c_int;
+}
+extern "C" {
+    pub fn at_quick_exit(arg1: ::std::option::Option<unsafe extern "C" fn()>) -> libc::c_int;
 }
 extern "C" {
     pub fn atof(arg1: *const libc::c_char) -> f64;
@@ -4975,10 +5163,10 @@ extern "C" {
     pub fn mblen(__s: *const libc::c_char, __n: usize) -> libc::c_int;
 }
 extern "C" {
-    pub fn mbstowcs(arg1: *mut wchar_t, arg2: *const libc::c_char, arg3: usize) -> usize;
+    pub fn mbstowcs(arg1: *mut wchar_t, arg2: *const libc::c_char, __n: usize) -> usize;
 }
 extern "C" {
-    pub fn mbtowc(arg1: *mut wchar_t, arg2: *const libc::c_char, arg3: usize) -> libc::c_int;
+    pub fn mbtowc(arg1: *mut wchar_t, arg2: *const libc::c_char, __n: usize) -> libc::c_int;
 }
 extern "C" {
     pub fn qsort(
@@ -4992,6 +5180,9 @@ extern "C" {
             ) -> libc::c_int,
         >,
     );
+}
+extern "C" {
+    pub fn quick_exit(arg1: libc::c_int) -> !;
 }
 extern "C" {
     pub fn rand() -> libc::c_int;
@@ -5037,7 +5228,7 @@ extern "C" {
     pub fn system(arg1: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-    pub fn wcstombs(arg1: *mut libc::c_char, arg2: *const wchar_t, arg3: usize) -> usize;
+    pub fn wcstombs(arg1: *mut libc::c_char, arg2: *const wchar_t, __n: usize) -> usize;
 }
 extern "C" {
     pub fn wctomb(arg1: *mut libc::c_char, arg2: wchar_t) -> libc::c_int;
@@ -5081,8 +5272,11 @@ extern "C" {
     pub fn grantpt(arg1: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn initstate(arg1: libc::c_uint, arg2: *mut libc::c_char, arg3: usize)
-        -> *mut libc::c_char;
+    pub fn initstate(
+        arg1: libc::c_uint,
+        arg2: *mut libc::c_char,
+        __size: usize,
+    ) -> *mut libc::c_char;
 }
 extern "C" {
     pub fn jrand48(arg1: *mut libc::c_ushort) -> libc::c_long;
@@ -5164,7 +5358,7 @@ extern "C" {
     pub fn arc4random() -> u32;
 }
 extern "C" {
-    pub fn arc4random_addrandom(arg1: *mut libc::c_uchar, arg2: libc::c_int);
+    pub fn arc4random_addrandom(arg1: *mut libc::c_uchar, __datlen: libc::c_int);
 }
 extern "C" {
     pub fn arc4random_buf(__buf: *mut libc::c_void, __nbytes: usize);
@@ -5255,7 +5449,7 @@ extern "C" {
     pub fn getbsize(arg1: *mut libc::c_int, arg2: *mut libc::c_long) -> *mut libc::c_char;
 }
 extern "C" {
-    pub fn getloadavg(arg1: *mut f64, arg2: libc::c_int) -> libc::c_int;
+    pub fn getloadavg(arg1: *mut f64, __nelem: libc::c_int) -> libc::c_int;
 }
 extern "C" {
     pub fn getprogname() -> *const libc::c_char;
@@ -5388,9 +5582,6 @@ extern "C" {
 }
 extern "C" {
     pub fn srandomdev();
-}
-extern "C" {
-    pub fn reallocf(__ptr: *mut libc::c_void, __size: usize) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn strtonum(
@@ -5596,6 +5787,9 @@ extern "C" {
     ) -> *mut libc::c_char;
 }
 extern "C" {
+    pub fn strchrnul(__s: *const libc::c_char, __c: libc::c_int) -> *mut libc::c_char;
+}
+extern "C" {
     pub fn strnstr(
         __big: *const libc::c_char,
         __little: *const libc::c_char,
@@ -5626,7 +5820,7 @@ extern "C" {
     ) -> *mut libc::c_char;
 }
 extern "C" {
-    pub fn swab(arg1: *const libc::c_void, arg2: *mut libc::c_void, arg3: isize);
+    pub fn swab(arg1: *const libc::c_void, arg2: *mut libc::c_void, __len: isize);
 }
 extern "C" {
     pub fn timingsafe_bcmp(
@@ -5646,14 +5840,14 @@ extern "C" {
     pub fn bcmp(
         arg1: *const libc::c_void,
         arg2: *const libc::c_void,
-        arg3: libc::c_ulong,
+        __n: libc::c_ulong,
     ) -> libc::c_int;
 }
 extern "C" {
-    pub fn bcopy(arg1: *const libc::c_void, arg2: *mut libc::c_void, arg3: usize);
+    pub fn bcopy(arg1: *const libc::c_void, arg2: *mut libc::c_void, __n: libc::c_ulong);
 }
 extern "C" {
-    pub fn bzero(arg1: *mut libc::c_void, arg2: libc::c_ulong);
+    pub fn bzero(arg1: *mut libc::c_void, __n: libc::c_ulong);
 }
 extern "C" {
     pub fn index(arg1: *const libc::c_char, arg2: libc::c_int) -> *mut libc::c_char;
@@ -14938,12 +15132,17 @@ extern "C" {
     #[doc = " See libc sscanf manual for more information.\n Locale-independent sscanf implementation."]
     pub fn av_sscanf(string: *const libc::c_char, format: *const libc::c_char, ...) -> libc::c_int;
 }
+#[doc = " Buffer to print data progressively\n\n The string buffer grows as necessary and is always 0-terminated.\n The content of the string is never accessed, and thus is\n encoding-agnostic and can even hold binary data.\n\n Small buffers are kept in the structure itself, and thus require no\n memory allocation at all (unless the contents of the buffer is needed\n after the structure goes out of scope). This is almost as lightweight as\n declaring a local `char buf[512]`.\n\n The length of the string can go beyond the allocated size: the buffer is\n then truncated, but the functions still keep account of the actual total\n length.\n\n In other words, AVBPrint.len can be greater than AVBPrint.size and records\n the total length of what would have been to the buffer if there had been\n enough memory.\n\n Append operations do not need to be tested for failure: if a memory\n allocation fails, data stop being appended to the buffer, but the length\n is still updated. This situation can be tested with\n av_bprint_is_complete().\n\n The AVBPrint.size_max field determines several possible behaviours:\n - `size_max = -1` (= `UINT_MAX`) or any large value will let the buffer be\n   reallocated as necessary, with an amortized linear cost.\n - `size_max = 0` prevents writing anything to the buffer: only the total\n   length is computed. The write operations can then possibly be repeated in\n   a buffer with exactly the necessary size\n   (using `size_init = size_max = len + 1`).\n - `size_max = 1` is automatically replaced by the exact size available in the\n   structure itself, thus ensuring no dynamic memory allocation. The\n   internal buffer is large enough to hold a reasonable paragraph of text,\n   such as the current paragraph."]
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct ff_pad_helper_AVBPrint {
+    #[doc = "< string so far"]
     pub str_: *mut libc::c_char,
+    #[doc = "< length so far"]
     pub len: libc::c_uint,
+    #[doc = "< allocated memory"]
     pub size: libc::c_uint,
+    #[doc = "< maximum allocated memory"]
     pub size_max: libc::c_uint,
     pub reserved_internal_buffer: [libc::c_char; 1usize],
 }
@@ -14967,9 +15166,13 @@ const _: () = {
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct AVBPrint {
+    #[doc = "< string so far"]
     pub str_: *mut libc::c_char,
+    #[doc = "< length so far"]
     pub len: libc::c_uint,
+    #[doc = "< allocated memory"]
     pub size: libc::c_uint,
+    #[doc = "< maximum allocated memory"]
     pub size_max: libc::c_uint,
     pub reserved_internal_buffer: [libc::c_char; 1usize],
     pub reserved_padding: [libc::c_char; 1000usize],
@@ -16235,9 +16438,9 @@ extern "C" {
 extern "C" {
     pub fn strftime(
         arg1: *mut libc::c_char,
-        arg2: usize,
-        arg3: *const libc::c_char,
-        arg4: *const tm,
+        __maxsize: usize,
+        arg2: *const libc::c_char,
+        arg3: *const tm,
     ) -> usize;
 }
 extern "C" {
