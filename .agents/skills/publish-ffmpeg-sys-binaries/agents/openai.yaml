@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish FFmpeg Sys Binaries"
+  short_description: "Open a PR with archives and bindings"
+  default_prompt: "Use $publish-ffmpeg-sys-binaries to install verified splitter artifacts, regenerate bindings, and open a draft rust-ffmpeg-sys PR."
