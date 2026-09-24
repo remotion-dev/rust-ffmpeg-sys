@@ -1,5 +1,5 @@
 These binaries were generated from
-[`rust-ffmpeg-splitter` commit `55a09b8c66ca3049d4aef4c3c160d11e45a20d5a`](https://github.com/remotion-dev/rust-ffmpeg-splitter/commit/55a09b8c66ca3049d4aef4c3c160d11e45a20d5a).
+[`rust-ffmpeg-splitter` commit `50b6a0c0e7e3076e33044254b560f466b67cd245`](https://github.com/remotion-dev/rust-ffmpeg-splitter/commit/50b6a0c0e7e3076e33044254b560f466b67cd245).
 
-- macOS ARM64 and x64: [GitHub Actions run 35577580309](https://github.com/remotion-dev/rust-ffmpeg-splitter/actions/runs/35577580309)
-- Linux ARM64/x64 GNU/musl and Windows x64 GNU: CircleCI pipeline 456 (`dc35e970-ef57-4214-a5b0-38973909498e`), workflow `b6f76a77-1e9a-4872-804d-0026ff2237de`
+- macOS ARM64 and x64: [GitHub Actions run 36004832409](https://github.com/remotion-dev/rust-ffmpeg-splitter/actions/runs/36004832409)
+- Linux ARM64/x64 GNU/musl and Windows x64 GNU: CircleCI pipeline 459 (`90c49ff6-f569-41c5-ab49-245950fcb242`), workflow `3c2e690a-6378-46d1-b103-0cc7606f09c9`
