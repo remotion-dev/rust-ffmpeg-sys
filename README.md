@@ -1,5 +1,7 @@
-Fork of `ffmpeg-sys-next` for Remotion 4.0+.
+# Remotion FFmpeg C bindings
 
-To customize, follow instructions of [`rust-ffmpeg-splitter`](https://github.com/remotion-dev/rust-ffmpeg-splitter) and copy the ZIPs into the `zips` folder.
+This project has moved to [`packages/compositor/ffmpeg/sys` in the Remotion monorepo](https://github.com/remotion-dev/remotion/tree/main/packages/compositor/ffmpeg/sys).
 
-Afterwards, run `node extract-bindings.mjs` so lib.rs can read them. Commit the changes.
+Use the [FFmpeg build and release guide](https://github.com/remotion-dev/remotion/tree/main/packages/compositor/ffmpeg#readme) for current development and release instructions.
+
+This repository is archived and retained for its history. Make changes and open issues or pull requests in [`remotion-dev/remotion`](https://github.com/remotion-dev/remotion).
